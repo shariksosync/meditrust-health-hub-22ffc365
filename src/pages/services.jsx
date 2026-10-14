@@ -31,6 +31,16 @@ import {
   company,
   fullBodyCheckups,
   pathologyTests,
+  ayurvedaFeaturedHerbs,
+  ayurvedaSkinHerbs,
+  ayurvedaDigestiveHerbs,
+  ayurvedaHairHerbs,
+  ayurvedaAZDirectory,
+  consultTrustPillars,
+  consultFaqs,
+  consultTestimonials,
+  partnerSolutions,
+  partnerStats,
 } from "../data/demo";
 
 export function Newsletter() {
@@ -1114,36 +1124,132 @@ function DoctorCard({ d }) {
 
 export function Consult() {
   const { state } = useApp();
+  const [openFaq, setOpenFaq] = useState(null);
+
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-16">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 py-10 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#ff6f61]">
-            Tata 1mg Online Consultations
-          </p>
-          <h1 className="mt-1 text-2xl sm:text-3xl font-extrabold">
-            Consult Top Doctors 24x7
-          </h1>
-          <p className="mt-1 text-sm text-gray-300">
-            Connect via Video, Audio or Chat with verified healthcare specialists across 25+ specialties.
-          </p>
-        </div>
+      {/* 1. CARE PLAN SAVINGS BANNER matching Screenshot 1 */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-4">
+        <A
+          href="/care-plan"
+          className="block overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100 p-3 sm:p-4 shadow-xs hover:shadow-md transition"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="rounded bg-gray-900 px-2 py-0.5 text-[10px] font-extrabold text-amber-300 uppercase tracking-wider">
+                CARE PLAN
+              </span>
+              <p className="text-xs sm:text-sm font-semibold text-gray-800">
+                You can save an additional <strong className="text-gray-900">₹600/yr</strong> on consultations with MEDITRUST Care Plan membership
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#ff6f61]">
+              <span>Explore Plan</span>
+              <Icon name="arrow" size={14} />
+            </div>
+          </div>
+        </A>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+      {/* 2. HERO SECTION matching Screenshot 1 */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+        <div className="overflow-hidden rounded-2xl bg-gradient-to-r from-rose-50 via-orange-50 to-rose-100 p-6 sm:p-10 border border-rose-100 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xs">
+          <div className="max-w-xl">
+            <span className="inline-block rounded-full bg-[#ff6f61]/15 px-3 py-1 text-xs font-bold text-[#ff6f61]">
+              Online Consultations Starting at ₹199
+            </span>
+            <h1 className="mt-3 text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+              Consult India's Top Doctors Online, Safely from Home
+            </h1>
+            <p className="mt-3 text-xs sm:text-base text-gray-600 leading-relaxed">
+              Connect in under 5 minutes with verified medical practitioners across 25+ specialties via HD Video, Audio call, or WhatsApp chat. Instant verifiable digital prescriptions.
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <A
+                href="/doctors/general-physician"
+                className="rounded-xl bg-[#ff6f61] px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#e85b4d] transition"
+              >
+                Consult Now
+              </A>
+              <A
+                href="#specialties"
+                className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-gray-700 hover:bg-gray-50 transition shadow-xs"
+              >
+                Browse Specialties
+              </A>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-rose-200/60 pt-4 text-xs font-medium text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span><strong>3,000+</strong> Verified Doctors</span>
+              </div>
+              <div>
+                <span><strong>30 Lakh+</strong> Happy Consultations</span>
+              </div>
+              <div>
+                <span><strong>25+</strong> Specialties</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0 flex justify-center">
+            <img
+              src="/images/consult_doctor/consult_hero_art.png"
+              alt="Consult Doctor Online"
+              className="max-h-64 sm:max-h-72 object-contain drop-shadow-md"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 3. TRUST PILLARS matching Screenshot 2 */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {consultTrustPillars.map((tp, idx) => (
+            <div
+              key={idx}
+              className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-xs hover:shadow-sm transition"
+            >
+              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-orange-50/70 p-2 border border-orange-100 flex items-center justify-center">
+                <img
+                  src={tp.iconImg}
+                  alt={tp.title}
+                  className="h-full w-full object-contain"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              </div>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-900">{tp.title}</h3>
+                <p className="mt-1 text-xs text-gray-500 leading-relaxed">{tp.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6" id="specialties">
         <Crumbs items={[["Doctor consultation"]]} />
         <div className="my-4">
           <DemoNote>
-            All doctors and slots are <strong>demonstration examples</strong>. No real consultation,
-            video call or medical advice is provided.
+            Demonstration medical consultation platform for <strong>{company.name}</strong>. No actual physician appointment, video call or clinical treatment is performed.
           </DemoNote>
         </div>
 
-        <h2 className="mb-4 text-lg font-bold text-gray-900">Popular Specialties</h2>
+        {/* 4. POPULAR SPECIALTIES */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Consult Top Doctors by Specialty</h2>
+            <p className="text-xs text-gray-500">Pick from over 25+ verified medical disciplines</p>
+          </div>
+        </div>
         <SpecialtyGrid />
 
-        <h2 className="mb-4 mt-10 text-lg font-bold text-gray-900">Featured Specialists</h2>
+        {/* 5. FEATURED SPECIALISTS LIST */}
+        <h2 className="mb-2 mt-10 text-lg sm:text-xl font-bold text-gray-900">Featured Specialists</h2>
+        <p className="mb-4 text-xs text-gray-500">Available right now for instant or scheduled consultations</p>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {state.doctors
             .filter((d) => d.visible)
@@ -1151,6 +1257,86 @@ export function Consult() {
               <DoctorCard key={d.id} d={d} />
             ))}
         </div>
+
+        {/* 6. PATIENT TESTIMONIALS */}
+        <section className="mt-12 rounded-2xl bg-white border border-gray-200 p-6 sm:p-8">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900">What Our Patients Say</h2>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            {consultTestimonials.map((t, idx) => (
+              <div key={idx} className="rounded-xl bg-gray-50 p-5 border border-gray-100 flex flex-col justify-between">
+                <p className="text-xs sm:text-sm italic text-gray-700 leading-relaxed">
+                  "{t.text}"
+                </p>
+                <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-gray-900">{t.name}</p>
+                    <p className="text-[10px] text-gray-400">{t.role}</p>
+                  </div>
+                  <div className="flex text-amber-400 text-xs">
+                    ★★★★★
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 7. DOCTOR RECRUITMENT BANNER matching Screenshot 3 & 4 */}
+        <section className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+          <div className="max-w-lg">
+            <span className="rounded bg-emerald-500/30 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-200">
+              For Healthcare Providers
+            </span>
+            <h3 className="mt-2 text-xl sm:text-2xl font-bold">Are you a Doctor? Join MEDITRUST</h3>
+            <p className="mt-2 text-xs sm:text-sm text-emerald-100 leading-relaxed">
+              Expand your digital medical practice. Connect with thousands of verified patients across Maharashtra and India with sovereign scheduling and automated EHR tools.
+            </p>
+            <div className="mt-4 flex gap-3">
+              <a
+                href={`tel:${company.phone}`}
+                className="rounded-lg bg-white px-5 py-2.5 text-xs font-bold text-emerald-900 shadow hover:bg-emerald-50 transition"
+              >
+                Join as Doctor · {company.phone}
+              </a>
+            </div>
+          </div>
+          <div className="shrink-0">
+            <img
+              src="/images/consult_doctor/doctor_join_banner.png"
+              alt="Doctor Join Banner"
+              className="max-h-40 rounded-xl object-contain shadow-sm border border-emerald-700"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+        </section>
+
+        {/* 8. CONSULT FAQs ACCORDION matching Screenshot 3 */}
+        <section className="mt-8 rounded-2xl bg-white border border-gray-200 p-6 sm:p-8">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+          <div className="divide-y divide-gray-100">
+            {consultFaqs.map((faq, idx) => (
+              <div key={idx} className="py-3.5">
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="flex w-full items-center justify-between text-left text-xs sm:text-sm font-semibold text-gray-800 hover:text-[#ff6f61] transition"
+                >
+                  <span>{faq.q}</span>
+                  <Icon
+                    name="chev"
+                    size={16}
+                    className={cx("text-gray-400 transition-transform", openFaq === idx && "rotate-180")}
+                  />
+                </button>
+                {openFaq === idx && (
+                  <p className="mt-2 text-xs text-gray-600 leading-relaxed pr-6">
+                    {faq.a}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -2066,6 +2252,645 @@ export function Offers() {
   );
 }
 
+/* ---------------- AYURVEDA PAGE ---------------- */
+export function Ayurveda() {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [selectedLetter, setSelectedLetter] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const alphabet = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "Z"];
+
+  const filteredDirectory = ayurvedaAZDirectory.filter((item) => {
+    const matchesLetter = selectedLetter === "All" || item.letter === selectedLetter;
+    const matchesSearch = !searchTerm || 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.botName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.benefits.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesLetter && matchesSearch;
+  });
+
+  return (
+    <div className="bg-[#f8f9fa] min-h-screen pb-16">
+      {/* 1. HINDI ARTH BANNER matching Screenshot 1 */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-4">
+        <div className="overflow-hidden rounded-xl border border-amber-200 bg-[#fff9f2] shadow-xs">
+          <img
+            src="/images/ayurveda/arth_banner.png"
+            alt="Ayurveda Arth Banner - ज्ञान, स्वास्थ्य और दीर्घायु"
+            className="w-full object-cover max-h-24 sm:max-h-28"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+        <Crumbs items={[["Ayurveda & Herbal Care"]]} />
+        <div className="my-3">
+          <DemoNote>
+            Authentic Ayurvedic health information and genuine herbal catalog curated for <strong>{company.name}</strong>.
+          </DemoNote>
+        </div>
+
+        {/* 2. SECTION: FEATURED HERBS matching Screenshot 1 */}
+        <section className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Featured Herbs</h2>
+              <p className="text-xs text-gray-500">Ancient remedies backed by modern clinical research</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4">
+            {ayurvedaFeaturedHerbs.map((h) => (
+              <div
+                key={h.id}
+                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-emerald-500 hover:shadow-md transition flex flex-col justify-between"
+              >
+                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-emerald-50/50 p-1 flex items-center justify-center">
+                  <img
+                    src={h.img}
+                    alt={h.name}
+                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-emerald-700 transition">
+                    {h.name}
+                  </h3>
+                  <p className="mt-0.5 text-[11px] font-medium text-emerald-600">{h.subtitle}</p>
+                  <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 3. SECTION: HERBS FOR SKIN CARE matching Screenshot 2 */}
+        <section className="mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Herbs for Skin Care</h2>
+              <p className="text-xs text-gray-500">Herbal extracts to nourish, heal and brighten your natural skin glow</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4">
+            {ayurvedaSkinHerbs.map((h) => (
+              <div
+                key={h.id}
+                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-rose-400 hover:shadow-md transition flex flex-col justify-between"
+              >
+                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-rose-50/50 p-1 flex items-center justify-center">
+                  <img
+                    src={h.img}
+                    alt={h.name}
+                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-rose-600 transition">
+                    {h.name}
+                  </h3>
+                  <p className="mt-0.5 text-[11px] font-medium text-rose-500">{h.subtitle}</p>
+                  <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 4. SECTION: HERBS FOR DIGESTIVE CARE matching Screenshot 2 */}
+        <section className="mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Herbs for Digestive Care</h2>
+              <p className="text-xs text-gray-500">Ayurvedic roots, fruits, and seeds that balance gut flora and metabolism</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4">
+            {ayurvedaDigestiveHerbs.map((h) => (
+              <div
+                key={h.id}
+                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-amber-500 hover:shadow-md transition flex flex-col justify-between"
+              >
+                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-amber-50/50 p-1 flex items-center justify-center">
+                  <img
+                    src={h.img}
+                    alt={h.name}
+                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-amber-700 transition">
+                    {h.name}
+                  </h3>
+                  <p className="mt-0.5 text-[11px] font-medium text-amber-600">{h.subtitle}</p>
+                  <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 5. SECTION: HERBS FOR HAIR CARE matching Screenshot 3 */}
+        <section className="mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Herbs for Hair Care</h2>
+              <p className="text-xs text-gray-500">Traditional botanicals for root strength, shine, and scalp health</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4">
+            {ayurvedaHairHerbs.map((h) => (
+              <div
+                key={h.id}
+                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-teal-500 hover:shadow-md transition flex flex-col justify-between"
+              >
+                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-teal-50/50 p-1 flex items-center justify-center">
+                  <img
+                    src={h.img}
+                    alt={h.name}
+                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-teal-700 transition">
+                    {h.name}
+                  </h3>
+                  <p className="mt-0.5 text-[11px] font-medium text-teal-600">{h.subtitle}</p>
+                  <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 6. A-Z AYURVEDIC HERBS DIRECTORY matching Screenshots 3-7 */}
+        <section className="mt-12 rounded-2xl bg-white border border-gray-200 p-6 sm:p-8 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Ayurvedic Herbs A-Z Directory</h2>
+              <p className="text-xs text-gray-500">Explore comprehensive encyclopedic profiles, botanical taxonomy, and therapeutic applications</p>
+            </div>
+            <div className="relative w-full sm:w-72">
+              <input
+                type="text"
+                placeholder="Search herb name or benefit..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 py-2 pl-3 pr-8 text-xs outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-2.5 top-2.5 text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="close" size={14} />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Alphabet Tabs */}
+          <div className="mt-6 flex flex-wrap gap-1.5 border-b border-gray-100 pb-4">
+            {alphabet.map((letter) => (
+              <button
+                key={letter}
+                onClick={() => setSelectedLetter(letter)}
+                className={cx(
+                  "min-w-7 h-7 rounded px-1.5 text-xs font-bold transition",
+                  selectedLetter === letter
+                    ? "bg-emerald-700 text-white shadow-xs"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                )}
+              >
+                {letter}
+              </button>
+            ))}
+          </div>
+
+          {/* 3-Column Herb Directory Grid */}
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredDirectory.length > 0 ? (
+              filteredDirectory.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3.5 rounded-xl border border-gray-100 bg-[#fafafa] p-3 hover:border-emerald-400 hover:bg-white hover:shadow-xs transition"
+                >
+                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-emerald-50 p-1 border border-emerald-100">
+                    <img
+                      src={item.thumb}
+                      alt={item.name}
+                      className="h-full w-full object-contain"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline justify-between gap-1">
+                      <h4 className="text-xs sm:text-sm font-bold text-gray-900 truncate">{item.name}</h4>
+                      <span className="rounded bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800 shrink-0">
+                        {item.letter}
+                      </span>
+                    </div>
+                    <p className="text-[11px] italic text-gray-500 truncate">{item.botName}</p>
+                    <p className="mt-0.5 text-[10px] text-gray-600 font-medium truncate">
+                      Benefits: {item.benefits}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full py-12 text-center text-xs text-gray-400">
+                No herbs found matching your search.
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- PARTNERSHIPS PAGE ---------------- */
+export function Partnerships() {
+  const [activeTab, setActiveTab] = useState("hospital");
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    org: "",
+    email: "",
+    phone: "",
+    service: "Hospital Pharmacy Integration",
+    message: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.phone) {
+      alert("Please fill in your name, email and phone number.");
+      return;
+    }
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="bg-[#f8f9fa] min-h-screen pb-16">
+      {/* 1. HERO SECTION matching Screenshot 1 */}
+      <section className="bg-gradient-to-r from-orange-50 via-amber-50 to-rose-50 border-b border-orange-100 py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10">
+          <div className="max-w-2xl">
+            <span className="inline-block rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800 uppercase tracking-wider">
+              MEDITRUST Enterprise Healthcare
+            </span>
+            <h1 className="mt-4 text-3xl sm:text-5xl font-black text-gray-900 tracking-tight leading-tight">
+              Let's Empower Healthcare Together
+            </h1>
+            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">
+              Partner with India's trusted omnichannel healthcare and pharmacy network. We empower hospitals, corporations, diagnostic labs, insurance providers, and pharmaceutical innovators with cutting-edge digital supply chains and telehealth platforms.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a
+                href="#lead-form"
+                className="rounded-xl bg-[#ff6f61] px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#e85b4d] transition"
+              >
+                Partner With Us
+              </a>
+              <a
+                href={`tel:${company.phone}`}
+                className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-gray-700 hover:bg-gray-50 transition shadow-xs flex items-center gap-2"
+              >
+                <Icon name="phone" size={16} className="text-[#ff6f61]" />
+                <span>Call {company.phone}</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="shrink-0 flex justify-center">
+            <img
+              src="/images/partnerships/partner_floral_hero.png"
+              alt="Healthcare Partnerships"
+              className="max-h-72 sm:max-h-80 object-contain drop-shadow-md"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 2. SCALE & REACH STATS matching Screenshot 2 */}
+      <section className="border-b border-gray-200 bg-white py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {partnerStats.map((st, idx) => (
+              <div key={idx} className="p-2">
+                <p className="text-2xl sm:text-4xl font-extrabold text-[#ff6f61]">{st.value}</p>
+                <p className="mt-1 text-xs font-semibold text-gray-600">{st.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
+        {/* 3. CORE PLATFORM SOLUTIONS matching Screenshot 2 */}
+        <section>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Enterprise Solutions Ecosystem</h2>
+            <p className="mt-2 text-xs sm:text-sm text-gray-500">
+              End-to-end digital infrastructure built for hospitals, clinical research, insurance companies, and wellness brands.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {partnerSolutions.map((sol) => (
+              <div
+                key={sol.id}
+                className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs hover:shadow-lg transition flex flex-col justify-between"
+              >
+                <div>
+                  <div className="h-44 overflow-hidden bg-gray-50 border-b border-gray-100 flex items-center justify-center p-2">
+                    <img
+                      src={sol.img}
+                      alt={sol.title}
+                      className="h-full w-full object-contain"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#ff6f61]">
+                      {sol.subtitle}
+                    </span>
+                    <h3 className="mt-1 text-lg font-bold text-gray-900">{sol.title}</h3>
+                    <p className="mt-2 text-xs text-gray-600 leading-relaxed">{sol.desc}</p>
+
+                    <ul className="mt-4 space-y-2 border-t border-gray-100 pt-3">
+                      {sol.points.map((pt, pIdx) => (
+                        <li key={pIdx} className="flex items-center gap-2 text-xs text-gray-700">
+                          <Icon name="check" size={14} className="text-emerald-500 shrink-0" />
+                          <span>{pt}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-6 pt-0">
+                  <a
+                    href="#lead-form"
+                    className="block text-center rounded-lg bg-gray-900 py-2.5 text-xs font-bold uppercase text-white hover:bg-black transition"
+                  >
+                    Inquire For Collaboration
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 4. TAILORED SECTOR SOLUTIONS TABS matching Screenshots 3-7 */}
+        <section className="mt-16 rounded-2xl bg-white border border-gray-200 p-6 sm:p-10 shadow-xs">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Tailored Strategic Solutions</h2>
+            <p className="mt-1 text-xs text-gray-500">Industry-specific healthcare architectures tailored to your operational models</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 border-b border-gray-200 pb-4">
+            {[
+              ["hospital", "Hospital Services"],
+              ["patient-support", "Patient Support Programs"],
+              ["insurance", "Insurance & TPA Networks"],
+              ["corporate", "Corporate Wellness"],
+              ["clinical", "Clinical Research Logistics"],
+            ].map(([tabKey, tabLabel]) => (
+              <button
+                key={tabKey}
+                onClick={() => setActiveTab(tabKey)}
+                className={cx(
+                  "rounded-full px-4 py-2 text-xs font-bold transition",
+                  activeTab === tabKey
+                    ? "bg-[#ff6f61] text-white shadow-xs"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                )}
+              >
+                {tabLabel}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-8 lg:grid-cols-2 items-center">
+            <div>
+              <span className="text-xs font-bold text-[#ff6f61] uppercase">Sector Focus</span>
+              <h3 className="mt-1 text-xl font-bold text-gray-900">
+                {activeTab === "hospital" && "Hospital Digital Pharmacy & Home Discharge Delivery"}
+                {activeTab === "patient-support" && "Patient Support Programs (PSP) for Chronic Therapies"}
+                {activeTab === "insurance" && "Cashless OPD, Diagnostic & Pharmacy Benefits Integration"}
+                {activeTab === "corporate" && "Comprehensive Annual Health Checkups & Employee Care"}
+                {activeTab === "clinical" && "Temperature-Controlled Clinical Trial Sample Logistics"}
+              </h3>
+              <p className="mt-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                {activeTab === "hospital" && "Enable discharged patients to receive prescribed medicines at home within 2 hours. Seamless API integration with your hospital Information System (HIS) ensures zero stockouts, automated substitution checks, and real-time delivery tracking."}
+                {activeTab === "patient-support" && "Dedicated patient counseling, financial assistance program management, and monthly medication compliance refills for cardiology, oncology, and endocrinology regimens."}
+                {activeTab === "insurance" && "Direct cashless claim settlement for OPD prescriptions, home lab tests, and health supplements across India. Reduces administrative overhead with automated fraud-check algorithms."}
+                {activeTab === "corporate" && "Custom wellness dashboards, ergonomic on-site biometric screening camps, annual health checkups, and corporate pharmacy discounts for teams of 50 to 50,000 employees."}
+                {activeTab === "clinical" && "Cold-chain validation (-20°C to +25°C), barcoded biological sample transport, and strict regulatory compliance aligned with GCP and ICMR guidelines."}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-4 text-xs font-semibold text-gray-800">
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-1.5 border border-gray-200">
+                  <Icon name="check" size={14} className="text-emerald-500" /> ISO 9001 & 27001 Certified
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-1.5 border border-gray-200">
+                  <Icon name="check" size={14} className="text-emerald-500" /> 100% Genuine Inventory
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-1.5 border border-gray-200">
+                  <Icon name="check" size={14} className="text-emerald-500" /> Dedicated Account Manager
+                </span>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-gray-50">
+              <img
+                src="/images/partnerships/sol_hospital_service.png"
+                alt="Healthcare Architecture Solution"
+                className="w-full object-cover max-h-80"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* 5. CONTACT / LEAD FORM matching Screenshot 8 & 9 */}
+        <section id="lead-form" className="mt-16 rounded-2xl bg-white border border-gray-200 p-6 sm:p-10 shadow-xs">
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#ff6f61]">
+                Connect With Our Corporate Team
+              </span>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold text-gray-900">
+                Partner with MEDITRUST LIFE SCIENCE PVT LTD
+              </h2>
+              <p className="mt-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Whether you represent a hospital network, diagnostic franchise, corporate HR team, or pharmaceutical enterprise, our business development team will craft a bespoke collaboration package.
+              </p>
+
+              <div className="mt-8 space-y-4 text-xs sm:text-sm text-gray-700">
+                <div className="flex items-start gap-3">
+                  <Icon name="pin" size={18} className="text-[#ff6f61] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-gray-900">Registered Office:</strong>
+                    <p className="text-xs text-gray-500">{company.address}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icon name="phone" size={18} className="text-[#ff6f61] shrink-0" />
+                  <div>
+                    <strong className="text-gray-900">Direct Contact:</strong>
+                    <p className="text-xs text-gray-500">{company.phone}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icon name="mail" size={18} className="text-[#ff6f61] shrink-0" />
+                  <div>
+                    <strong className="text-gray-900">Email Inquiries:</strong>
+                    <p className="text-xs text-gray-500">{company.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Icon name="user" size={18} className="text-[#ff6f61] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-gray-900">Registered Directors:</strong>
+                    <p className="text-xs text-gray-500">{company.directors.join(" · ")}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-gray-50 p-6 border border-gray-200">
+              {submitted ? (
+                <div className="py-12 text-center">
+                  <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-emerald-100 text-emerald-600">
+                    <Icon name="check" size={28} />
+                  </span>
+                  <h3 className="mt-4 text-lg font-bold text-gray-900">Thank you for your inquiry!</h3>
+                  <p className="mt-2 text-xs text-gray-600">
+                    Your partnership request has been recorded for demonstration. Our business development desk will reach out shortly.
+                  </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="mt-6 rounded-lg bg-[#ff6f61] px-5 py-2 text-xs font-bold text-white hover:bg-[#e85b4d] transition"
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <h3 className="text-sm font-bold text-gray-900">Request a Callback / Proposal</h3>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                        Full Name *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61]"
+                        placeholder="Dr. Ajay Sharma"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                        Organization / Hospital
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.org}
+                        onChange={(e) => setFormData({ ...formData, org: e.target.value })}
+                        className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61]"
+                        placeholder="Apollo Healthcare / Self"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                        Email Address *
+                      </label>
+                      <input
+                        required
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61]"
+                        placeholder="sharma@hospital.org"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                        Contact Phone *
+                      </label>
+                      <input
+                        required
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61]"
+                        placeholder="+91 9876543210"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                      Solution Interest
+                    </label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61] bg-white"
+                    >
+                      <option>Hospital Pharmacy Integration</option>
+                      <option>Corporate Health & Wellness Program</option>
+                      <option>Diagnostic Network Franchise</option>
+                      <option>Insurance OPD & TPA Cashless</option>
+                      <option>Patient Support Program (PSP)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                      Collaboration Details
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="mt-1 w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#ff6f61]"
+                      placeholder="Tell us about your organization's requirements..."
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full rounded-lg bg-[#ff6f61] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow hover:bg-[#e85b4d] transition"
+                  >
+                    Submit Proposal Request
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
 function NotFound() {
   return (
     <div className="mx-auto max-w-xl px-4 py-16 text-center">
@@ -2080,3 +2905,4 @@ function NotFound() {
     </div>
   );
 }
+

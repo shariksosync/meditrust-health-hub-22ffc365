@@ -20,6 +20,8 @@ const routes = [
   ["/order-confirmation", S.OrderConfirmation], ["/orders", S.Orders], ["/orders/:id", S.OrderDetail],
   ["/lab-tests", V.LabTests], ["/lab-tests/booking", V.LabBooking], ["/lab-tests/booking-confirmation", V.LabConfirm], ["/lab-tests/:id", V.LabTest],
   ["/consult-doctor", V.Consult], ["/doctors/:specialty", V.Specialty], ["/doctor/:id", V.Doctor], ["/consultation/booking", V.ConsultBooking], ["/consultation/confirmation", V.ConsultConfirm],
+  ["/ayurveda", V.Ayurveda],
+  ["/partnerships", V.Partnerships],
   ["/health-articles", V.Articles], ["/health-articles/:slug", V.Article],
   ["/login", U.Login], ["/register", U.Register], ["/forgot-password", U.Forgot], ["/profile", U.Profile], ["/addresses", U.Addresses], ["/wishlist", U.Wishlist],
   ["/contact", V.Contact], ["/faq", V.Faq], ["/offers", V.Offers],

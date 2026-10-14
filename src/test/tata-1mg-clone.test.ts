@@ -24,6 +24,16 @@ import {
   labRadiologyCards,
   labCollectionSteps,
   labPopularTestSuggestions,
+  ayurvedaFeaturedHerbs,
+  ayurvedaSkinHerbs,
+  ayurvedaDigestiveHerbs,
+  ayurvedaHairHerbs,
+  ayurvedaAZDirectory,
+  consultTrustPillars,
+  consultFaqs,
+  consultTestimonials,
+  partnerSolutions,
+  partnerStats,
 } from "../data/demo";
 
 describe("Tata 1mg Clone Mock Data & Architecture", () => {
@@ -138,5 +148,57 @@ describe("Tata 1mg Clone Mock Data & Architecture", () => {
 
     expect(labPopularTestSuggestions.length).toBe(3);
     expect(labPopularTestSuggestions[0].name).toContain("Urine R/M");
+  });
+
+  it("verifies Ayurveda page herbal categories and A-Z directory matching screenshots 1-7", () => {
+    expect(ayurvedaFeaturedHerbs.length).toBe(7);
+    expect(ayurvedaFeaturedHerbs[0].name).toBe("Ashwagandha");
+    expect(ayurvedaFeaturedHerbs[0].img).toBe("/images/ayurveda/herb_ashwagandha.png");
+
+    expect(ayurvedaSkinHerbs.length).toBe(7);
+    expect(ayurvedaSkinHerbs[0].name).toBe("Aloe Vera");
+    expect(ayurvedaSkinHerbs[0].img).toBe("/images/ayurveda/skin_aloe_vera.png");
+
+    expect(ayurvedaDigestiveHerbs.length).toBe(7);
+    expect(ayurvedaDigestiveHerbs[0].name).toContain("Alsi");
+    expect(ayurvedaDigestiveHerbs[0].img).toBe("/images/ayurveda/digest_alsi.png");
+
+    expect(ayurvedaHairHerbs.length).toBe(7);
+    expect(ayurvedaHairHerbs[0].name).toContain("Onion");
+    expect(ayurvedaHairHerbs[0].img).toBe("/images/ayurveda/hair_onion.png");
+
+    expect(ayurvedaAZDirectory.length).toBeGreaterThanOrEqual(18);
+    expect(ayurvedaAZDirectory.some((x) => x.name === "Ashwagandha")).toBe(true);
+    expect(ayurvedaAZDirectory.some((x) => x.letter === "T")).toBe(true);
+  });
+
+  it("verifies Consult Doctor trust pillars, testimonials, and FAQs matching screenshots 1-4", () => {
+    expect(consultTrustPillars.length).toBe(4);
+    expect(consultTrustPillars[0].title).toBe("100% Confidential");
+    expect(consultTrustPillars[0].iconImg).toBe("/images/consult_doctor/pillar_confidential.png");
+    expect(consultTrustPillars[1].title).toBe("Certified Doctors");
+    expect(consultTrustPillars[2].title).toBe("Convenience");
+    expect(consultTrustPillars[3].title).toBe("Cost Effective");
+
+    expect(consultFaqs.length).toBe(4);
+    expect(consultTestimonials.length).toBe(2);
+  });
+
+  it("verifies Partnerships platform solutions, metrics, and lead form matching screenshots 1-9", () => {
+    expect(partnerSolutions.length).toBe(3);
+    expect(partnerSolutions[0].title).toBe("ePharmacy Solutions");
+    expect(partnerSolutions[0].img).toBe("/images/partnerships/sol_card_epharmacy.png");
+    expect(partnerSolutions[1].title).toBe("eDiagnostics Network");
+    expect(partnerSolutions[2].title).toBe("eConsultations Suite");
+
+    expect(partnerStats.length).toBe(4);
+    expect(partnerStats.some((s) => s.value.includes("24,000+"))).toBe(true);
+    expect(partnerStats.some((s) => s.value.includes("800+"))).toBe(true);
+
+    const ayurTab = topTabs.find((t) => t.id === "ayurveda");
+    expect(ayurTab?.href).toBe("/ayurveda");
+
+    const partnerTab = topTabs.find((t) => t.id === "partnerships");
+    expect(partnerTab?.href).toBe("/partnerships");
   });
 });

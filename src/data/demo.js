@@ -100,8 +100,8 @@ export const topTabs = [
   { id: "lab-tests", label: "LAB TESTS", href: "/lab-tests" },
   { id: "consult-doctors", label: "CONSULT DOCTORS", href: "/consult-doctor" },
   { id: "cancer-care", label: "CANCER CARE", href: "/healthcare/cancer-care" },
-  { id: "ayurveda", label: "AYURVEDA", href: "/healthcare/ayurveda-products" },
-  { id: "partnerships", label: "PARTNERSHIPS", href: "/about" },
+  { id: "ayurveda", label: "AYURVEDA", href: "/ayurveda" },
+  { id: "partnerships", label: "PARTNERSHIPS", href: "/partnerships" },
   { id: "corporates", label: "CORPORATES", href: "/about" },
   { id: "care-plan", label: "CARE PLAN", href: "/care-plan", badge: "SAVE MORE" },
 ];
@@ -1245,3 +1245,156 @@ export const defaultSettings = {
     newsletter: true,
   },
 };
+
+/* ---------------- AYURVEDA PAGE DATA ---------------- */
+export const ayurvedaFeaturedHerbs = [
+  { id: "ashwagandha", name: "Ashwagandha", subtitle: "Immunity & Stress Relief", img: "/images/ayurveda/herb_ashwagandha.png", desc: "Adaptogenic herb that boosts stamina, cognitive focus and vitality." },
+  { id: "shilajit", name: "Shilajit", subtitle: "Stamina & Energy", img: "/images/ayurveda/herb_shilajit.png", desc: "Rich in fulvic acid and 84+ minerals for vigor and endurance." },
+  { id: "giloy", name: "Giloy", subtitle: "Fever & Immunity", img: "/images/ayurveda/herb_giloy.png", desc: "Known as Amrita; purifies blood and fights recurring fevers." },
+  { id: "amla", name: "Amla", subtitle: "Vitamin C & Digestion", img: "/images/ayurveda/herb_amla.png", desc: "Richest natural source of Vitamin C for radiant skin and hair." },
+  { id: "isabgol", name: "Isabgol", subtitle: "Digestion & Regularity", img: "/images/ayurveda/herb_isabgol.png", desc: "Natural dietary fiber that promotes healthy bowel movements." },
+  { id: "turmeric", name: "Turmeric", subtitle: "Joints & Antioxidant", img: "/images/ayurveda/herb_turmeric.png", desc: "Potent curcumin for inflammation support and immunity." },
+  { id: "shatavari", name: "Shatavari", subtitle: "Women's Health", img: "/images/ayurveda/herb_shatavari.png", desc: "Nourishes the female reproductive system and balances hormones." },
+];
+
+export const ayurvedaSkinHerbs = [
+  { id: "aloe-vera", name: "Aloe Vera", subtitle: "Skin Hydration", img: "/images/ayurveda/skin_aloe_vera.png", desc: "Soothes irritated skin and hydrates deeply." },
+  { id: "honey", name: "Honey", subtitle: "Natural Glow", img: "/images/ayurveda/skin_honey.png", desc: "Natural humectant packed with antimicrobial properties." },
+  { id: "turmeric-skin", name: "Turmeric", subtitle: "Blemish Control", img: "/images/ayurveda/skin_turmeric_skin.png", desc: "Combats acne, clears scars and brightens skin complexion." },
+  { id: "coconut", name: "Coconut", subtitle: "Deep Nourishment", img: "/images/ayurveda/skin_coconut.png", desc: "Healthy fatty acids that restore moisture and barrier health." },
+  { id: "grapes", name: "Grapes", subtitle: "Anti-Aging Support", img: "/images/ayurveda/skin_grapes.png", desc: "High in resveratrol to defend against free radicals." },
+  { id: "tulsi", name: "Tulsi", subtitle: "Purifying & Clear Skin", img: "/images/ayurveda/skin_tulsi.png", desc: "Detoxifies skin pores and soothes environmental redness." },
+  { id: "papaya", name: "Papaya", subtitle: "Gentle Exfoliation", img: "/images/ayurveda/skin_papaya.png", desc: "Contains papain enzyme to remove dead skin cells naturally." },
+];
+
+export const ayurvedaDigestiveHerbs = [
+  { id: "alsi", name: "Alsi (Flaxseeds)", subtitle: "Fiber & Omega-3", img: "/images/ayurveda/digest_alsi.png", desc: "Rich in soluble fiber that supports gut microbiome balance." },
+  { id: "ginger", name: "Ginger (Adrak)", subtitle: "Nausea & Bloating", img: "/images/ayurveda/digest_ginger.png", desc: "Stimulates digestive fire (Agni) and eases gut cramps." },
+  { id: "dhania", name: "Dhania (Coriander)", subtitle: "Cooling & Acidity", img: "/images/ayurveda/digest_dhania.png", desc: "Soothes acid reflux and cools gastrointestinal heat." },
+  { id: "fennel", name: "Fennel (Saunf)", subtitle: "Post-Meal Freshness", img: "/images/ayurveda/digest_fennel.png", desc: "Relieves gas and helps in natural digestive enzyme secretion." },
+  { id: "bael", name: "Bael Fruit", subtitle: "Bowel Regularity", img: "/images/ayurveda/digest_bael.png", desc: "Traditional remedy for chronic constipation and IBS." },
+  { id: "hing", name: "Hing (Asafoetida)", subtitle: "Gas Relief", img: "/images/ayurveda/digest_hing.png", desc: "Fast-acting anti-flatulent spice for stomach bloating." },
+  { id: "pudina", name: "Pudina (Mint)", subtitle: "Soothing Stomach", img: "/images/ayurveda/digest_pudina.png", desc: "Cools internal warmth and relieves indigestion." },
+];
+
+export const ayurvedaHairHerbs = [
+  { id: "onion", name: "Onion Seed Oil", subtitle: "Hair Fall Defense", img: "/images/ayurveda/hair_onion.png", desc: "Sulfur-rich formula that boosts blood circulation to scalp roots." },
+  { id: "bhringraj", name: "Bhringraj", subtitle: "Keshraj (King of Hair)", img: "/images/ayurveda/hair_bhringraj.png", desc: "Traditional Ayurvedic herb that strengthens follicular roots." },
+  { id: "shikakai", name: "Shikakai", subtitle: "Gentle Cleanser", img: "/images/ayurveda/hair_shikakai.png", desc: "Natural shampoo alternative that balances scalp sebum." },
+  { id: "mehendi", name: "Mehendi (Henna)", subtitle: "Conditioner & Shine", img: "/images/ayurveda/hair_mehendi.png", desc: "Conditions hair cuticles and prevents premature greying." },
+  { id: "tea-tree", name: "Tea Tree", subtitle: "Anti-Dandruff", img: "/images/ayurveda/hair_tea_tree.png", desc: "Clears fungal buildup and soothes itchy, flaking scalp." },
+  { id: "brahmi", name: "Brahmi", subtitle: "Calming Scalp Care", img: "/images/ayurveda/hair_brahmi.png", desc: "Strengthens hair shafts and calms nervous tension." },
+  { id: "reetha", name: "Reetha", subtitle: "Natural Foaming Wash", img: "/images/ayurveda/hair_reetha.png", desc: "Herbal saponin cleanser that adds voluminous bounce." },
+];
+
+export const ayurvedaAZDirectory = [
+  { letter: "A", name: "Ashwagandha", botName: "Withania somnifera", benefits: "Stress, Immunity, Stamina", thumb: "/images/ayurveda/herb_ashwagandha.png" },
+  { letter: "A", name: "Amla", botName: "Phyllanthus emblica", benefits: "Vitamin C, Digestion, Eyesight", thumb: "/images/ayurveda/herb_amla.png" },
+  { letter: "A", name: "Arjuna", botName: "Terminalia arjuna", benefits: "Heart Health, Blood Pressure", thumb: "/images/ayurveda/az_thumb_0.png" },
+  { letter: "B", name: "Brahmi", botName: "Bacopa monnieri", benefits: "Memory, Cognitive Health, Calmness", thumb: "/images/ayurveda/hair_brahmi.png" },
+  { letter: "B", name: "Bhringraj", botName: "Eclipta alba", benefits: "Hair Regrowth, Scalp Health", thumb: "/images/ayurveda/hair_bhringraj.png" },
+  { letter: "B", name: "Bael", botName: "Aegle marmelos", benefits: "Gut Health, Ulcers, Bowel Ease", thumb: "/images/ayurveda/digest_bael.png" },
+  { letter: "C", name: "Celery", botName: "Apium graveolens", benefits: "Digestion, Water Balance", thumb: "/images/ayurveda/celery.png" },
+  { letter: "C", name: "Chitrak", botName: "Plumbago zeylanica", benefits: "Digestive Fire, Metabolism", thumb: "/images/ayurveda/az_thumb_1.png" },
+  { letter: "G", name: "Giloy", botName: "Tinospora cordifolia", benefits: "Fever, Platelets, Immunity", thumb: "/images/ayurveda/herb_giloy.png" },
+  { letter: "G", name: "Green Tea", botName: "Camellia sinensis", benefits: "Antioxidants, Metabolism", thumb: "/images/ayurveda/greentea.png" },
+  { letter: "K", name: "Kachnar", botName: "Bauhinia variegata", benefits: "Lymphatic Health, Thyroid Balance", thumb: "/images/ayurveda/kachnar.png" },
+  { letter: "L", name: "Lemon", botName: "Citrus limon", benefits: "Detoxification, Vitamin C", thumb: "/images/ayurveda/lemon.png" },
+  { letter: "M", name: "Mahasudarshan", botName: "Polyherbal Compound", benefits: "Acute & Chronic Fevers, Malaise", thumb: "/images/ayurveda/mahasudarshan.png" },
+  { letter: "P", name: "Plum", botName: "Prunus domestica", benefits: "Antioxidants, Bone Health", thumb: "/images/ayurveda/plum.png" },
+  { letter: "S", name: "Shilajit", botName: "Asphaltum punjabianum", benefits: "Stamina, Vitality, Minerals", thumb: "/images/ayurveda/herb_shilajit.png" },
+  { letter: "S", name: "Shatavari", botName: "Asparagus racemosus", benefits: "Hormonal Balance, Lactation", thumb: "/images/ayurveda/herb_shatavari.png" },
+  { letter: "T", name: "Turmeric", botName: "Curcuma longa", benefits: "Curcumin, Joints, Inflammation", thumb: "/images/ayurveda/herb_turmeric.png" },
+  { letter: "T", name: "Tulsi", botName: "Ocimum sanctum", benefits: "Respiratory Relief, Immunity", thumb: "/images/ayurveda/skin_tulsi.png" },
+];
+
+/* ---------------- CONSULT DOCTOR DATA ---------------- */
+export const consultTrustPillars = [
+  {
+    title: "100% Confidential",
+    desc: "All consultations & medical records are strictly private and encrypted.",
+    iconImg: "/images/consult_doctor/pillar_confidential.png",
+  },
+  {
+    title: "Certified Doctors",
+    desc: "Verified profiles with medical registration licenses across India.",
+    iconImg: "/images/consult_doctor/pillar_certified.png",
+  },
+  {
+    title: "Convenience",
+    desc: "Connect instantly from home via Video, Voice call or Live Chat.",
+    iconImg: "/images/consult_doctor/pillar_convenience.png",
+  },
+  {
+    title: "Cost Effective",
+    desc: "High quality healthcare consultations starting at just ₹199.",
+    iconImg: "/images/consult_doctor/pillar_cost_effective.png",
+  },
+];
+
+export const consultFaqs = [
+  {
+    q: "How do online doctor consultations work on MEDITRUST?",
+    a: "You simply choose a medical specialty or specific doctor, pick a convenient time slot, and enter the patient symptoms. You will connect with an accredited doctor via high-definition video, phone call, or secure chat. A verifiable digital prescription is issued right after the consultation.",
+  },
+  {
+    q: "Is an online consultation valid for buying prescription medicines?",
+    a: "Yes. Digital prescriptions generated by registered medical practitioners (RMPs) following Telemedicine Practice Guidelines are legally valid across licensed pharmacies in India.",
+  },
+  {
+    q: "What if I need a follow-up consultation?",
+    a: "Every online consultation on MEDITRUST includes a complimentary 7-day chat follow-up window with your consulting physician.",
+  },
+  {
+    q: "Are the doctors verified and licensed?",
+    a: "Yes, 100%. Every physician on MEDITRUST undergoes thorough credential verification of their MBBS/MD degrees, state medical council registration, and clinic history.",
+  },
+];
+
+export const consultTestimonials = [
+  {
+    name: "Dr. Neha Kulkarni",
+    role: "Senior Consultant, Internal Medicine",
+    text: "MEDITRUST has simplified tele-consultations for patients across tier 1 and tier 2 cities. Patients get accurate medical advice without the stress of traveling.",
+  },
+  {
+    name: "Rohan Deshmukh",
+    role: "Patient, Pune",
+    text: "Got connected to a pediatrician for my daughter in under 5 minutes at 11 PM. Prompt diagnosis, warm doctor, and e-prescription delivered straight to my dashboard.",
+  },
+];
+
+/* ---------------- PARTNERSHIPS PAGE DATA ---------------- */
+export const partnerSolutions = [
+  {
+    id: "epharmacy",
+    title: "ePharmacy Solutions",
+    subtitle: "Pan-India Genuine Medicine Fulfillment",
+    desc: "Comprehensive supply chain covering 24,000+ pincodes with temperature-controlled logistics, barcoded tracking, and 100% genuine inventory.",
+    img: "/images/partnerships/sol_card_epharmacy.png",
+    points: ["Automated electronic batch verification", "Same-day and next-day express fulfillment", "API integration for hospital OPD desks"],
+  },
+  {
+    id: "ediagnostics",
+    title: "eDiagnostics Network",
+    subtitle: "NABL & CAP Certified Diagnostic Labs",
+    desc: "Complete pathology and radiology network offering home sample collections, AI-assisted reporting, and seamless enterprise health screening drives.",
+    img: "/images/partnerships/sol_card_ediagnostics.png",
+    points: ["Smart temperature cold-box logistics", "Standardized phlebotomy protocols", "Direct digital report integration to patient EHR"],
+  },
+  {
+    id: "econsultations",
+    title: "eConsultations Suite",
+    subtitle: "24x7 Multi-Specialty Telehealth Infrastructure",
+    desc: "Scalable tele-consultation platform connecting your members and employees to 3,000+ top doctors across 25+ medical disciplines.",
+    img: "/images/partnerships/sol_card_econsultations.png",
+    points: ["Video, Voice, and WhatsApp chat support", "Custom enterprise branded portals", "Integrated e-Prescription with medicine auto-order"],
+  },
+];
+
+export const partnerStats = [
+  { label: "Pincodes Covered", value: "24,000+" },
+  { label: "Certified Test Centres", value: "800+" },
+  { label: "Orders Fulfilled", value: "65 Million+" },
+  { label: "Monthly Healthcare Visitors", value: "260 Million+" },
+];
