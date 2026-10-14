@@ -73,17 +73,40 @@ const P = {
   info: <><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-9.5v.5"/></>,
   users: <><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 4a3 3 0 0 1 0 6m2 10a6 6 0 0 0-3-5.2"/></>,
   settings: <><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></>,
+  lightning: <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" fill="currentColor"/>,
+  crosshair: <><circle cx="12" cy="12" r="7"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></>,
+  star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor"/>,
+  safe: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></>,
 };
 export function Icon({ name, size = 20, className = "" }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">{P[name] || P.plus}</svg>;
 }
 
 export function Logo({ light = false }) {
-  const { state } = useApp();
-  return <A href="/" className="flex items-center gap-2 shrink-0" aria-label="MEDITRUST home">
-    <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-soft"><Icon name="shield" size={22}/></span>
-    <span className="leading-none"><span className={cx("font-display text-lg font-bold tracking-tight", light ? "text-primary-foreground" : "text-foreground")}>{state.settings.logoText}</span><span className={cx("block text-[10px] font-semibold tracking-[0.2em]", light ? "text-primary-foreground/70" : "text-primary")}>LIFE SCIENCE</span></span>
+  return <A href="/" className="flex items-center gap-1.5 shrink-0 select-none group" aria-label="Tata 1mg Home">
+    <span className={cx("font-black tracking-tight text-xl sm:text-2xl", light ? "text-white" : "text-gray-900")}>TATA</span>
+    <span className="flex items-center justify-center rounded px-1.5 py-0.5 bg-black text-white font-extrabold text-lg sm:text-xl leading-none tracking-tight">1mg</span>
   </A>;
+}
+
+export function Stars({ rating = 4.3, reviews }) {
+  return (
+    <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+      <div className="flex items-center gap-0.5 text-emerald-600">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <svg
+            key={s}
+            className={`h-3 w-3 ${s <= Math.round(rating) ? "fill-emerald-600 text-emerald-600" : "fill-gray-200 text-gray-200"}`}
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+      <span>{rating}</span>
+      {reviews && <span className="text-gray-400 font-normal">({reviews})</span>}
+    </div>
+  );
 }
 
 export const Badge = ({ tone = "mint", children }) => <span className={cx("badge", `badge-${tone}`)}>{children}</span>;

@@ -1,5 +1,5 @@
 import { useApp, AppProvider } from "./context/AppContext";
-import { Footer, Header } from "./components/Layout";
+import { Footer, Header, StickyBottomBar } from "./components/Layout";
 import { A, Icon, Toasts, matchRoute, useLoc } from "./components/ui";
 import * as S from "./pages/shop";
 import * as V from "./pages/services";
@@ -12,7 +12,11 @@ const routes = [
   ["/medicines", (p) => <S.Listing {...p} base="medicines"/>], ["/medicines/:category", (p) => <S.Listing {...p} base="medicines"/>],
   ["/healthcare", (p) => <S.Listing {...p} base="healthcare"/>], ["/healthcare/:category", (p) => <S.Listing {...p} base="healthcare"/>],
   ["/search", (p) => <S.Listing {...p} base="search"/>],
-  ["/product/:id", S.Product], ["/prescription-upload", S.PrescriptionUpload], ["/cart", S.Cart], ["/checkout", S.Checkout],
+  ["/product/:id", S.Product],
+  ["/prescription-upload", S.PrescriptionUpload],
+  ["/quick-order", S.PrescriptionUpload],
+  ["/cart", S.Cart],
+  ["/checkout", S.Checkout],
   ["/order-confirmation", S.OrderConfirmation], ["/orders", S.Orders], ["/orders/:id", S.OrderDetail],
   ["/lab-tests", V.LabTests], ["/lab-tests/booking", V.LabBooking], ["/lab-tests/booking-confirmation", V.LabConfirm], ["/lab-tests/:id", V.LabTest],
   ["/consult-doctor", V.Consult], ["/doctors/:specialty", V.Specialty], ["/doctor/:id", V.Doctor], ["/consultation/booking", V.ConsultBooking], ["/consultation/confirmation", V.ConsultConfirm],
@@ -35,9 +39,25 @@ function Routes() {
   const m = matchRoute(routes, path);
   const Page = m?.Comp || S.NotFound;
   const count = state.cart.reduce((s, c) => s + c.quantity, 0);
-  return <div className="flex min-h-screen flex-col"><Header/><main className="flex-1"><Page key={path} params={m?.params || {}}/></main><Footer/>
-    {count > 0 && !["/cart", "/checkout"].includes(path) && <A href="/cart" className="btn btn-primary fixed bottom-4 left-4 right-4 z-30 shadow-lift sm:hidden"><Icon name="cart" size={18}/>View cart · {count} item{count > 1 ? "s" : ""}</A>}
-  </div>;
+  return (
+    <div className="flex min-h-screen flex-col pb-12 sm:pb-0">
+      <Header />
+      <main className="flex-1">
+        <Page key={path} params={m?.params || {}} />
+      </main>
+      <Footer />
+      {!path.startsWith("/admin") && <StickyBottomBar />}
+      {count > 0 && !["/cart", "/checkout"].includes(path) && (
+        <A
+          href="/cart"
+          className="btn btn-primary fixed bottom-16 left-4 right-4 z-30 shadow-lift sm:hidden"
+        >
+          <Icon name="cart" size={18} />
+          View cart · {count} item{count > 1 ? "s" : ""}
+        </A>
+      )}
+    </div>
+  );
 }
 
 export default function App() {

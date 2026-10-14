@@ -1,102 +1,799 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { useApp } from "../context/AppContext";
-import { A, Art, Badge, Icon, Logo, catIcon, cx, money, useGo, useLoc } from "./ui";
+import { A, Badge, Icon, Logo, Stars, cx, money, useGo, useLoc } from "./ui";
+import { topTabs, navDropdowns, popularCities, allCities, paymentPartners } from "../data/demo";
+import { AuthModal } from "./AuthModals";
 
 export function SearchBar({ big = false, onDone }) {
   const { state } = useApp();
   const go = useGo();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, []);
+
   const sugg = useMemo(() => {
-    const t = q.trim().toLowerCase(); if (!t) return [];
-    return [...state.products.filter((p) => p.visible && `${p.name} ${p.brand} ${p.category}`.toLowerCase().includes(t)).slice(0, 5).map((p) => [p.name, `/product/${p.id}`, "bottle"]),
-      ...state.labTests.filter((l) => l.visible && l.name.toLowerCase().includes(t)).slice(0, 2).map((l) => [l.name, `/lab-tests/${l.id}`, "lab"])];
+    const t = q.trim().toLowerCase();
+    if (!t) return [];
+    return [
+      ...state.products
+        .filter((p) => p.visible && `${p.name} ${p.brand} ${p.category}`.toLowerCase().includes(t))
+        .slice(0, 5)
+        .map((p) => [p.name, `/product/${p.id}`, "bottle"]),
+      ...state.labTests
+        .filter((l) => l.visible && l.name.toLowerCase().includes(t))
+        .slice(0, 3)
+        .map((l) => [l.name, `/lab-tests/${l.id}`, "lab"]),
+    ];
   }, [q, state.products, state.labTests]);
-  const submit = (e) => { e.preventDefault(); if (!q.trim()) return; go(`/search?q=${encodeURIComponent(q.trim())}`); setOpen(false); onDone?.(); };
-  return <form role="search" onSubmit={submit} className={cx("relative flex w-full items-center rounded-xl border border-border bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20", big ? "p-1.5 shadow-soft" : "")}>
-    <Icon name="search" size={18} className="ml-3 shrink-0 text-muted-foreground"/>
-    <input aria-label="Search medicines, products and lab tests" value={q} onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)} onBlur={() => setTimeout(() => setOpen(false), 150)} placeholder="Search medicines, products & lab tests" className={cx("min-w-0 flex-1 bg-transparent px-3 outline-none placeholder:text-muted-foreground", big ? "py-3 text-base" : "py-2.5 text-sm")}/>
-    <button type="submit" className={cx("btn btn-primary", big ? "" : "m-1 px-3 py-1.5")}>Search</button>
-    {open && sugg.length > 0 && <ul className="absolute left-0 right-0 top-full z-40 mt-2 overflow-hidden rounded-xl border border-border bg-card shadow-lift">{sugg.map(([l, h, i]) => <li key={h}><A href={h} onClick={onDone} className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-mint"><Icon name={i} size={16} className="text-primary"/>{l}</A></li>)}</ul>}
-  </form>;
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!q.trim()) return;
+    go(`/search?q=${encodeURIComponent(q.trim())}`);
+    setOpen(false);
+    onDone?.();
+  };
+
+  return (
+    <div ref={containerRef} className="relative w-full">
+      <form
+        role="search"
+        onSubmit={submit}
+        className={cx(
+          "flex w-full items-center rounded-lg bg-[#f1f4f6] border border-transparent focus-within:border-gray-300 focus-within:bg-white focus-within:shadow-sm transition",
+          big ? "h-12 px-4" : "h-10 px-3"
+        )}
+      >
+        <input
+          aria-label="Search for Medicines and Health Products"
+          value={q}
+          onChange={(e) => {
+            setQ(e.target.value);
+            setOpen(true);
+          }}
+          onFocus={() => setOpen(true)}
+          placeholder="Search for Medicines and Health Products"
+          className="min-w-0 flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400 font-normal"
+        />
+        <button
+          type="submit"
+          aria-label="Submit search"
+          className="p-1 text-gray-500 hover:text-[#ff6f61] transition"
+        >
+          <Icon name="search" size={18} />
+        </button>
+      </form>
+
+      {open && sugg.length > 0 && (
+        <ul className="absolute left-0 right-0 top-full z-50 mt-1.5 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl max-h-72 overflow-y-auto">
+          {sugg.map(([l, h, i]) => (
+            <li key={h}>
+              <A
+                href={h}
+                onClick={() => {
+                  setOpen(false);
+                  onDone?.();
+                }}
+                className="flex items-center gap-3 px-4 py-2.5 text-xs sm:text-sm text-gray-700 hover:bg-[#fff3f2] hover:text-[#ff6f61] transition"
+              >
+                <Icon name={i} size={16} className="text-[#ff6f61] shrink-0" />
+                <span className="truncate">{l}</span>
+              </A>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
-const menus = {
-  "/medicines": (s) => s.categories.filter((c) => c.visible && /medicine/i.test(c.name)).map((c) => [c.name, `/medicines/${c.slug}`]).concat([["Upload prescription", "/prescription-upload"]]),
-  "/healthcare": (s) => s.categories.filter((c) => c.visible && !/prescription/i.test(c.name)).map((c) => [c.name, `/healthcare/${c.slug}`]),
-  "/lab-tests": (s) => s.labTests.filter((t) => t.visible).slice(0, 6).map((t) => [t.name, `/lab-tests/${t.id}`]),
-  "/consult-doctor": () => ["General Physician", "Dermatology", "Pediatrics", "Gynecology", "Orthopedics", "Mental Wellness"].map((s) => [s, `/doctors/${s.toLowerCase().replace(/\s+/g, "-")}`]),
-};
+export function CitySelector() {
+  const { state, update, toast } = useApp();
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, []);
+
+  const selectCity = (city) => {
+    update({ settings: { ...state.settings, location: city } });
+    setOpen(false);
+    toast(`Location changed to ${city}`);
+  };
+
+  return (
+    <div ref={dropdownRef} className="relative shrink-0">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm text-gray-800 bg-[#f1f4f6] rounded-lg hover:bg-gray-200 transition font-medium"
+      >
+        <Icon name="pin" size={16} className="text-gray-600 shrink-0" />
+        <span className="max-w-[90px] sm:max-w-[120px] truncate">{state.settings.location || "Gurgaon"}</span>
+        <Icon name="crosshair" size={14} className="text-gray-500 shrink-0" />
+      </button>
+
+      {open && (
+        <div className="absolute left-0 top-full z-50 mt-1.5 w-64 rounded-xl border border-gray-200 bg-white p-3 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+          <p className="px-2 pb-1 text-[11px] font-bold tracking-wider text-gray-400 uppercase">
+            POPULAR CITIES
+          </p>
+          <div className="space-y-0.5">
+            {popularCities.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => selectCity(c)}
+                className={cx(
+                  "flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-xs text-left transition",
+                  state.settings.location === c
+                    ? "bg-[#fff3f2] font-semibold text-[#ff6f61]"
+                    : "text-gray-700 hover:bg-gray-100"
+                )}
+              >
+                <span>{c}</span>
+                {state.settings.location === c && <Icon name="check" size={14} />}
+              </button>
+            ))}
+          </div>
+
+          <div className="my-2 border-t border-gray-100" />
+
+          <p className="px-2 pb-1 text-[11px] font-bold tracking-wider text-gray-400 uppercase">
+            ALL CITIES
+          </p>
+          <div className="max-h-48 overflow-y-auto space-y-0.5 pr-1">
+            {allCities.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => selectCity(c)}
+                className="w-full rounded-md px-2.5 py-1 text-xs text-left text-gray-600 hover:bg-gray-100 transition truncate"
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Header() {
-  const { state } = useApp();
+  const { state, update, toast } = useApp();
   const { path } = useLoc();
   const [mob, setMob] = useState(false);
-  const [sOpen, setSOpen] = useState(false);
-  const [sub, setSub] = useState(null);
-  const count = state.cart.reduce((s, c) => s + c.quantity, 0);
-  const nav = state.navigation.filter((n) => n.visible);
-  return <header className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b border-border">
-    {state.settings.announcementVisible && <div className="bg-primary-deep text-primary-foreground"><div className="container-page flex items-center justify-between gap-3 py-1.5 text-xs"><span className="flex items-center gap-1.5 truncate"><Icon name="sparkle" size={13}/>{state.settings.announcement}</span><A href="/healthcare-disclaimer" className="hidden shrink-0 underline-offset-2 hover:underline sm:block">Demonstration website</A></div></div>}
-    <div className="container-page flex items-center gap-3 py-3">
-      <button className="icon-btn lg:hidden" onClick={() => setMob(true)} aria-label="Open menu"><Icon name="menu"/></button>
-      <Logo/>
-      <button className="ml-2 hidden items-center gap-1.5 rounded-xl px-2 py-1.5 text-left text-xs hover:bg-mint md:flex" title="Demo location"><Icon name="pin" size={18} className="text-primary"/><span><span className="block text-muted-foreground">Deliver to (demo)</span><span className="font-semibold">{state.settings.location}</span></span></button>
-      <div className="mx-2 hidden flex-1 md:block"><SearchBar/></div>
-      <div className="ml-auto flex items-center gap-1 md:ml-0">
-        <button className="icon-btn md:hidden" onClick={() => setSOpen((v) => !v)} aria-label="Search"><Icon name="search"/></button>
-        <A href={state.user ? "/profile" : "/login"} className="icon-btn w-auto gap-2 px-2 text-sm font-medium" aria-label="Account"><Icon name="user"/><span className="hidden lg:inline">{state.user ? state.user.name.split(" ")[0] : "Login"}</span></A>
-        <A href="/wishlist" className="icon-btn relative" aria-label="Wishlist"><Icon name="heart"/>{state.wishlist.length > 0 && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive"/>}</A>
-        <A href="/cart" className="icon-btn relative" aria-label={`Cart, ${count} items`}><Icon name="cart"/>{count > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">{count}</span>}</A>
-      </div>
-    </div>
-    {sOpen && <div className="container-page pb-3 md:hidden"><SearchBar onDone={() => setSOpen(false)}/></div>}
-    <nav className="hidden border-t border-border lg:block" aria-label="Main"><ul className="container-page flex items-center gap-1">
-      {nav.map((n) => <li key={n.id} className="group relative">
-        <A href={n.href} className={cx("flex items-center gap-1 px-3 py-3 text-sm font-medium transition hover:text-primary", path.startsWith(n.href) ? "text-primary" : "text-foreground")}>{n.label}{menus[n.href] && <Icon name="chev" size={14}/>}</A>
-        {menus[n.href] && <div className="invisible absolute left-0 top-full z-40 w-64 rounded-xl border border-border bg-card p-2 opacity-0 shadow-lift transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">{menus[n.href](state).map(([l, h]) => <A key={h} href={h} className="block rounded-lg px-3 py-2 text-sm hover:bg-mint hover:text-primary">{l}</A>)}</div>}
-      </li>)}
-      <li className="ml-auto"><A href="/prescription-upload" className="flex items-center gap-1.5 px-3 py-3 text-sm font-semibold text-primary"><Icon name="upload" size={16}/>Upload prescription</A></li>
-    </ul></nav>
-    {mob && <div className="fixed inset-0 z-50 bg-foreground/40 lg:hidden" onClick={() => setMob(false)}>
-      <aside className="h-full w-[85%] max-w-sm overflow-auto bg-card p-4" onClick={(e) => e.stopPropagation()}>
-        <div className="mb-4 flex items-center justify-between"><Logo/><button className="icon-btn" onClick={() => setMob(false)} aria-label="Close menu"><Icon name="close"/></button></div>
-        <ul className="space-y-1">{nav.map((n) => <li key={n.id}>
-          <div className="flex items-center"><A href={n.href} onClick={() => setMob(false)} className="flex-1 rounded-lg px-3 py-3 font-medium hover:bg-mint">{n.label}</A>{menus[n.href] && <button className="icon-btn" aria-label={`Show ${n.label} categories`} aria-expanded={sub === n.id} onClick={() => setSub(sub === n.id ? null : n.id)}><Icon name="chev" className={sub === n.id ? "rotate-180" : ""}/></button>}</div>
-          {sub === n.id && <div className="ml-3 border-l border-border pl-2">{menus[n.href](state).map(([l, h]) => <A key={h} href={h} onClick={() => setMob(false)} className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-primary">{l}</A>)}</div>}
-        </li>)}</ul>
-        <div className="mt-4 grid gap-2 border-t border-border pt-4 text-sm">{[["Upload prescription", "/prescription-upload"], ["My orders", "/orders"], ["Wishlist", "/wishlist"], [state.user ? "My profile" : "Login / Register", state.user ? "/profile" : "/login"]].map(([l, h]) => <A key={h} href={h} onClick={() => setMob(false)} className="rounded-lg px-3 py-2 hover:bg-mint">{l}</A>)}</div>
-      </aside>
-    </div>}
-  </header>;
+  const [authModal, setAuthModal] = useState({ open: false, mode: "login" });
+  const [cartHover, setCartHover] = useState(false);
+  const [helpHover, setHelpHover] = useState(false);
+  const [userDropdown, setUserDropdown] = useState(false);
+
+  const cartCount = state.cart.reduce((s, c) => s + c.quantity, 0);
+
+  const handleLogout = () => {
+    update({ user: null });
+    setUserDropdown(false);
+    toast("Logged out successfully");
+  };
+
+  return (
+    <>
+      <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
+        {/* Tier 1: Brand Logo + Primary Service Tabs + Auth/Offers/Cart/Help */}
+        <div className="border-b border-gray-100">
+          <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+            {/* Left: Mobile hamburger + TATA 1mg Logo */}
+            <div className="flex items-center gap-3">
+              <button
+                className="grid h-9 w-9 place-items-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden"
+                onClick={() => setMob(true)}
+                aria-label="Open mobile navigation menu"
+              >
+                <Icon name="menu" size={22} />
+              </button>
+              <Logo />
+            </div>
+
+            {/* Middle: Primary Service Tabs (Medicines, Lab Tests, Consult Doctors, etc.) */}
+            <nav className="hidden lg:flex items-center space-x-1 xl:space-x-4 h-full" aria-label="Main Services">
+              {topTabs.map((tab) => {
+                const isActive =
+                  tab.id === "medicines"
+                    ? path === "/" || path.startsWith("/medicines") || path.startsWith("/product")
+                    : path.startsWith(tab.href);
+
+                return (
+                  <A
+                    key={tab.id}
+                    href={tab.href}
+                    className={cx(
+                      "relative flex items-center h-full px-2 xl:px-3 text-xs font-bold tracking-tight transition duration-150 hover:text-[#ff6f61]",
+                      isActive ? "text-[#ff6f61]" : "text-gray-800"
+                    )}
+                  >
+                    <span>{tab.label}</span>
+                    {tab.badge && (
+                      <span className="ml-1.5 rounded bg-[#ff6f61] px-1.5 py-0.5 text-[9px] font-extrabold text-white tracking-wider">
+                        {tab.badge}
+                      </span>
+                    )}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#ff6f61]" />
+                    )}
+                  </A>
+                );
+              })}
+            </nav>
+
+            {/* Right Side: Login/Signup | Offers | Cart | Need Help? */}
+            <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-gray-700">
+              {/* User Account / Login */}
+              {state.user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setUserDropdown((v) => !v)}
+                    className="flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-gray-100 font-semibold text-gray-900"
+                  >
+                    <Icon name="user" size={16} className="text-[#ff6f61]" />
+                    <span className="max-w-[80px] truncate">{state.user.name.split(" ")[0]}</span>
+                    <Icon name="chev" size={12} className={userDropdown ? "rotate-180" : ""} />
+                  </button>
+
+                  {userDropdown && (
+                    <div className="absolute right-0 top-full z-50 mt-1.5 w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
+                      <p className="px-3 py-1.5 text-[11px] text-gray-400 uppercase font-bold">My Account</p>
+                      <A href="/orders" onClick={() => setUserDropdown(false)} className="block px-3 py-1.5 rounded-lg text-xs hover:bg-gray-100">
+                        My Orders
+                      </A>
+                      <A href="/wishlist" onClick={() => setUserDropdown(false)} className="block px-3 py-1.5 rounded-lg text-xs hover:bg-gray-100">
+                        Wishlist
+                      </A>
+                      <A href="/profile" onClick={() => setUserDropdown(false)} className="block px-3 py-1.5 rounded-lg text-xs hover:bg-gray-100">
+                        Manage Profile
+                      </A>
+                      <div className="my-1 border-t border-gray-100" />
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-red-600 hover:bg-red-50 font-semibold"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setAuthModal({ open: true, mode: "login" })}
+                    className="hover:text-[#ff6f61] font-semibold text-xs sm:text-sm text-gray-800"
+                  >
+                    Login
+                  </button>
+                  <span className="text-gray-300">|</span>
+                  <button
+                    type="button"
+                    onClick={() => setAuthModal({ open: true, mode: "signup" })}
+                    className="hover:text-[#ff6f61] font-semibold text-xs sm:text-sm text-gray-800"
+                  >
+                    Signup
+                  </button>
+                </div>
+              )}
+
+              {/* Offers link */}
+              <A href="/offers" className="hidden sm:inline-flex items-center hover:text-[#ff6f61] text-xs sm:text-sm text-gray-800 font-medium">
+                Offers
+              </A>
+
+              {/* Cart Icon with Hover dropdown preview */}
+              <div
+                className="relative"
+                onMouseEnter={() => setCartHover(true)}
+                onMouseLeave={() => setCartHover(false)}
+              >
+                <A
+                  href="/cart"
+                  className="relative p-1.5 text-gray-800 hover:text-[#ff6f61] transition block"
+                  aria-label={`Cart, ${cartCount} items`}
+                >
+                  <Icon name="cart" size={22} />
+                  {cartCount > 0 && (
+                    <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#ff6f61] px-1 text-[9px] font-black text-white">
+                      {cartCount}
+                    </span>
+                  )}
+                </A>
+
+                {/* Hover Cart Preview matching Screenshot 2026-10-14 200919.png */}
+                {cartHover && (
+                  <div className="absolute right-0 top-full z-50 mt-1 w-56 rounded-md border border-gray-200 bg-white p-4 shadow-xl">
+                    <div className="flex items-center justify-between border-b border-gray-100 pb-3 text-xs font-bold text-gray-900">
+                      <span>Order Summary</span>
+                      <span>{cartCount} Item{cartCount === 1 ? "" : "s"}</span>
+                    </div>
+                    <A
+                      href="/cart"
+                      className="mt-3 block w-full rounded bg-transparent border-0 text-center py-2 text-xs font-bold text-[#ff6f61] hover:bg-[#fff3f2] tracking-wider transition uppercase"
+                    >
+                      PROCEED TO CART
+                    </A>
+                  </div>
+                )}
+              </div>
+
+              {/* Need Help? Hover dropdown matching Screenshot 2026-10-14 200929.png */}
+              <div
+                className="relative hidden sm:block"
+                onMouseEnter={() => setHelpHover(true)}
+                onMouseLeave={() => setHelpHover(false)}
+              >
+                <A href="/faq" className="hover:text-[#ff6f61] text-xs sm:text-sm text-gray-800 font-medium">
+                  Need Help?
+                </A>
+
+                {helpHover && (
+                  <div className="absolute right-0 top-full z-50 mt-1 w-64 rounded-xl border border-gray-200 bg-white p-4 shadow-xl">
+                    <p className="text-sm font-bold text-gray-900">Need Help ?</p>
+                    <div className="mt-3 flex items-center justify-between">
+                      <span className="text-xs text-gray-600">with your orders</span>
+                      <button
+                        onClick={() => {
+                          setHelpHover(false);
+                          setAuthModal({ open: true, mode: "login" });
+                        }}
+                        className="rounded bg-[#ff6f61] px-4 py-1.5 text-xs font-bold text-white hover:bg-[#e85b4d] uppercase"
+                      >
+                        LOGIN
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tier 2: Location selector + Wide Search Input + Quick Buy Promo */}
+        <div className="border-b border-gray-100 bg-white py-2.5">
+          <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6">
+            <CitySelector />
+            <div className="flex-1 min-w-0">
+              <SearchBar />
+            </div>
+
+            {/* Quick Buy CTA matching reference bar */}
+            <div className="hidden lg:flex items-center gap-3 pl-3 shrink-0">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-800">
+                <Icon name="lightning" size={14} className="text-[#ff6f61]" />
+                <span>QUICK BUY! Get up to 25% off on medicines*</span>
+              </div>
+              <A
+                href="/prescription-upload"
+                className="rounded-md bg-[#ff6f61] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#e85b4d] transition shrink-0"
+              >
+                Quick order
+              </A>
+            </div>
+          </div>
+        </div>
+
+        {/* Tier 3: Category Mega Dropdowns Menu Bar matching reference */}
+        <div className="hidden lg:block bg-white text-xs font-medium text-gray-700">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <ul className="flex items-center justify-between space-x-1">
+              {navDropdowns.map((category) => (
+                <li key={category.label} className="group relative py-2.5">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 text-[13px] text-gray-700 hover:text-[#ff6f61] transition font-normal"
+                  >
+                    <span>{category.label}</span>
+                    <Icon name="chev" size={12} className="text-gray-400 group-hover:rotate-180 transition duration-150" />
+                  </button>
+
+                  {/* Dropdown Popover */}
+                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-0 top-full z-50 min-w-[210px] rounded-lg border border-gray-200 bg-white py-2 shadow-2xl transition duration-150">
+                    {category.items.map((subItem) => (
+                      <A
+                        key={subItem.name}
+                        href={subItem.href}
+                        className="block px-4 py-2 text-xs font-normal text-gray-800 hover:bg-[#fff3f2] hover:text-[#ff6f61] transition"
+                      >
+                        {subItem.name}
+                      </A>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Menu */}
+      {mob && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 lg:hidden animate-in fade-in duration-200"
+          onClick={() => setMob(false)}
+        >
+          <aside
+            className="h-full w-[85%] max-w-sm overflow-y-auto bg-white p-5 shadow-2xl animate-in slide-in-from-left duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+              <Logo />
+              <button
+                className="p-1 text-gray-500 hover:text-black"
+                onClick={() => setMob(false)}
+                aria-label="Close menu"
+              >
+                <Icon name="close" size={22} />
+              </button>
+            </div>
+
+            <div className="py-4 border-b border-gray-100">
+              <A
+                href="/prescription-upload"
+                onClick={() => setMob(false)}
+                className="flex items-center justify-center gap-2 rounded-lg bg-[#ff6f61] py-2.5 text-xs font-bold text-white shadow-sm"
+              >
+                <Icon name="upload" size={16} />
+                Quick order (Upload prescription)
+              </A>
+            </div>
+
+            {/* Service navigation */}
+            <div className="py-3">
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Services</p>
+              <ul className="space-y-1">
+                {topTabs.map((t) => (
+                  <li key={t.id}>
+                    <A
+                      href={t.href}
+                      onClick={() => setMob(false)}
+                      className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100"
+                    >
+                      <span>{t.label}</span>
+                      {t.badge && (
+                        <span className="rounded bg-[#ff6f61] px-1.5 py-0.5 text-[9px] font-bold text-white">
+                          {t.badge}
+                        </span>
+                      )}
+                    </A>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Categories */}
+            <div className="py-3 border-t border-gray-100">
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Shop Categories</p>
+              <ul className="space-y-1">
+                {navDropdowns.map((cat) => (
+                  <li key={cat.label}>
+                    <A
+                      href={cat.items[0]?.href || "/healthcare"}
+                      onClick={() => setMob(false)}
+                      className="block rounded-lg px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100"
+                    >
+                      {cat.label}
+                    </A>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      )}
+
+      {/* Auth Modal (Login / Sign Up) */}
+      <AuthModal
+        open={authModal.open}
+        initialMode={authModal.mode}
+        onClose={() => setAuthModal({ open: false, mode: "login" })}
+      />
+    </>
+  );
 }
 
 export function Footer() {
-  const { state } = useApp();
-  const s = state.settings;
-  const cols = [
-    ["Company", [["About MEDITRUST", "/about"], ["Our Services", "/about"], ["Contact Us", "/contact"], ["Careers", "/careers"]]],
-    ["Healthcare Services", [["Order Medicines", "/medicines"], ["Healthcare Products", "/healthcare"], ["Book Lab Tests", "/lab-tests"], ["Consult a Doctor", "/consult-doctor"], ["Health Articles", "/health-articles"]]],
-    ["Customer Support", [["FAQs", "/faq"], ["Shipping Policy", "/shipping-policy"], ["Returns and Refunds", "/returns-policy"], ["Privacy Policy", "/privacy-policy"], ["Terms and Conditions", "/terms"], ["Healthcare Disclaimer", "/healthcare-disclaimer"]]],
-  ];
-  return <footer className="mt-16 bg-navy text-primary-foreground">
-    <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
-      <div className="lg:col-span-2"><Logo light/><p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{s.footerText}</p>
-        <ul className="mt-5 space-y-2 text-sm text-primary-foreground/85">
-          <li className="flex gap-2"><Icon name="phone" size={16} className="mt-0.5 shrink-0"/><a href={`tel:${s.phone.replace(/\s/g, "")}`} className="hover:underline">{s.phone}</a></li>
-          <li className="flex gap-2"><Icon name="mail" size={16} className="mt-0.5 shrink-0"/><a href={`mailto:${s.email}`} className="hover:underline">{s.email}</a></li>
-          <li className="flex gap-2"><Icon name="pin" size={16} className="mt-0.5 shrink-0"/><span>{s.address}</span></li>
-        </ul>
-        <div className="mt-4 flex gap-3 text-xs">{Object.entries(s.social || {}).map(([k, v]) => v && <a key={k} href={v} target="_blank" rel="noreferrer" className="rounded-full border border-primary-foreground/20 px-3 py-1 capitalize hover:bg-primary-foreground/10">{k}</a>)}</div>
+  const [expandInfo, setExpandInfo] = useState(false);
+
+  return (
+    <footer className="mt-16 bg-white border-t border-gray-200 text-gray-700 text-xs pb-20">
+      {/* 1. Main Navigation Grid */}
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+          {/* Know Us */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Know Us</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li><A href="/about" className="hover:text-[#ff6f61]">About Us</A></li>
+              <li><A href="/contact" className="hover:text-[#ff6f61]">Contact Us</A></li>
+              <li><A href="/about" className="hover:text-[#ff6f61]">Press Coverage</A></li>
+              <li><A href="/careers" className="hover:text-[#ff6f61]">Careers</A></li>
+              <li><A href="/about" className="hover:text-[#ff6f61]">Business Partnership</A></li>
+              <li><A href="/about" className="hover:text-[#ff6f61]">Become a Health Partner</A></li>
+              <li><A href="/about" className="hover:text-[#ff6f61]">Corporate Governance</A></li>
+            </ul>
+          </div>
+
+          {/* Our Policies */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Our Policies</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li><A href="/privacy-policy" className="hover:text-[#ff6f61]">Privacy Policy</A></li>
+              <li><A href="/terms" className="hover:text-[#ff6f61]">Terms and Conditions</A></li>
+              <li><A href="/health-articles" className="hover:text-[#ff6f61]">Editorial Policy</A></li>
+              <li><A href="/returns-policy" className="hover:text-[#ff6f61]">Return Policy</A></li>
+              <li><A href="/terms" className="hover:text-[#ff6f61]">IP Policy</A></li>
+              <li><A href="/contact" className="hover:text-[#ff6f61]">Grievance Redressal Policy</A></li>
+              <li><A href="/healthcare-disclaimer" className="hover:text-[#ff6f61]">Fake Jobs and Fraud Disclaimer</A></li>
+            </ul>
+          </div>
+
+          {/* Our Services */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Our Services</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li><A href="/medicines" className="hover:text-[#ff6f61]">Order Medicines</A></li>
+              <li><A href="/lab-tests" className="hover:text-[#ff6f61]">Book Lab Tests</A></li>
+              <li><A href="/consult-doctor" className="hover:text-[#ff6f61]">Consult a Doctor</A></li>
+              <li><A href="/healthcare/ayurveda-products" className="hover:text-[#ff6f61]">Ayurveda Articles</A></li>
+              <li><A href="/health-articles" className="hover:text-[#ff6f61]">Hindi Articles</A></li>
+              <li><A href="/care-plan" className="hover:text-[#ff6f61]">Care Plan</A></li>
+              <li><A href="/lab-tests" className="hover:text-[#ff6f61]">NABH</A></li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Connect</h4>
+            <p className="mb-3 text-xs text-gray-500">Social Links</p>
+            <div className="flex flex-wrap gap-2 text-gray-800">
+              {["FB", "IG", "X", "YT", "IN", "M"].map((s) => (
+                <span
+                  key={s}
+                  className="grid h-7 w-7 place-items-center rounded-full bg-black text-white font-bold text-[10px] cursor-pointer hover:bg-[#ff6f61] transition"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Download App */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Download the Tata 1mg app</h4>
+            <div className="space-y-2">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block"
+              >
+                <div className="flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white hover:bg-gray-800 transition">
+                  <span className="text-base font-bold">▶</span>
+                  <div className="text-left leading-tight">
+                    <p className="text-[9px] uppercase tracking-wider text-gray-400">GET IT ON</p>
+                    <p className="text-xs font-bold">Google Play</p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://apps.apple.com/in/app/tata-1mg/id1081682217"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block"
+              >
+                <div className="flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white hover:bg-gray-800 transition">
+                  <span className="text-base font-bold"></span>
+                  <div className="text-left leading-tight">
+                    <p className="text-[9px] uppercase tracking-wider text-gray-400">Download on the</p>
+                    <p className="text-xs font-bold">App Store</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Trust Pillars (Reliable, Secure, Affordable) matching screenshot */}
+        <div className="my-12 grid gap-6 border-y border-gray-100 py-10 sm:grid-cols-3">
+          <div className="flex items-start gap-4">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-purple-100 text-purple-700">
+              <Icon name="heart" size={26} />
+            </div>
+            <div>
+              <h5 className="font-bold text-gray-900 text-sm">Reliable</h5>
+              <p className="mt-1 text-xs text-gray-500 leading-relaxed">
+                All products displayed on Tata 1mg are procured from verified and licensed pharmacies. All labs listed on the platform are accredited.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-100 text-blue-600">
+              <Icon name="shield" size={26} />
+            </div>
+            <div>
+              <h5 className="font-bold text-gray-900 text-sm">Secure</h5>
+              <p className="mt-1 text-xs text-gray-500 leading-relaxed">
+                Tata 1mg uses Secure Sockets Layer (SSL) 128-bit encryption and is Payment Card Industry Data Security Standard (PCI DSS) compliant.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-emerald-100 text-emerald-600">
+              <Icon name="check" size={26} />
+            </div>
+            <div>
+              <h5 className="font-bold text-gray-900 text-sm">Affordable</h5>
+              <p className="mt-1 text-xs text-gray-500 leading-relaxed">
+                Find affordable medicine substitutes, save up to 50% on health products, up to 80% off on lab tests and free doctor consultations.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Certifications Seal */}
+        <div className="my-8 flex flex-col items-center justify-center text-center">
+          <div className="flex items-center gap-3 border border-gray-300 rounded px-4 py-2 bg-white">
+            <div className="text-left font-serif font-black text-xs border-r border-gray-300 pr-3">
+              URS <br />
+              <span className="text-[9px] font-sans">ISO 27001</span>
+            </div>
+            <div className="text-left font-serif text-[10px]">
+              UKAS <br />
+              <span className="text-[9px] font-sans">MANAGEMENT SYSTEMS</span>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-gray-500">
+            India's only LegitScript and ISO/IEC 27001:2022 certified online healthcare platform
+          </p>
+        </div>
+
+        {/* 4. Expandable "Know more about Tata 1mg" Accordion */}
+        <div className="border-t border-gray-100 pt-6">
+          <button
+            type="button"
+            onClick={() => setExpandInfo((v) => !v)}
+            className="flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-[#ff6f61] transition"
+          >
+            <span>Know more about Tata 1mg</span>
+            <Icon name="chev" size={14} className={expandInfo ? "rotate-180" : ""} />
+          </button>
+
+          {expandInfo && (
+            <div className="mt-4 space-y-3 text-xs leading-relaxed text-gray-500">
+              <p>
+                Tata 1mg is your complete healthcare partner. We simplify healthcare with reliable medicines delivered to your doorstep, accredited diagnostic lab tests from the comfort of your home, and online doctor consultations across all clinical specialties.
+              </p>
+              <p>
+                Our Care Plan offers extra benefits including flat 5% extra savings on medicines, zero delivery fees on orders, complimentary lab checkups, and exclusive member discounts.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* 5. Legal disclaimer and Copyright */}
+        <div className="mt-8 border-t border-gray-100 pt-6 text-[11px] text-gray-500 leading-relaxed">
+          <p>
+            © 2026 Tata 1mg. All rights reserved. All medicines are dispensed in compliance with the Drugs and Cosmetics Act, 1940 and Drugs and Cosmetics Rules, 1945. We do not process requests for Schedule X and habit forming drugs.
+          </p>
+        </div>
+
+        {/* 6. Payment Partners Row & Admin Link */}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 pt-6">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-bold text-gray-800">
+            <span className="text-gray-500 font-semibold mr-1">Our payment partners:</span>
+            {paymentPartners.map((p) => (
+              <span key={p} className="rounded border border-gray-200 px-2 py-1 text-[11px] bg-gray-50 font-medium">
+                {p}
+              </span>
+            ))}
+          </div>
+
+          <A href="/admin/login" className="text-gray-400 hover:text-gray-700 text-[11px]">
+            Admin Login →
+          </A>
+        </div>
       </div>
-      {cols.map(([t, ls]) => <div key={t}><h3 className="mb-3 text-sm font-semibold">{t}</h3><ul className="space-y-2 text-sm text-primary-foreground/70">{ls.map(([l, h]) => <li key={l}><A href={h} className="hover:text-primary-foreground">{l}</A></li>)}</ul></div>)}
+    </footer>
+  );
+}
+
+export function StickyBottomBar() {
+  const { toast } = useApp();
+  const [closed, setClosed] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  if (closed) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!phone || phone.replace(/\D/g, "").length < 10) {
+      toast("Please enter a valid 10-digit mobile number", "error");
+      return;
+    }
+    toast("Thank you! Our pharmacy specialist will call you shortly.");
+    setPhone("");
+  };
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-2xl py-2 px-4 animate-in slide-in-from-bottom duration-300">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+        {/* Left Side: Call Info */}
+        <div className="flex items-center gap-2.5">
+          <div className="grid h-8 w-8 place-items-center rounded-full bg-blue-50 text-blue-600">
+            <Icon name="phone" size={16} />
+          </div>
+          <div className="text-xs sm:text-sm">
+            <span className="font-bold text-gray-900">Order Medicines on Call </span>
+            <span className="text-gray-600">Call us at </span>
+            <a href="tel:18002122323" className="font-bold text-emerald-700 hover:underline">
+              1800-212-2323
+            </a>
+            <span className="text-gray-600"> or get a call back</span>
+          </div>
+        </div>
+
+        {/* Right Side: Phone callback form + Close button */}
+        <div className="flex items-center gap-2">
+          <form onSubmit={handleSubmit} className="flex items-center gap-2">
+            <div className="flex h-9 items-center rounded-md border border-gray-300 bg-white px-2 focus-within:border-[#ff6f61]">
+              <span className="text-xs font-semibold text-gray-600 mr-1.5 flex items-center gap-1">
+                🇮🇳 +91
+              </span>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter Phone Number"
+                className="w-32 sm:w-44 text-xs text-gray-900 outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              className="flex items-center gap-1.5 rounded-md bg-[#ff6f61] px-3 sm:px-4 py-2 text-xs font-bold text-white shadow hover:bg-[#e85b4d] active:scale-95 transition whitespace-nowrap"
+            >
+              <Icon name="phone" size={14} />
+              <span>Get a Call to Order Medicines</span>
+            </button>
+          </form>
+
+          <button
+            onClick={() => setClosed(true)}
+            aria-label="Close bottom bar"
+            className="p-1.5 text-gray-400 hover:text-gray-800 transition rounded-full hover:bg-gray-100"
+          >
+            <Icon name="close" size={16} />
+          </button>
+        </div>
+      </div>
     </div>
-    <div className="border-t border-primary-foreground/10"><div className="container-page flex flex-col gap-2 py-5 text-xs text-primary-foreground/60 md:flex-row md:items-center md:justify-between">
-      <span>© 2026 {s.companyName}. Directors: Ajay Kumar Pathri, Omkar Sanjay Telangi.</span>
-      <span className="md:max-w-md">{s.disclaimer}</span>
-      <A href="/admin/login" className="text-primary-foreground/50 hover:text-primary-foreground">Admin Login →</A>
-    </div></div>
-  </footer>;
+  );
 }
 
 export function ProductCard({ p }) {
@@ -104,39 +801,190 @@ export function ProductCard({ p }) {
   const go = useGo();
   const wished = state.wishlist.includes(p.id);
   const off = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
-  return <article className="card group flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-soft">
-    <div className="relative aspect-square"><A href={`/product/${p.id}`} aria-label={p.name}><Art icon={catIcon(state.categories, p.category)} seed={parseInt(p.id.slice(-2))} image={p.image} alt={p.name}/></A>
-      {p.prescription && <span className="absolute left-2 top-2"><Badge tone="rx">Rx required</Badge></span>}
-      {off > 0 && !p.prescription && <span className="absolute left-2 top-2"><Badge tone="ok">{off}% off</Badge></span>}
-      <button onClick={() => toggleWish(p.id)} aria-label={wished ? "Remove from wishlist" : "Add to wishlist"} aria-pressed={wished} className={cx("absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full bg-card shadow-soft transition", wished ? "text-destructive" : "text-muted-foreground hover:text-destructive")}><Icon name="heart" size={18} className={wished ? "fill-current" : ""}/></button>
-    </div>
-    <div className="flex flex-1 flex-col p-3 sm:p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{p.brand} · {p.category}</p>
-      <A href={`/product/${p.id}`} className="mt-1 line-clamp-2 text-sm font-semibold leading-snug hover:text-primary">{p.name}</A>
-      <p className="mt-0.5 text-xs text-muted-foreground">{p.pack}</p>
-      <div className="mt-auto pt-3"><div className="flex items-baseline gap-2"><span className="font-bold">{money(p.price)}</span>{off > 0 && <span className="text-xs text-muted-foreground line-through">MRP {money(p.mrp)}</span>}</div>
-        <button className="btn btn-soft mt-2 w-full py-2" disabled={p.stock <= 0} onClick={() => p.prescription ? go(`/product/${p.id}`) : addToCart(p)}>{p.stock <= 0 ? "Out of stock" : p.prescription ? "View details" : <><Icon name="plus" size={16}/>Add to cart</>}</button>
+
+  return (
+    <article className="group relative flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-3.5 transition hover:shadow-lg">
+      <div>
+        {/* Wishlist toggle */}
+        <button
+          onClick={() => toggleWish(p.id)}
+          aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
+          className={cx(
+            "absolute right-3 top-3 z-10 grid h-7 w-7 place-items-center rounded-full bg-white shadow-sm transition",
+            wished ? "text-red-500" : "text-gray-400 hover:text-red-500"
+          )}
+        >
+          <Icon name="heart" size={15} className={wished ? "fill-current" : ""} />
+        </button>
+
+        {/* Product Image */}
+        <A href={`/product/${p.id}`} className="block relative aspect-square w-full overflow-hidden rounded-lg bg-white mb-3">
+          <div className="grid h-full w-full place-items-center p-2 group-hover:scale-105 transition duration-200">
+            {p.image ? (
+              <img src={p.image} alt={p.name} className="h-full w-full object-contain" />
+            ) : (
+              <div className="grid h-24 w-24 place-items-center rounded-xl bg-gray-50 text-[#ff6f61]">
+                <Icon name="bottle" size={38} />
+              </div>
+            )}
+          </div>
+        </A>
+
+        {/* Product Brand & Category */}
+        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+          {p.brand}
+        </p>
+
+        {/* Product Title */}
+        <A
+          href={`/product/${p.id}`}
+          className="mt-1 line-clamp-2 text-xs sm:text-sm font-semibold text-gray-900 leading-snug hover:text-[#ff6f61] transition"
+        >
+          {p.name}
+        </A>
+
+        {/* Pack Subtitle */}
+        <p className="mt-0.5 text-[11px] text-gray-500">{p.pack}</p>
+
+        {/* Rating */}
+        <div className="mt-1.5">
+          <Stars rating={p.rating || 4.3} reviews={p.reviews || 88} />
+        </div>
+
+        {/* Delivery speed badge */}
+        <p className="mt-1.5 text-[10px] font-medium text-gray-500">
+          {p.delivery || "Get by Tomorrow"}
+        </p>
       </div>
-    </div>
-  </article>;
+
+      {/* Price & Add to Cart button */}
+      <div className="mt-3 border-t border-gray-100 pt-3">
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-sm sm:text-base font-bold text-gray-900">{money(p.price)}</span>
+          {off > 0 && (
+            <>
+              <span className="text-xs text-gray-400 line-through">₹{p.mrp}</span>
+              <span className="text-xs font-bold text-emerald-600">{off}% off</span>
+            </>
+          )}
+        </div>
+
+        <button
+          onClick={() => (p.prescription ? go(`/product/${p.id}`) : addToCart(p))}
+          className="mt-2.5 w-full rounded-md border border-[#ff6f61] bg-white py-1.5 text-xs font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition shadow-sm"
+        >
+          {p.prescription ? "View details" : "ADD"}
+        </button>
+      </div>
+    </article>
+  );
 }
-export const ProductGrid = ({ items }) => <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">{items.map((p) => <ProductCard key={p.id} p={p}/>)}</div>;
+
+export const ProductGrid = ({ items }) => (
+  <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
+    {items.map((p) => (
+      <ProductCard key={p.id} p={p} />
+    ))}
+  </div>
+);
 
 export function ProductFilters({ list, f, setF }) {
   const brands = [...new Set(list.map((p) => p.brand))].sort();
   const cats = [...new Set(list.map((p) => p.category))];
-  return <aside className="card h-fit space-y-5 p-4 text-sm">
-    {cats.length > 1 && <div><h3 className="mb-2 font-semibold">Category</h3><select className="input" value={f.cat} onChange={(e) => setF({ ...f, cat: e.target.value })}><option value="">All categories</option>{cats.map((c) => <option key={c}>{c}</option>)}</select></div>}
-    <div><h3 className="mb-2 font-semibold">Brand</h3><div className="max-h-44 space-y-1.5 overflow-auto">{brands.map((b) => <label key={b} className="flex items-center gap-2"><input type="checkbox" className="accent-[var(--primary)]" checked={f.brands.includes(b)} onChange={() => setF({ ...f, brands: f.brands.includes(b) ? f.brands.filter((x) => x !== b) : [...f.brands, b] })}/>{b}</label>)}</div></div>
-    <div><h3 className="mb-2 font-semibold">Max price: {money(f.max)}</h3><input type="range" min="50" max="2000" step="50" value={f.max} onChange={(e) => setF({ ...f, max: +e.target.value })} className="w-full accent-[var(--primary)]" aria-label="Maximum price"/></div>
-    <label className="flex items-center gap-2"><input type="checkbox" className="accent-[var(--primary)]" checked={f.rxOnly === false} onChange={(e) => setF({ ...f, rxOnly: e.target.checked ? false : null })}/>Hide prescription items</label>
-    <button className="btn btn-outline btn-sm w-full" onClick={() => setF({ cat: "", brands: [], max: 2000, rxOnly: null, sort: f.sort })}>Clear filters</button>
-  </aside>;
+  return (
+    <aside className="rounded-xl border border-gray-200 bg-white p-4 text-xs space-y-5">
+      {cats.length > 1 && (
+        <div>
+          <h3 className="mb-2 font-bold text-gray-900 uppercase tracking-wider text-[11px]">Category</h3>
+          <select
+            className="w-full rounded border border-gray-200 p-2 text-xs outline-none"
+            value={f.cat}
+            onChange={(e) => setF({ ...f, cat: e.target.value })}
+          >
+            <option value="">All categories</option>
+            {cats.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      <div>
+        <h3 className="mb-2 font-bold text-gray-900 uppercase tracking-wider text-[11px]">Brand</h3>
+        <div className="max-h-44 space-y-1 overflow-auto pr-1">
+          {brands.map((b) => (
+            <label key={b} className="flex items-center gap-2 cursor-pointer text-gray-700 hover:text-black">
+              <input
+                type="checkbox"
+                className="accent-[#ff6f61]"
+                checked={f.brands.includes(b)}
+                onChange={() =>
+                  setF({
+                    ...f,
+                    brands: f.brands.includes(b) ? f.brands.filter((x) => x !== b) : [...f.brands, b],
+                  })
+                }
+              />
+              <span className="truncate">{b}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 className="mb-2 font-bold text-gray-900 uppercase tracking-wider text-[11px]">
+          Max Price: {money(f.max)}
+        </h3>
+        <input
+          type="range"
+          min="50"
+          max="3000"
+          step="50"
+          value={f.max}
+          onChange={(e) => setF({ ...f, max: +e.target.value })}
+          className="w-full accent-[#ff6f61]"
+        />
+      </div>
+      <button
+        className="w-full rounded border border-gray-300 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition"
+        onClick={() => setF({ cat: "", brands: [], max: 3000, rxOnly: null, sort: f.sort })}
+      >
+        Clear filters
+      </button>
+    </aside>
+  );
 }
+
 export function applyFilters(list, f) {
-  const r = list.filter((p) => (!f.cat || p.category === f.cat) && (!f.brands.length || f.brands.includes(p.brand)) && p.price <= f.max && (f.rxOnly !== false || !p.prescription));
+  const r = list.filter(
+    (p) =>
+      (!f.cat || p.category === f.cat) &&
+      (!f.brands.length || f.brands.includes(p.brand)) &&
+      p.price <= f.max &&
+      (f.rxOnly !== false || !p.prescription)
+  );
   const disc = (p) => (p.mrp - p.price) / p.mrp;
-  const by = { popular: (a, b) => b.popularity - a.popularity, low: (a, b) => a.price - b.price, high: (a, b) => b.price - a.price, name: (a, b) => a.name.localeCompare(b.name), discount: (a, b) => disc(b) - disc(a) };
+  const by = {
+    popular: (a, b) => (b.popularity || 0) - (a.popularity || 0),
+    low: (a, b) => a.price - b.price,
+    high: (a, b) => b.price - a.price,
+    name: (a, b) => a.name.localeCompare(b.name),
+    discount: (a, b) => disc(b) - disc(a),
+  };
   return [...r].sort(by[f.sort] || by.popular);
 }
-export const SortSelect = ({ f, setF }) => <label className="flex items-center gap-2 text-sm"><span className="text-muted-foreground">Sort</span><select className="input w-auto py-2" value={f.sort} onChange={(e) => setF({ ...f, sort: e.target.value })}><option value="popular">Popularity</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="name">Name</option><option value="discount">Discount</option></select></label>;
+
+export const SortSelect = ({ f, setF }) => (
+  <label className="flex items-center gap-2 text-xs">
+    <span className="text-gray-500 font-medium">Sort by</span>
+    <select
+      className="rounded border border-gray-200 bg-white py-1.5 px-2 text-xs font-semibold text-gray-800 outline-none"
+      value={f.sort}
+      onChange={(e) => setF({ ...f, sort: e.target.value })}
+    >
+      <option value="popular">Popularity</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="name">Name</option>
+      <option value="discount">Discount</option>
+    </select>
+  </label>
+);

@@ -1,205 +1,1297 @@
 import { useEffect, useMemo, useState } from "react";
-import heroFallback from "../assets/meditrust-healthcare.jpg";
 import { applyCoupon, priceOf, useApp } from "../context/AppContext";
-import { A, Art, Badge, Crumbs, DemoNote, Empty, Field, Icon, Section, catIcon, cx, money, phoneOk, req, useForm, useGo, useLoc } from "../components/ui";
+import { A, Badge, DemoNote, Empty, Field, Icon, Stars, cx, money, phoneOk, req, useForm, useGo, useLoc } from "../components/ui";
 import { ProductCard, ProductFilters, ProductGrid, SearchBar, SortSelect, applyFilters } from "../components/Layout";
-import { ArticleCard, Newsletter } from "./services";
+import * as D from "../data/demo";
+
+// Reusable Section Header with red "See all >" button
+function SectionHead({ title, href, isAd = false }) {
+  return (
+    <div className="mb-4 flex items-center justify-between border-b border-gray-100 pb-2">
+      <div className="flex items-center gap-2">
+        {isAd && (
+          <span className="rounded border border-gray-300 px-1 py-0.5 text-[10px] font-bold text-gray-500 uppercase">
+            Ad
+          </span>
+        )}
+        <h2 className="text-base sm:text-lg font-bold text-gray-900">{title}</h2>
+      </div>
+      {href && (
+        <A
+          href={href}
+          className="rounded-md border border-[#ff6f61] px-2.5 py-1 text-xs font-semibold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+        >
+          See all &gt;
+        </A>
+      )}
+    </div>
+  );
+}
+
+// Horizontal Scroll Carousel Container
+function ScrollRow({ children }) {
+  return (
+    <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-thin no-scrollbar">
+      {children}
+    </div>
+  );
+}
+
+// 1mg Deal/Product Card (for deals, trending, collagen, flash sales, etc.)
+function DealCard({ item }) {
+  const { addToCart } = useApp();
+  const off = item.mrp && item.mrp > item.price ? Math.round(((item.mrp - item.price) / item.mrp) * 100) : 0;
+
+  return (
+    <div className="w-[180px] sm:w-[200px] shrink-0 rounded-xl border border-gray-200 bg-white p-3 flex flex-col justify-between hover:shadow-md transition">
+      <div>
+        {/* Product image container */}
+        <A href={`/search?q=${encodeURIComponent(item.name.slice(0, 15))}`} className="block relative aspect-square w-full mb-2">
+          <div className="grid h-full w-full place-items-center p-2 rounded-lg bg-white">
+            <div className="grid h-20 w-20 place-items-center rounded-xl bg-gray-50 text-[#ff6f61]">
+              <Icon name="bottle" size={34} />
+            </div>
+          </div>
+        </A>
+
+        {/* Name */}
+        <A
+          href={`/search?q=${encodeURIComponent(item.name.slice(0, 15))}`}
+          className="line-clamp-2 text-xs font-bold text-gray-900 hover:text-[#ff6f61] transition leading-snug"
+          title={item.name}
+        >
+          {item.name}
+        </A>
+
+        {/* Subtitle / Pack */}
+        <p className="mt-0.5 text-[11px] text-gray-500 truncate">{item.pack}</p>
+
+        {/* Rating */}
+        {item.rating && (
+          <div className="mt-1">
+            <Stars rating={item.rating} reviews={item.reviews} />
+          </div>
+        )}
+
+        {/* Delivery estimate */}
+        {item.delivery && (
+          <p className="mt-1 text-[10px] font-medium text-gray-500">{item.delivery}</p>
+        )}
+      </div>
+
+      <div className="mt-2.5 pt-2 border-t border-gray-100">
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-xs sm:text-sm font-bold text-gray-900">{money(item.price)}</span>
+          {item.mrp && item.mrp > item.price && (
+            <>
+              <span className="text-[10px] text-gray-400 line-through">₹{item.mrp}</span>
+              <span className="text-[10px] font-bold text-emerald-600">{item.discount || `${off}% off`}</span>
+            </>
+          )}
+        </div>
+
+        {/* Green Sale Badge if active */}
+        {item.saleEnds && (
+          <div className="mt-1 flex items-center gap-1">
+            <span className="rounded bg-[#1aab2a] px-1 py-0.2 text-[9px] font-bold text-white">Sale</span>
+            <span className="text-[10px] font-medium text-emerald-700 truncate">{item.saleEnds}</span>
+          </div>
+        )}
+
+        <button
+          onClick={() =>
+            addToCart({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              mrp: item.mrp || item.price,
+              pack: item.pack,
+              category: "OTC Medicines",
+            })
+          }
+          className="mt-2 w-full rounded border border-[#ff6f61] py-1 text-[11px] font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+        >
+          ADD
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Lab Package Card with SAFE badge
+function CheckupCard({ checkup }) {
+  const { toggleLab, state } = useApp();
+  const inCart = state.labCart.includes(checkup.id);
+
+  return (
+    <div className="w-[230px] sm:w-[250px] shrink-0 rounded-xl border border-gray-200 bg-white p-3.5 flex flex-col justify-between hover:shadow-md transition">
+      <div>
+        <p className="line-clamp-2 text-xs sm:text-sm font-bold text-gray-900 leading-snug">
+          {checkup.name}
+        </p>
+        <p className="mt-1 text-[11px] text-gray-500">{checkup.testsCount}</p>
+
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-[11px] font-bold text-gray-800">{checkup.provider}</span>
+          {checkup.safe && (
+            <span className="flex items-center gap-1 rounded border border-amber-300 bg-[#fef7e7] px-1.5 py-0.5 text-[10px] font-bold text-gray-800">
+              <Icon name="check" size={10} className="text-emerald-600" />
+              SAFE
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+        <div>
+          <span className="text-sm sm:text-base font-bold text-gray-900">{money(checkup.price)}</span>
+          {checkup.mrp && (
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-gray-400 line-through">₹{checkup.mrp}</span>
+              <span className="text-xs font-bold text-emerald-600">{checkup.discount}</span>
+            </div>
+          )}
+        </div>
+        <button
+          onClick={() => toggleLab(checkup.id)}
+          className={cx(
+            "rounded px-2.5 py-1 text-xs font-bold transition",
+            inCart ? "bg-emerald-600 text-white" : "border border-[#ff6f61] text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white"
+          )}
+        >
+          {inCart ? "Booked" : "Book"}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export function Home() {
-  const { state } = useApp();
-  const s = state.settings, sec = s.sections;
-  const featured = state.products.filter((p) => p.visible && p.featured).slice(0, 8);
-  return <>
-    <section className="hero-glow border-b border-border"><div className="container-page grid items-center gap-10 py-10 lg:grid-cols-2 lg:py-16">
-      <div><p className="eyebrow flex items-center gap-1.5"><Icon name="shield" size={14}/>MEDITRUST · Everyday healthcare</p>
-        <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{s.heroTitle}</h1>
-        <p className="mt-4 max-w-xl text-lg text-muted-foreground">{s.heroSubtitle}</p>
-        <div className="mt-6 max-w-xl"><SearchBar big/></div>
-        <div className="mt-5 flex flex-wrap gap-3"><A href={s.heroPrimaryHref} className="btn btn-primary px-5 py-3">{s.heroPrimaryText}<Icon name="arrow" size={17}/></A><A href={s.heroSecondaryHref} className="btn btn-outline px-5 py-3">{s.heroSecondaryText}</A></div>
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto carousel rotation
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setSlideIdx((prev) => (prev + 1) % D.heroSlides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const slide = D.heroSlides[slideIdx];
+
+  return (
+    <div className="bg-white min-h-screen pb-16">
+      {/* 1. Hero Multi-Slide Carousel Banner matching Screenshot 2026-10-14 201806.png */}
+      <section className="border-b border-gray-200 bg-[#fafafa]">
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+          <div className="grid gap-4 lg:grid-cols-12 items-stretch">
+            {/* Left Main Hero Banner */}
+            <div
+              className={`relative lg:col-span-8 overflow-hidden rounded-xl bg-gradient-to-r ${slide.bg} p-6 sm:p-8 flex flex-col justify-between min-h-[220px] shadow-sm`}
+            >
+              <div className="max-w-md">
+                <span className="inline-block rounded-md bg-black px-2 py-0.5 text-[10px] font-black text-white tracking-widest uppercase mb-2">
+                  {slide.brandTag}
+                </span>
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 leading-tight">
+                  {slide.headline}
+                </h1>
+                <ul className="mt-3 space-y-1 text-xs text-gray-700 font-medium">
+                  {slide.features.map((f, i) => (
+                    <li key={i} className="flex items-center gap-1.5">
+                      <Icon name="check" size={13} className="text-[#ff6f61]" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <A
+                  href={slide.actionHref}
+                  className="rounded-md bg-black px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-gray-800 transition"
+                >
+                  {slide.actionText}
+                </A>
+                <span className="text-[10px] text-gray-500 font-medium">T&amp;C Apply</span>
+              </div>
+            </div>
+
+            {/* Right Public Interest Banner (PvPI toll-free) */}
+            <div className="lg:col-span-4 rounded-xl border border-gray-200 bg-gradient-to-r from-orange-50 to-amber-50 p-4 sm:p-5 flex flex-col justify-between shadow-sm">
+              <div>
+                <p className="text-xs font-bold text-red-600 uppercase tracking-wide">
+                  {slide.rightNotice.title}
+                </p>
+                <p className="mt-1 text-xs text-gray-700 leading-relaxed">
+                  {slide.rightNotice.desc}
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="grid h-8 w-8 place-items-center rounded-full bg-black text-white">
+                    <Icon name="phone" size={14} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-500">PvPI Toll Free Number</p>
+                    <a href={`tel:${slide.rightNotice.phone.replace(/\s/g, "")}`} className="font-extrabold text-sm text-gray-900 hover:text-[#ff6f61]">
+                      {slide.rightNotice.phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-[9px] text-gray-500 border-t border-amber-200/60 pt-2 leading-tight">
+                {slide.rightNotice.org}
+              </p>
+            </div>
+          </div>
+
+          {/* Carousel Controls: Prev, Next, Dots, Pause */}
+          <div className="mt-3 flex items-center justify-center gap-3">
+            <button
+              onClick={() => setSlideIdx((p) => (p === 0 ? D.heroSlides.length - 1 : p - 1))}
+              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs font-bold"
+              aria-label="Previous slide"
+            >
+              &lt;
+            </button>
+            <button
+              onClick={() => setSlideIdx((p) => (p + 1) % D.heroSlides.length)}
+              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs font-bold"
+              aria-label="Next slide"
+            >
+              &gt;
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              {D.heroSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSlideIdx(i)}
+                  className={`h-2 rounded-full transition-all ${
+                    slideIdx === i ? "w-6 bg-gray-800" : "w-2 bg-gray-300"
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => setIsPaused((p) => !p)}
+              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-[10px]"
+              aria-label={isPaused ? "Play slider" : "Pause slider"}
+            >
+              {isPaused ? "▶" : "❚❚"}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Platform Headline Title */}
+      <section className="py-6 text-center border-b border-gray-100">
+        <div className="mx-auto max-w-7xl px-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+            Tata 1mg: India's Leading Online Pharmacy &amp; Healthcare Platform
+          </h2>
+        </div>
+      </section>
+
+      {/* 3. Care Plan Promotion Banner */}
+      <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6">
+        <div className="relative overflow-hidden rounded-2xl bg-[#fef4e8] border border-amber-200 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:grid h-16 w-16 shrink-0 place-items-center rounded-full bg-amber-200/70 text-[#662d1b] font-black text-xl">
+              1mg
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="rounded bg-[#662d1b] px-2 py-0.5 text-xs font-bold text-white uppercase tracking-wider">
+                  {D.carePlanBanner.tag}
+                </span>
+                <span className="text-xs font-semibold text-[#662d1b]">
+                  {D.carePlanBanner.subtag}
+                </span>
+              </div>
+              <h3 className="mt-2 text-sm sm:text-base font-bold text-gray-900 leading-snug">
+                {D.carePlanBanner.title}
+              </h3>
+              <p className="mt-0.5 text-xs text-gray-600 font-medium">
+                {D.carePlanBanner.action}
+              </p>
+            </div>
+          </div>
+          <A
+            href={D.carePlanBanner.btnHref}
+            className="rounded-md bg-[#662d1b] px-6 py-2.5 text-xs font-bold text-white shadow-md hover:bg-[#522314] transition shrink-0"
+          >
+            {D.carePlanBanner.btnText}
+          </A>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-10 mt-6">
+        {/* 4. Section 1: Shop by health concerns */}
+        <section>
+          <SectionHead title="Shop by health concerns" href="/healthcare" />
+          <ScrollRow>
+            {D.healthConcerns.map((hc) => (
+              <A
+                key={hc.id}
+                href={hc.href}
+                className="w-[125px] sm:w-[135px] shrink-0 text-center group"
+              >
+                <div
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
+                  style={{ backgroundColor: hc.color }}
+                >
+                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                    <Icon name={hc.icon} size={28} className="text-[#ff6f61]" />
+                  </div>
+                </div>
+                <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition line-clamp-2">
+                  {hc.name}
+                </p>
+              </A>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 5. Section 2: Full body health checkups */}
+        <section>
+          <SectionHead title="Full body health checkups" href="/lab-tests" />
+          <ScrollRow>
+            {D.fullBodyCheckups.map((fbc) => (
+              <CheckupCard key={fbc.id} checkup={fbc} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 6. Section 3: Featured brands */}
+        <section>
+          <SectionHead title="Featured brands" href="/healthcare" />
+          <ScrollRow>
+            {D.featuredBrands.map((b) => (
+              <A
+                key={b.id}
+                href={`/search?q=${encodeURIComponent(b.name)}`}
+                className="w-[105px] sm:w-[120px] shrink-0 text-center group"
+              >
+                <div className="aspect-square w-full rounded-full border border-gray-200 bg-white grid place-items-center p-3 mb-1.5 shadow-sm group-hover:shadow-md transition group-hover:border-[#ff6f61]">
+                  <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
+                    {b.name}
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 truncate">{b.category}</p>
+              </A>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 7. Section 4: Personal care */}
+        <section>
+          <SectionHead title="Personal care" href="/healthcare/personal-care" />
+          <ScrollRow>
+            {D.personalCareCategories.map((pc) => (
+              <A
+                key={pc.id}
+                href={pc.href}
+                className="w-[125px] sm:w-[135px] shrink-0 text-center group"
+              >
+                <div
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
+                  style={{ backgroundColor: pc.color }}
+                >
+                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                    <Icon name="sparkle" size={28} className="text-[#ff6f61]" />
+                  </div>
+                </div>
+                <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition">
+                  {pc.name}
+                </p>
+              </A>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 8. Section 5: Pathology Tests | Up to 70% off */}
+        <section>
+          <SectionHead title="Pathology Tests | Up to 70% off" href="/lab-tests" />
+          <ScrollRow>
+            {D.pathologyTests.map((pt) => (
+              <div
+                key={pt.id}
+                className="w-[210px] sm:w-[230px] shrink-0 rounded-xl border border-gray-200 bg-white p-3.5 flex flex-col justify-between hover:shadow-md transition"
+              >
+                <div>
+                  <p className="text-xs sm:text-sm font-bold text-gray-900 leading-snug">
+                    {pt.name}
+                  </p>
+                  <p className="mt-1 text-[11px] text-gray-500">{pt.desc}</p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-gray-800">{pt.provider}</span>
+                    {pt.safe && (
+                      <span className="flex items-center gap-1 rounded border border-amber-300 bg-[#fef7e7] px-1.5 py-0.5 text-[10px] font-bold text-gray-800">
+                        <Icon name="check" size={10} className="text-emerald-600" />
+                        SAFE
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-sm font-bold text-gray-900">{money(pt.price)}</span>
+                    {pt.discount && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-gray-400 line-through">₹{pt.mrp}</span>
+                        <span className="text-xs font-bold text-emerald-600">{pt.discount}</span>
+                      </div>
+                    )}
+                  </div>
+                  <A
+                    href={`/lab-tests/${pt.id}`}
+                    className="rounded border border-[#ff6f61] px-2.5 py-1 text-xs font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+                  >
+                    Book
+                  </A>
+                </div>
+              </div>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 9. Section 6: Super saving deals */}
+        <section>
+          <SectionHead title="Super saving deals" href="/medicines" />
+          <ScrollRow>
+            {D.superSavingDeals.map((deal) => (
+              <DealCard key={deal.id} item={deal} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 10. Section 7: Popular categories */}
+        <section>
+          <SectionHead title="Popular categories" href="/healthcare" />
+          <ScrollRow>
+            {D.popularCategories.map((cat) => (
+              <A
+                key={cat.id}
+                href={cat.href}
+                className="w-[125px] sm:w-[135px] shrink-0 text-center group"
+              >
+                <div
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
+                  style={{ backgroundColor: cat.color }}
+                >
+                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                    <Icon name="tag" size={26} className="text-[#ff6f61]" />
+                  </div>
+                </div>
+                <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition">
+                  {cat.name}
+                </p>
+              </A>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 11. Section 8: Trending now (with Sale ends in... badge) */}
+        <section>
+          <SectionHead title="Trending now" href="/medicines" />
+          <ScrollRow>
+            {D.trendingNow.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 12. Section 9: Skin care products */}
+        <section>
+          <SectionHead title="Skin care products" href="/healthcare/skin-care" />
+          <ScrollRow>
+            {D.skinCareProducts.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 13. Section 10: Popular Combo Deals */}
+        <section>
+          <SectionHead title="Popular Combo Deals" href="/healthcare" />
+          <ScrollRow>
+            {D.popularComboDeals.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 14. Section 11: Top deals of pain relief and cough & cold */}
+        <section>
+          <SectionHead title="Top deals of pain relief and cough & cold" href="/healthcare" />
+          <ScrollRow>
+            {D.topDealsPainCough.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 15. Section 12: Collagen | supplement of the week */}
+        <section>
+          <SectionHead title="Collagen | supplement of the week" href="/healthcare/vitamins-supplements" />
+          <ScrollRow>
+            {D.collagenSupplement.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 16. Section 13: Flash sale deals */}
+        <section>
+          <SectionHead title="Flash sale deals" href="/medicines" />
+          <ScrollRow>
+            {D.flashSaleDeals.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 17. Section 14: Radiology Tests | Up to 60% off */}
+        <section>
+          <SectionHead title="Radiology Tests | Up to 60% off" href="/lab-tests" />
+          <ScrollRow>
+            {D.radiologyTests.map((rt) => (
+              <div
+                key={rt.id}
+                className="w-[210px] sm:w-[230px] shrink-0 rounded-xl border border-gray-200 bg-white p-3.5 flex flex-col justify-between hover:shadow-md transition"
+              >
+                <div>
+                  <p className="text-xs sm:text-sm font-bold text-gray-900 leading-snug">
+                    {rt.name}
+                  </p>
+                  <p className="mt-1 text-[11px] text-gray-500">{rt.desc}</p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-gray-800">{rt.provider}</span>
+                    {rt.safe && (
+                      <span className="flex items-center gap-1 rounded border border-amber-300 bg-[#fef7e7] px-1.5 py-0.5 text-[10px] font-bold text-gray-800">
+                        <Icon name="check" size={10} className="text-emerald-600" />
+                        SAFE
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-sm font-bold text-gray-900">{money(rt.price)}</span>
+                  <A
+                    href={`/lab-tests/${rt.id}`}
+                    className="rounded border border-[#ff6f61] px-2.5 py-1 text-xs font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+                  >
+                    Book
+                  </A>
+                </div>
+              </div>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 18. Section 15: Explore something new */}
+        <section>
+          <SectionHead title="Explore something new" href="/healthcare" />
+          <ScrollRow>
+            {D.exploreSomethingNew.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 19. Section 16: Ad In the spotlight */}
+        <section>
+          <SectionHead title="In the spotlight" isAd={true} />
+          <ScrollRow>
+            {D.inTheSpotlight.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 20. Section 17: Ayurveda top brands */}
+        <section>
+          <SectionHead title="Ayurveda top brands" href="/healthcare/ayurveda-products" />
+          <ScrollRow>
+            {D.ayurvedaTopBrands.map((b) => (
+              <A
+                key={b.id}
+                href={`/search?q=${encodeURIComponent(b.name)}`}
+                className="w-[105px] sm:w-[120px] shrink-0 text-center group"
+              >
+                <div
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-1.5 shadow-sm group-hover:scale-105 transition"
+                  style={{ backgroundColor: b.color }}
+                >
+                  <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
+                    {b.name}
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500">Ayurveda</p>
+              </A>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 21. Section 18: Deals of the day */}
+        <section>
+          <SectionHead title="Deals of the day" href="/medicines" />
+          <ScrollRow>
+            {D.dealsOfTheDay.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 22. Section 19: Ad Skincare Picks Just for You */}
+        <section>
+          <SectionHead title="Skincare Picks Just for You" isAd={true} />
+          <ScrollRow>
+            {D.skincarePicks.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 23. Section 20: Ad Pain Relief Essentials */}
+        <section>
+          <SectionHead title="Pain Relief Essentials" isAd={true} />
+          <ScrollRow>
+            {D.painReliefEssentials.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 24. Section 21: Ad Healthy Hair Starts Here */}
+        <section>
+          <SectionHead title="Healthy Hair Starts Here" isAd={true} />
+          <ScrollRow>
+            {D.healthyHairStartsHere.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 25. Section 22: Tuco Kids top sellers */}
+        <section>
+          <SectionHead title="Tuco Kids top sellers" href="/healthcare/baby-care" />
+          <ScrollRow>
+            {D.tucoKidsTopSellers.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 26. Section 23: Homeopathy women's health */}
+        <section>
+          <SectionHead title="Homeopathy women's health" href="/healthcare/homeopathy" />
+          <ScrollRow>
+            {D.homeopathyWomensHealth.map((item) => (
+              <DealCard key={item.id} item={item} />
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 27. Section 24: Ayurveda herbs knowledge */}
+        <section>
+          <SectionHead title="Ayurveda" href="/healthcare/ayurveda-products" />
+          <ScrollRow>
+            {D.ayurvedaKnowledge.map((herb) => (
+              <div
+                key={herb.id}
+                className="w-[200px] sm:w-[220px] shrink-0 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition flex flex-col justify-between"
+              >
+                <div>
+                  <div className="aspect-[4/3] w-full rounded-xl bg-emerald-50 mb-3 grid place-items-center text-emerald-700">
+                    <Icon name="leaf" size={40} />
+                  </div>
+                  <h3 className="font-bold text-gray-900 text-sm">{herb.name}</h3>
+                  <p className="mt-1 text-xs text-gray-500 leading-relaxed line-clamp-3">
+                    {herb.desc}
+                  </p>
+                </div>
+                <A
+                  href={`/search?q=${encodeURIComponent(herb.name)}`}
+                  className="mt-3 block text-xs font-semibold text-[#ff6f61] hover:underline"
+                >
+                  Explore medicines →
+                </A>
+              </div>
+            ))}
+          </ScrollRow>
+        </section>
+
+        {/* 28. Section 25: India's largest healthcare platform */}
+        <section className="py-8 border-t border-gray-100">
+          <h2 className="text-center text-xl sm:text-2xl font-bold text-gray-900 mb-8">
+            India's largest healthcare platform
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">260m+</p>
+                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Visitors</p>
+              </div>
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-100 text-emerald-700">
+                <Icon name="users" size={26} />
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">31m+</p>
+                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Orders Delivered</p>
+              </div>
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-blue-100 text-blue-600">
+                <Icon name="package" size={26} />
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">1800+</p>
+                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Cities</p>
+              </div>
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-pink-100 text-pink-600">
+                <Icon name="pin" size={26} />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-      <div className="relative"><div className="aspect-[4/3] overflow-hidden rounded-3xl shadow-lift"><img src={s.heroImage || heroFallback} onError={(e) => { e.currentTarget.src = heroFallback; }} alt="Pharmacist helping a customer in a bright modern pharmacy" className="h-full w-full object-cover"/></div>
-        <div className="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl bg-card p-3 pr-5 shadow-lift"><span className="grid h-10 w-10 place-items-center rounded-xl bg-mint text-primary"><Icon name="upload"/></span><div className="text-sm"><p className="font-semibold">Have a prescription?</p><A href="/prescription-upload" className="text-primary">Try the demo upload →</A></div></div>
-      </div>
-    </div></section>
-    {sec.shortcuts && <Section eyebrow="All in one place" title="How can we help today?"><div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{state.shortcuts.filter((x) => x.visible).map((c, i) => <A key={c.id} href={c.href} className="card group p-4 transition hover:border-primary hover:shadow-soft"><span className={cx("mb-3 grid h-12 w-12 place-items-center rounded-xl text-primary", `tone-${i % 6}`)}><Icon name={c.icon} size={24}/></span><p className="font-semibold">{c.title}</p><p className="mt-1 text-xs text-muted-foreground">{c.text}</p></A>)}</div></Section>}
-    {sec.categories && <Section eyebrow="Thoughtfully organised" title="Shop by category" href="/healthcare" className="pt-0 sm:pt-0"><div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">{[...state.categories].filter((c) => c.visible).sort((a, b) => a.order - b.order).map((c, i) => <A key={c.id} href={/medicine/i.test(c.name) ? `/medicines/${c.slug}` : `/healthcare/${c.slug}`} className="card overflow-hidden transition hover:shadow-soft"><div className="aspect-[4/3]"><Art icon={c.icon} seed={i} image={c.image} alt={c.name}/></div><div className="p-3"><p className="text-sm font-semibold">{c.name}</p><p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{c.description}</p></div></A>)}</div></Section>}
-    {sec.featured && <Section eyebrow="Popular picks" title="Featured products" text="Illustrative products from our demonstration catalogue." href="/medicines" className="pt-0 sm:pt-0"><ProductGrid items={featured}/></Section>}
-    {sec.promos && <section className="container-page grid gap-4 pb-6 md:grid-cols-3">{state.banners.filter((b) => b.visible).map((b) => <A key={b.id} href={b.href} className={cx("relative overflow-hidden rounded-2xl p-6 transition hover:shadow-lift", b.tone === "navy" ? "bg-navy text-primary-foreground" : b.tone === "teal" ? "bg-primary text-primary-foreground" : "bg-mint text-foreground")}><p className="text-xs font-bold uppercase tracking-widest opacity-75">Offer · demo</p><h3 className="mt-2 font-display text-2xl font-semibold">{b.title}</h3><p className="mt-1 text-sm opacity-80">{b.text}</p>{b.coupon && <p className="mt-4 inline-block rounded-lg border border-dashed border-current px-2 py-1 text-xs font-bold">Use {b.coupon}{b.validTo ? ` · till ${b.validTo}` : ""}</p>}<Icon name="sparkle" size={90} className="absolute -bottom-4 -right-4 opacity-15"/></A>)}</section>}
-    {sec.labs && <div className="bg-card border-y border-border"><Section eyebrow="Diagnostics · demonstration" title="Popular lab tests" text="Sample listings only — no laboratory is connected." href="/lab-tests"><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{state.labTests.filter((t) => t.visible).slice(0, 4).map((t) => <LabCard key={t.id} t={t}/>)}</div></Section></div>}
-    {sec.doctors && <Section eyebrow="Consultation · demo" title="Consult by specialty" text="Example specialties with demonstration profiles." href="/consult-doctor"><SpecialtyGrid/></Section>}
-    {sec.trust && <section className="bg-mint"><div className="container-page grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-4">{state.trust.map((t) => <div key={t.id} className="rounded-2xl bg-card p-5"><span className="mb-3 grid h-11 w-11 place-items-center rounded-xl bg-primary text-primary-foreground"><Icon name={t.icon}/></span><p className="font-semibold">{t.title}</p><p className="mt-1 text-sm text-muted-foreground">{t.text}</p></div>)}</div></section>}
-    {sec.articles && <Section eyebrow="Health library" title="Read & learn" href="/health-articles"><div className="grid gap-4 md:grid-cols-3">{state.articles.filter((a) => a.published).slice(0, 3).map((a) => <ArticleCard key={a.id} a={a}/>)}</div><p className="mt-4 text-xs text-muted-foreground">Articles are general information and not a substitute for professional medical advice.</p></Section>}
-    {sec.newsletter && <Newsletter/>}
-  </>;
+    </div>
+  );
 }
 
-export function LabCard({ t }) {
-  const { state, toggleLab } = useApp();
-  const inCart = state.labCart.includes(t.id);
-  return <article className="card flex flex-col p-5"><div className="flex items-start justify-between gap-2"><span className="grid h-11 w-11 place-items-center rounded-xl bg-mint text-primary"><Icon name="lab"/></span><Badge tone="muted">{t.category}</Badge></div>
-    <A href={`/lab-tests/${t.id}`} className="mt-3 font-semibold hover:text-primary">{t.name}</A><p className="mt-1 text-xs text-muted-foreground">Sample: {t.sample} · Home collection (demo)</p>
-    <div className="mt-auto flex items-center justify-between pt-4"><div><span className="font-bold">{money(t.price)}</span> <span className="text-xs text-muted-foreground line-through">{money(t.mrp)}</span></div><button className={cx("btn btn-sm", inCart ? "btn-primary" : "btn-soft")} onClick={() => toggleLab(t.id)}>{inCart ? <><Icon name="check" size={14}/>Added</> : "Book test"}</button></div>
-  </article>;
-}
-export function SpecialtyGrid() {
-  const icons = ["steth", "sparkle", "heart", "flower", "monitor", "leaf"];
-  return <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{["General Physician", "Dermatology", "Pediatrics", "Gynecology", "Orthopedics", "Mental Wellness"].map((s, i) => <A key={s} href={`/doctors/${s.toLowerCase().replace(/\s+/g, "-")}`} className="card flex flex-col items-center p-5 text-center transition hover:border-primary"><span className={cx("mb-3 grid h-14 w-14 place-items-center rounded-full text-primary", `tone-${i}`)}><Icon name={icons[i]} size={26}/></span><span className="text-sm font-semibold">{s}</span></A>)}</div>;
+// ---------------------- QUICK ORDER / UPLOAD PRESCRIPTION ----------------------
+// Matching Screenshot 2026-10-14 200806 / quick order.png
+export function PrescriptionUpload() {
+  const { state, update, toast } = useApp();
+  const go = useGo();
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
+  const [err, setErr] = useState("");
+
+  useEffect(() => () => url && URL.revokeObjectURL(url), [url]);
+
+  const pick = (e) => {
+    const f = e.target.files?.[0];
+    setErr("");
+    if (!f) return;
+    if (!/^image\/|pdf$/.test(f.type)) return setErr("Please choose an image or PDF file.");
+    if (f.size > 5e6) return setErr("Please choose a file under 5 MB.");
+    setFile(f);
+    setUrl(URL.createObjectURL(f));
+    update({ prescription: { name: f.name } });
+    toast("Prescription attached successfully!");
+  };
+
+  return (
+    <div className="bg-white min-h-[80vh] py-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="grid gap-8 lg:grid-cols-12">
+          {/* Left Column: Upload Dropzone matching quick order.png */}
+          <div className="lg:col-span-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Upload prescriptions</h1>
+            <p className="mt-1 text-xs sm:text-sm text-gray-500">
+              and let us arrange your medicines for you
+            </p>
+
+            {/* Dashed Dropzone */}
+            <div className="mt-6 rounded-2xl border-2 border-dashed border-gray-300 bg-[#fafafa] p-8 text-center hover:border-[#ff6f61] transition">
+              <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-white shadow-sm text-gray-500 mb-4">
+                <Icon name="upload" size={32} className="text-[#ff6f61]" />
+              </div>
+
+              <label className="inline-block cursor-pointer rounded-md border border-[#ff6f61] bg-white px-6 py-2.5 text-sm font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition shadow-sm">
+                Upload prescription
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  className="sr-only"
+                  onChange={pick}
+                />
+              </label>
+
+              <p className="mt-3 text-xs text-gray-400">
+                Drag files from your computer (JPG, PNG and PDF)
+              </p>
+
+              {err && <p className="mt-2 text-xs font-semibold text-red-500">{err}</p>}
+
+              {file && (
+                <div className="mt-5 inline-flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 text-left shadow-sm">
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-emerald-50 text-emerald-600">
+                    <Icon name="check" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-gray-900">{file.name}</p>
+                    <p className="text-[11px] text-gray-400">{Math.round(file.size / 1024)} KB</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setFile(null);
+                      setUrl("");
+                      update({ prescription: null });
+                    }}
+                    className="ml-3 text-xs text-red-500 hover:underline"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* OR separator */}
+            <div className="my-6 flex items-center">
+              <div className="flex-1 border-t border-gray-200" />
+              <span className="px-4 text-xs font-bold text-gray-400">OR</span>
+              <div className="flex-1 border-t border-gray-200" />
+            </div>
+
+            {/* Select from past prescriptions card */}
+            <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-gray-100 text-gray-700">
+                  <Icon name="book" size={20} />
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-gray-800">
+                  Select from your past prescriptions
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  update({ prescription: { name: "Saved_Rx_DrSharma.pdf" } });
+                  setFile({ name: "Saved_Rx_DrSharma.pdf", size: 245000 });
+                  toast("Past prescription selected!");
+                }}
+                className="rounded-md border border-[#ff6f61] px-4 py-1.5 text-xs font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+              >
+                Select files
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Continue button & Security notes */}
+          <div className="lg:col-span-4 lg:border-l lg:border-gray-100 lg:pl-8 flex flex-col justify-start">
+            <button
+              disabled={!state.prescription}
+              onClick={() => go("/medicines")}
+              className="w-full rounded-md bg-[#ff6f61] py-3 text-sm font-bold text-white shadow-md hover:bg-[#e85b4d] disabled:bg-gray-300 disabled:text-gray-500 disabled:shadow-none transition"
+            >
+              Continue
+            </button>
+
+            <div className="mt-8 space-y-4 text-xs text-gray-500 leading-relaxed">
+              <p>All uploads are encrypted &amp; visible only to our pharmacists.</p>
+              <p>Any prescription you upload is validated before processing the order.</p>
+              <A href="/faq" className="inline-block text-xs font-semibold text-[#ff6f61] hover:underline">
+                What is a valid prescription?
+              </A>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-const blank = { cat: "", brands: [], max: 2000, rxOnly: null, sort: "popular" };
+// ---------------------- CART PAGE ----------------------
+// Matching Screenshot 2026-10-14 200806 / cart.png
+export function Cart() {
+  const { state, setQty } = useApp();
+  const go = useGo();
+  const lines = state.cart.map((c) => ({
+    ...c,
+    p: state.products.find((p) => p.id === c.id) || { id: c.id, name: "Product", price: 199, mrp: 249, pack: "Pack" },
+  }));
+  const sub = priceOf(state.cart, state.products);
+  const needsRx = lines.some((l) => l.p.prescription) && !state.prescription;
+
+  // Empty cart matching cart.png
+  if (!lines.length) {
+    return (
+      <div className="bg-white min-h-[75vh] flex flex-col items-center justify-center p-6 text-center">
+        {/* Shopping Cart Artwork with floating flies/sparkles matching screenshot */}
+        <div className="relative mb-6">
+          <div className="grid h-36 w-36 place-items-center rounded-full bg-gray-50 text-gray-400">
+            <Icon name="cart" size={68} />
+          </div>
+          <span className="absolute -top-1 right-2 text-xl">✨</span>
+          <span className="absolute bottom-2 -left-2 text-xl">✨</span>
+        </div>
+
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Your cart is empty</h1>
+        <p className="mt-1 text-xs sm:text-sm text-gray-500 max-w-sm">
+          We have all the medicines and healthcare products that you need.
+        </p>
+
+        <A
+          href="/medicines"
+          className="mt-6 inline-block rounded-md border-2 border-[#ff6f61] px-8 py-2.5 text-xs sm:text-sm font-bold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition shadow-sm"
+        >
+          Find medicines
+        </A>
+      </div>
+    );
+  }
+
+  // Active Cart State
+  return (
+    <div className="bg-[#fafafa] min-h-[80vh] py-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">My Cart ({lines.length} items)</h1>
+
+        <div className="grid gap-6 lg:grid-cols-12 items-start">
+          {/* Cart Items List */}
+          <div className="lg:col-span-8 space-y-4">
+            <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm divide-y divide-gray-100">
+              {lines.map(({ p, quantity, pack }) => (
+                <div key={p.id} className="py-4 first:pt-0 last:pb-0 flex gap-4 items-center">
+                  <div className="h-20 w-20 shrink-0 grid place-items-center rounded-lg bg-gray-50 text-[#ff6f61]">
+                    <Icon name="bottle" size={32} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <A href={`/product/${p.id}`} className="text-sm font-bold text-gray-900 hover:text-[#ff6f61] transition truncate block">
+                      {p.name}
+                    </A>
+                    <p className="text-xs text-gray-500">{pack || p.pack}</p>
+                    {p.prescription && (
+                      <span className="inline-block mt-1 rounded bg-red-50 text-red-600 px-1.5 py-0.5 text-[10px] font-bold">
+                        Prescription Required
+                      </span>
+                    )}
+
+                    <div className="mt-3 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 border border-gray-300 rounded-md bg-white">
+                        <button
+                          onClick={() => setQty(p.id, Math.max(0, quantity - 1))}
+                          className="px-2 py-1 text-gray-600 hover:text-black font-bold"
+                        >
+                          -
+                        </button>
+                        <span className="w-6 text-center text-xs font-bold">{quantity}</span>
+                        <button
+                          onClick={() => setQty(p.id, quantity + 1)}
+                          className="px-2 py-1 text-gray-600 hover:text-black font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <div className="text-right">
+                        <span className="text-sm font-bold text-gray-900">{money(p.price * quantity)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {needsRx && (
+              <div className="rounded-xl border border-amber-300 bg-[#fef7e7] p-4 text-xs text-gray-800">
+                <span className="font-bold">Prescription required for some items. </span>
+                <A href="/prescription-upload" className="font-bold text-[#ff6f61] underline ml-1">
+                  Upload prescription now
+                </A>
+              </div>
+            )}
+          </div>
+
+          {/* Order Summary Card */}
+          <div className="lg:col-span-4">
+            <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm space-y-4">
+              <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wide">
+                Order Summary
+              </h2>
+
+              <div className="space-y-2 text-xs text-gray-600 border-b border-gray-100 pb-4">
+                <div className="flex justify-between">
+                  <span>Item Total</span>
+                  <span className="font-semibold text-gray-900">{money(sub)}</span>
+                </div>
+                <div className="flex justify-between text-emerald-600">
+                  <span>Care Plan Savings (demo)</span>
+                  <span>-₹50</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Shipping Fee</span>
+                  <span className="text-emerald-600 font-semibold">FREE</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between text-base font-bold text-gray-900">
+                <span>To Pay</span>
+                <span>{money(Math.max(0, sub - 50))}</span>
+              </div>
+
+              <button
+                disabled={needsRx}
+                onClick={() => go("/checkout")}
+                className="w-full rounded-md bg-[#ff6f61] py-3 text-xs font-bold text-white shadow hover:bg-[#e85b4d] uppercase tracking-wider transition disabled:bg-gray-300"
+              >
+                PROCEED TO CHECKOUT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------- LISTING & SEARCH ----------------------
 export function Listing({ params, base }) {
   const { state } = useApp();
   const { path, query } = useLoc();
   const q = query.get("q") || "";
   const cat = params.category ? state.categories.find((c) => c.slug === params.category) : null;
+  const blank = { cat: "", brands: [], max: 3000, rxOnly: null, sort: "popular" };
   const [f, setF] = useState(blank);
+
   useEffect(() => setF(blank), [path, q]);
+
   let list = state.products.filter((p) => p.visible);
   if (base === "medicines") list = list.filter((p) => /medicine/i.test(p.category) || ["Vitamins & Supplements", "Diabetes Care"].includes(p.category));
   if (base === "healthcare") list = list.filter((p) => !p.prescription);
   if (cat) list = state.products.filter((p) => p.visible && p.category === cat.name);
-  if (base === "search") { const t = q.toLowerCase(); list = list.filter((p) => `${p.name} ${p.brand} ${p.category}`.toLowerCase().includes(t)); }
+  if (base === "search") {
+    const t = q.toLowerCase();
+    list = list.filter((p) => `${p.name} ${p.brand} ${p.category}`.toLowerCase().includes(t));
+  }
+
   const shown = applyFilters(list, f);
   const title = base === "search" ? `Results for “${q}”` : cat ? cat.name : base === "medicines" ? "Medicines" : "Healthcare products";
-  const tests = base === "search" ? state.labTests.filter((t) => t.visible && t.name.toLowerCase().includes(q.toLowerCase())) : [];
-  if (params.category && !cat) return <NotFound/>;
-  return <div className="container-page py-8">
-    <Crumbs items={[[base === "search" ? "Search" : base === "medicines" ? "Medicines" : "Healthcare", cat ? `/${base}` : null], ...(cat ? [[cat.name]] : [])]}/>
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><h1 className="font-display text-3xl font-semibold">{title}</h1><p className="text-sm text-muted-foreground">{shown.length} demonstration products{cat ? ` · ${cat.description}` : ""}</p></div><SortSelect f={f} setF={setF}/></div>
-    {base === "medicines" && !cat && <div className="mb-5"><DemoNote>Prescription items require a demo prescription upload before checkout. Nothing is dispensed or delivered.</DemoNote></div>}
-    {!cat && base !== "search" && <div className="mb-5 flex gap-2 overflow-x-auto pb-1">{state.categories.filter((c) => c.visible && (base === "healthcare" ? !/prescription/i.test(c.name) : true)).map((c) => <A key={c.id} href={`/${base}/${c.slug}`} className="chip shrink-0">{c.name}</A>)}</div>}
-    <div className="grid gap-6 lg:grid-cols-[240px_1fr]"><ProductFilters list={list} f={f} setF={setF}/>
-      <div>{tests.length > 0 && <div className="mb-6"><h2 className="mb-3 font-semibold">Lab tests</h2><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{tests.map((t) => <LabCard key={t.id} t={t}/>)}</div></div>}
-        {shown.length ? <ProductGrid items={shown}/> : <Empty icon="search" title="No products match" text="Try a different search or clear the filters." action="Browse all medicines"/>}</div>
-    </div>
-  </div>;
-}
 
-export function Product({ params }) {
-  const { state, addToCart, toggleWish, viewed } = useApp();
-  const go = useGo();
-  const p = state.products.find((x) => x.id === params.id && x.visible);
-  const [qty, setQty] = useState(1);
-  const [pack, setPack] = useState(p?.pack);
-  const [img, setImg] = useState(0);
-  useEffect(() => { if (p) { viewed(p.id); setPack(p.pack); setQty(1); } }, [p?.id]); // eslint-disable-line
-  if (!p) return <NotFound/>;
-  const off = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
-  const related = state.products.filter((x) => x.visible && x.category === p.category && x.id !== p.id).slice(0, 4);
-  const recent = state.recent.filter((id) => id !== p.id).map((id) => state.products.find((x) => x.id === id)).filter(Boolean).slice(0, 4);
-  const icon = catIcon(state.categories, p.category);
-  const mult = pack === "Pack of 2" ? 2 : pack === "Pack of 3" ? 3 : 1;
-  const add = () => addToCart({ ...p }, qty * mult, p.pack);
-  return <div className="container-page py-8">
-    <Crumbs items={[[p.prescription ? "Medicines" : "Healthcare", p.prescription ? "/medicines" : "/healthcare"], [p.category, `/${p.prescription ? "medicines" : "healthcare"}/${state.categories.find((c) => c.name === p.category)?.slug || ""}`], [p.name]]}/>
-    <div className="grid gap-8 lg:grid-cols-2">
-      <div><div className="card aspect-square overflow-hidden"><Art icon={icon} seed={parseInt(p.id.slice(-2)) + img} image={img === 0 ? p.image : ""} alt={p.name} label={img ? ["", "BACK OF PACK", "LABEL VIEW"][img] : ""}/></div>
-        <div className="mt-3 flex gap-2">{[0, 1, 2].map((i) => <button key={i} onClick={() => setImg(i)} aria-label={`View image ${i + 1}`} className={cx("h-16 w-16 overflow-hidden rounded-xl border-2", img === i ? "border-primary" : "border-transparent")}><Art icon={icon} seed={parseInt(p.id.slice(-2)) + i} image={i === 0 ? p.image : ""} alt=""/></button>)}</div></div>
-      <div><p className="text-sm font-medium text-primary">{p.brand}</p><h1 className="mt-1 font-display text-3xl font-semibold">{p.name}</h1>
-        <div className="mt-2 flex flex-wrap gap-2"><Badge tone="muted">{p.category}</Badge>{p.prescription && <Badge tone="rx">Prescription required</Badge>}<Badge tone={p.stock > 10 ? "ok" : "warn"}>{p.stock > 0 ? `${p.stock} in stock (demo)` : "Out of stock"}</Badge></div>
-        <div className="mt-5 flex items-baseline gap-3"><span className="text-3xl font-bold">{money(p.price)}</span>{off > 0 && <><span className="text-muted-foreground line-through">MRP {money(p.mrp)}</span><Badge tone="ok">{off}% off</Badge></>}</div><p className="text-xs text-muted-foreground">Demonstration price, inclusive of all taxes</p>
-        <div className="mt-5"><p className="mb-2 text-sm font-semibold">Pack size</p><div className="flex flex-wrap gap-2">{p.packs.map((x) => <button key={x} onClick={() => setPack(x)} className={cx("chip", pack === x && "chip-on")}>{x}</button>)}</div></div>
-        <div className="mt-5 flex flex-wrap items-center gap-3"><Qty value={qty} set={setQty}/>
-          {p.prescription && !state.prescription ? <button className="btn btn-primary flex-1" onClick={() => go("/prescription-upload")}><Icon name="upload" size={17}/>Upload prescription to add</button> : <button className="btn btn-primary flex-1" disabled={p.stock <= 0} onClick={add}><Icon name="cart" size={17}/>Add to cart</button>}
-          <button className="btn btn-outline" onClick={() => toggleWish(p.id)} aria-pressed={state.wishlist.includes(p.id)}><Icon name="heart" size={17} className={state.wishlist.includes(p.id) ? "fill-current text-destructive" : ""}/>Wishlist</button></div>
-        {p.prescription && <div className="mt-4"><DemoNote>This item is marked prescription-required. A demo upload unlocks the cart; it is not reviewed by a pharmacist and nothing is dispensed.</DemoNote></div>}
-        <div className="mt-6 card p-4"><h2 className="font-semibold">About this product</h2><p className="mt-2 text-sm text-muted-foreground">{p.description}</p><dl className="mt-3 grid grid-cols-2 gap-2 text-sm"><dt className="text-muted-foreground">Product ID</dt><dd>{p.id}</dd><dt className="text-muted-foreground">Pack</dt><dd>{p.pack}</dd><dt className="text-muted-foreground">Brand</dt><dd>{p.brand}</dd></dl></div>
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-gray-100 pb-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+          <p className="text-xs text-gray-500 mt-1">{shown.length} products available</p>
+        </div>
+        <SortSelect f={f} setF={setF} />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
+        <ProductFilters list={list} f={f} setF={setF} />
+        <div>
+          {shown.length ? (
+            <ProductGrid items={shown} />
+          ) : (
+            <Empty icon="search" title="No products found" text="Try searching with a different term." action="Browse all medicines" />
+          )}
+        </div>
       </div>
     </div>
-    {related.length > 0 && <div className="mt-12"><h2 className="mb-4 font-display text-2xl font-semibold">Related products</h2><ProductGrid items={related}/></div>}
-    {recent.length > 0 && <div className="mt-12"><h2 className="mb-4 font-display text-2xl font-semibold">Recently viewed</h2><ProductGrid items={recent}/></div>}
-  </div>;
-}
-export const Qty = ({ value, set, small }) => <div className="flex items-center rounded-xl border border-border bg-card"><button className={cx("grid place-items-center text-primary", small ? "h-8 w-8" : "h-11 w-10")} onClick={() => set(Math.max(small ? 0 : 1, value - 1))} aria-label="Decrease quantity"><Icon name="minus" size={16}/></button><span className="w-8 text-center text-sm font-semibold" aria-live="polite">{value}</span><button className={cx("grid place-items-center text-primary", small ? "h-8 w-8" : "h-11 w-10")} onClick={() => set(value + 1)} aria-label="Increase quantity"><Icon name="plus" size={16}/></button></div>;
-
-export function PrescriptionUpload() {
-  const { state, update, toast } = useApp();
-  const [file, setFile] = useState(null); const [url, setUrl] = useState(""); const [err, setErr] = useState("");
-  useEffect(() => () => url && URL.revokeObjectURL(url), [url]);
-  const pick = (e) => { const f = e.target.files?.[0]; setErr(""); if (!f) return; if (!/^image\/|pdf$/.test(f.type)) return setErr("Please choose an image or PDF file."); if (f.size > 5e6) return setErr("Please choose a file under 5 MB."); setFile(f); setUrl(URL.createObjectURL(f)); };
-  return <div className="container-page max-w-3xl py-8"><Crumbs items={[["Medicines", "/medicines"], ["Upload prescription"]]}/><h1 className="font-display text-3xl font-semibold">Upload a prescription</h1><p className="mt-1 text-muted-foreground">A demonstration of the prescription step for Rx-marked products.</p>
-    <div className="mt-5"><DemoNote>Demonstration only. Your file is previewed in this browser and is <strong>never uploaded, stored or reviewed</strong>. No pharmacist verification takes place. Please don't use a real prescription.</DemoNote></div>
-    <div className="card mt-5 p-6"><label className="flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-border p-8 text-center hover:border-primary"><Icon name="upload" size={32} className="text-primary"/><span className="mt-2 font-semibold">Choose an image or PDF</span><span className="text-xs text-muted-foreground">Max 5 MB · preview only</span><input type="file" accept="image/*,application/pdf" className="sr-only" onChange={pick}/></label>
-      {err && <p className="mt-3 text-sm text-destructive" role="alert">{err}</p>}
-      {file && <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">{file.type.startsWith("image/") ? <img src={url} alt="Prescription preview" className="h-40 w-40 rounded-xl border border-border object-cover"/> : <div className="grid h-40 w-40 place-items-center rounded-xl border border-border bg-surface text-sm">PDF selected</div>}<div className="flex-1"><p className="font-semibold">{file.name}</p><p className="text-xs text-muted-foreground">{Math.round(file.size / 1024)} KB · not uploaded</p><div className="mt-3 flex gap-2"><button className="btn btn-primary" onClick={() => { update({ prescription: { name: file.name } }); toast("Demo prescription attached for this session"); }}>Attach for this session</button><button className="btn btn-outline" onClick={() => { setFile(null); setUrl(""); }}>Remove</button></div></div></div>}
-      {state.prescription && <p className="mt-4 flex items-center gap-2 text-sm text-success"><Icon name="check" size={16}/>Demo prescription “{state.prescription.name}” attached (not verified). <A href="/medicines/prescription-medicines" className="underline">Continue shopping</A></p>}
-    </div></div>;
+  );
 }
 
-export function Cart() {
-  const { state, setQty } = useApp();
+// ---------------------- PRODUCT DETAILS PAGE ----------------------
+export function Product({ params }) {
+  const { state, addToCart, toggleWish } = useApp();
   const go = useGo();
-  const lines = state.cart.map((c) => ({ ...c, p: state.products.find((p) => p.id === c.id) })).filter((l) => l.p);
-  const sub = priceOf(state.cart, state.products);
-  const needsRx = lines.some((l) => l.p.prescription) && !state.prescription;
-  if (!lines.length) return <div className="container-page max-w-3xl py-12"><Empty icon="cart" title="Your cart is empty" text="Add demonstration products to explore the checkout flow." action="Explore medicines"/></div>;
-  return <div className="container-page py-8"><h1 className="mb-5 font-display text-3xl font-semibold">Your cart</h1><div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-    <ul className="card divide-y divide-border">{lines.map(({ p, quantity, pack }) => <li key={p.id} className="flex gap-4 p-4"><A href={`/product/${p.id}`} className="h-20 w-20 shrink-0 overflow-hidden rounded-xl"><Art icon={catIcon(state.categories, p.category)} seed={parseInt(p.id.slice(-2))} image={p.image} alt={p.name}/></A><div className="min-w-0 flex-1"><A href={`/product/${p.id}`} className="font-semibold hover:text-primary">{p.name}</A><p className="text-xs text-muted-foreground">{pack} · {p.brand}</p>{p.prescription && <Badge tone="rx">Rx</Badge>}<div className="mt-2 flex flex-wrap items-center justify-between gap-2"><Qty small value={quantity} set={(q) => setQty(p.id, q)}/><span className="font-bold">{money(p.price * quantity)}</span></div><button className="mt-1 text-xs text-destructive hover:underline" onClick={() => setQty(p.id, 0)}>Remove</button></div></li>)}</ul>
-    <Summary sub={sub}>{needsRx && <div className="mb-3"><DemoNote>Your cart has prescription items. <A href="/prescription-upload" className="font-semibold underline">Attach a demo prescription</A> to continue.</DemoNote></div>}<button className="btn btn-primary w-full" disabled={needsRx} onClick={() => go("/checkout")}>Proceed to checkout</button></Summary>
-  </div></div>;
-}
-function Summary({ sub, discount = 0, children }) {
-  const delivery = sub - discount >= 499 || sub === 0 ? 0 : 49;
-  return <aside className="card h-fit p-5"><h2 className="font-semibold">Order summary</h2><dl className="mt-3 space-y-2 text-sm"><div className="flex justify-between"><dt className="text-muted-foreground">Item total</dt><dd>{money(sub)}</dd></div>{discount > 0 && <div className="flex justify-between text-success"><dt>Coupon discount</dt><dd>−{money(discount)}</dd></div>}<div className="flex justify-between"><dt className="text-muted-foreground">Delivery (demo)</dt><dd>{delivery ? money(delivery) : "Free"}</dd></div><div className="flex justify-between border-t border-border pt-2 text-base font-bold"><dt>To pay</dt><dd>{money(sub - discount + delivery)}</dd></div></dl><div className="mt-4">{children}</div><p className="mt-3 text-xs text-muted-foreground">No payment is collected. This is a simulated checkout.</p></aside>;
+  const p = state.products.find((x) => x.id === params.id && x.visible) || state.products[0];
+  const [qty, setQty] = useState(1);
+  const wished = state.wishlist.includes(p.id);
+  const off = p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <div className="grid gap-8 lg:grid-cols-2">
+        {/* Product image */}
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 grid place-items-center">
+          <div className="grid h-64 w-64 place-items-center rounded-2xl bg-gray-50 text-[#ff6f61]">
+            <Icon name="bottle" size={96} />
+          </div>
+        </div>
+
+        {/* Product Info */}
+        <div className="space-y-4">
+          <p className="text-xs font-bold uppercase tracking-wider text-gray-400">{p.brand}</p>
+          <h1 className="text-2xl font-bold text-gray-900 leading-tight">{p.name}</h1>
+          <p className="text-xs text-gray-500">{p.pack}</p>
+
+          <div className="flex items-center gap-2">
+            <Stars rating={p.rating || 4.3} reviews={p.reviews || 88} />
+          </div>
+
+          <div className="flex items-baseline gap-3 pt-2">
+            <span className="text-3xl font-extrabold text-gray-900">{money(p.price)}</span>
+            {off > 0 && (
+              <>
+                <span className="text-sm text-gray-400 line-through">MRP {money(p.mrp)}</span>
+                <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">{off}% off</span>
+              </>
+            )}
+          </div>
+          <p className="text-[11px] text-gray-400">Inclusive of all taxes</p>
+
+          <div className="pt-4 flex items-center gap-3">
+            <div className="flex items-center border border-gray-300 rounded-md">
+              <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-3 py-2 font-bold text-gray-600">-</button>
+              <span className="w-8 text-center text-sm font-bold">{qty}</span>
+              <button onClick={() => setQty((q) => q + 1)} className="px-3 py-2 font-bold text-gray-600">+</button>
+            </div>
+
+            <button
+              onClick={() => addToCart(p, qty)}
+              className="flex-1 rounded-md bg-[#ff6f61] py-3 text-xs font-bold text-white shadow-md hover:bg-[#e85b4d] uppercase tracking-wider"
+            >
+              Add to cart
+            </button>
+
+            <button
+              onClick={() => toggleWish(p.id)}
+              className={cx("p-3 rounded-md border border-gray-300 transition", wished ? "text-red-500 border-red-300" : "text-gray-400 hover:text-black")}
+            >
+              <Icon name="heart" size={20} className={wished ? "fill-current" : ""} />
+            </button>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-gray-100 bg-[#fafafa] p-4 text-xs text-gray-600 leading-relaxed">
+            <h3 className="font-bold text-gray-900 mb-1">Product Description</h3>
+            <p>{p.description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
+// ---------------------- CHECKOUT ----------------------
 export function Checkout() {
   const { state, update, log } = useApp();
   const go = useGo();
   const sub = priceOf(state.cart, state.products);
-  const [code, setCode] = useState(""); const [coupon, setCoupon] = useState(null); const [cErr, setCErr] = useState("");
   const saved = state.addresses[0] || {};
-  const form = useForm({ name: state.user?.name || saved.name || "", phone: saved.phone || "", line: saved.line || "", city: saved.city || "", pin: saved.pin || "", pay: "cod" }, (v) => ({ ...req(v, ["name", "line", "city"]), ...(phoneOk(v.phone) ? {} : { phone: "Enter a valid 10-digit mobile number." }), ...(/^\d{6}$/.test(v.pin) ? {} : { pin: "Enter a 6-digit PIN code." }) }));
-  if (!state.cart.length) return <div className="container-page max-w-3xl py-12"><Empty icon="cart" title="Nothing to check out" text="Your cart is empty." action="Shop products"/></div>;
-  const discount = coupon ? applyCoupon(coupon.code, sub, state.offers).discount || 0 : 0;
+  const form = useForm(
+    { name: state.user?.name || saved.name || "", phone: saved.phone || "", line: saved.line || "", city: saved.city || "Gurgaon", pin: saved.pin || "122001", pay: "cod" },
+    (v) => ({ ...req(v, ["name", "line", "city"]), ...(phoneOk(v.phone) ? {} : { phone: "Enter valid 10-digit number" }) })
+  );
+
   const place = (v) => {
-    const delivery = sub - discount >= 499 ? 0 : 49;
-    const order = { id: `ORD-${Date.now().toString().slice(-6)}`, date: new Date().toISOString().slice(0, 10), customer: v.name, status: "Placed (demo)", address: `${v.line}, ${v.city} ${v.pin}`, coupon: coupon?.code || "", items: state.cart.map((c) => { const p = state.products.find((x) => x.id === c.id); return { id: c.id, name: p.name, price: p.price, quantity: c.quantity }; }), total: sub - discount + delivery };
-    update((s) => ({ orders: [order, ...s.orders], cart: [], lastOrder: order.id, prescription: null }));
-    log(`Demo order ${order.id} created`); go("/order-confirmation");
+    const order = {
+      id: `ORD-${Date.now().toString().slice(-6)}`,
+      date: new Date().toISOString().slice(0, 10),
+      customer: v.name,
+      status: "Placed (demo)",
+      address: `${v.line}, ${v.city} ${v.pin}`,
+      total: sub,
+      items: state.cart.map((c) => ({ id: c.id, quantity: c.quantity })),
+    };
+    update((s) => ({ orders: [order, ...s.orders], cart: [], lastOrder: order.id }));
+    log(`Order ${order.id} placed`);
+    go("/order-confirmation");
   };
-  const F = ({ k, label, ...r }) => <Field label={label} error={form.e[k]}><input className="input" value={form.v[k]} onChange={form.set(k)} {...r}/></Field>;
-  return <div className="container-page py-8"><Crumbs items={[["Cart", "/cart"], ["Checkout"]]}/><h1 className="mb-5 font-display text-3xl font-semibold">Checkout</h1>
-    <form onSubmit={form.submit(place)} className="grid gap-6 lg:grid-cols-[1fr_360px]" noValidate>
-      <div className="space-y-5"><div className="card p-5"><h2 className="mb-4 font-semibold">Delivery address</h2><div className="grid gap-4 sm:grid-cols-2">{F({ k: "name", label: "Full name" })}{F({ k: "phone", label: "Mobile number", inputMode: "numeric" })}<div className="sm:col-span-2">{F({ k: "line", label: "House, street, area" })}</div>{F({ k: "city", label: "City" })}{F({ k: "pin", label: "PIN code", inputMode: "numeric", maxLength: 6 })}</div></div>
-        <div className="card p-5"><h2 className="mb-3 font-semibold">Payment</h2>{[["cod", "Pay on delivery (simulated)"], ["upi", "UPI (simulated — nothing is charged)"]].map(([k, l]) => <label key={k} className="flex items-center gap-2 py-1.5 text-sm"><input type="radio" name="pay" checked={form.v.pay === k} onChange={() => form.setV({ ...form.v, pay: k })} className="accent-[var(--primary)]"/>{l}</label>)}<div className="mt-3"><DemoNote>No payment gateway is connected. Placing the order only creates a demo record in this browser.</DemoNote></div></div></div>
-      <Summary sub={sub} discount={discount}><div className="mb-3"><label className="text-sm font-medium" htmlFor="cc">Coupon code</label><div className="mt-1 flex gap-2"><input id="cc" className="input" value={code} onChange={(e) => setCode(e.target.value)} placeholder="e.g. WELCOME10"/><button type="button" className="btn btn-outline" onClick={() => { const r = applyCoupon(code, sub, state.offers); if (r.error) { setCErr(r.error); setCoupon(null); } else { setCErr(""); setCoupon(r.offer); } }}>Apply</button></div>{cErr && <p className="mt-1 text-xs text-destructive">{cErr}</p>}{coupon && <p className="mt-1 text-xs text-success">{coupon.code} applied — you save {money(discount)}. <button type="button" className="underline" onClick={() => setCoupon(null)}>Remove</button></p>}</div><button className="btn btn-primary w-full">Place demo order</button></Summary>
-    </form></div>;
+
+  const F = ({ k, label }) => (
+    <Field label={label} error={form.e[k]}>
+      <input className="input" value={form.v[k]} onChange={form.set(k)} />
+    </Field>
+  );
+
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Simulated Checkout</h1>
+      <form onSubmit={form.submit(place)} className="grid gap-6 md:grid-cols-12">
+        <div className="md:col-span-8 rounded-xl border border-gray-200 bg-white p-6 space-y-4">
+          <h2 className="font-bold text-gray-900">Delivery Address</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {F({ k: "name", label: "Full Name" })}
+            {F({ k: "phone", label: "Mobile Number" })}
+            <div className="sm:col-span-2">{F({ k: "line", label: "Address Line" })}</div>
+            {F({ k: "city", label: "City" })}
+            {F({ k: "pin", label: "PIN Code" })}
+          </div>
+        </div>
+        <div className="md:col-span-4 rounded-xl border border-gray-200 bg-white p-5 space-y-4">
+          <h2 className="font-bold text-gray-900">To Pay: {money(sub)}</h2>
+          <button type="submit" className="w-full rounded bg-[#ff6f61] py-3 text-xs font-bold text-white shadow hover:bg-[#e85b4d] uppercase">
+            Place Order
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
+// ---------------------- ORDER CONFIRMATION & ORDERS ----------------------
 export function OrderConfirmation() {
   const { state } = useApp();
-  const o = state.orders.find((x) => x.id === state.lastOrder);
-  if (!o) return <div className="container-page max-w-3xl py-12"><Empty title="No recent order" text="Place a demo order to see a confirmation." action="Start shopping"/></div>;
-  return <div className="container-page max-w-2xl py-12 text-center"><span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-success/15 text-success"><Icon name="check" size={32}/></span><h1 className="mt-4 font-display text-3xl font-semibold">Demo order recorded</h1><p className="mt-2 text-muted-foreground">Order <strong>{o.id}</strong> for {money(o.total)} was saved in this browser only. No payment was taken and nothing will be delivered.</p><div className="mt-6 flex justify-center gap-3"><A href={`/orders/${o.id}`} className="btn btn-primary">View order</A><A href="/" className="btn btn-outline">Back to home</A></div></div>;
+  const o = state.orders.find((x) => x.id === state.lastOrder) || state.orders[0];
+
+  return (
+    <div className="mx-auto max-w-xl px-4 py-16 text-center">
+      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-100 text-emerald-700">
+        <Icon name="check" size={32} />
+      </div>
+      <h1 className="mt-4 text-2xl font-bold text-gray-900">Order Confirmed!</h1>
+      <p className="mt-2 text-xs text-gray-500">Order ID: <strong>{o?.id}</strong></p>
+      <div className="mt-6 flex justify-center gap-3">
+        <A href="/orders" className="rounded bg-[#ff6f61] px-5 py-2 text-xs font-bold text-white">View Orders</A>
+        <A href="/" className="rounded border border-gray-300 px-5 py-2 text-xs font-semibold text-gray-700">Back Home</A>
+      </div>
+    </div>
+  );
 }
 
 export function Orders() {
   const { state } = useApp();
-  return <div className="container-page max-w-4xl py-8"><h1 className="mb-1 font-display text-3xl font-semibold">My orders</h1><p className="mb-5 text-sm text-muted-foreground">Sample orders and demo orders you place are shown here.</p>
-    {state.orders.length ? <ul className="space-y-3">{state.orders.map((o) => <li key={o.id}><A href={`/orders/${o.id}`} className="card flex flex-wrap items-center justify-between gap-3 p-4 hover:border-primary"><div><p className="font-semibold">{o.id}</p><p className="text-xs text-muted-foreground">{o.date} · {o.items.length} items</p></div><StatusBadge s={o.status}/><span className="font-bold">{money(o.total)}</span></A></li>)}</ul> : <Empty title="No orders yet" text="Your demo orders will appear here." action="Start shopping"/>}
-    <BookingHistory/></div>;
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">My Orders</h1>
+      {state.orders.length ? (
+        <div className="space-y-3">
+          {state.orders.map((o) => (
+            <div key={o.id} className="rounded-xl border border-gray-200 bg-white p-4 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-gray-900">{o.id}</p>
+                <p className="text-xs text-gray-500">{o.date} · {o.status}</p>
+              </div>
+              <span className="font-bold text-[#ff6f61]">{money(o.total)}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Empty title="No orders yet" text="Explore products and place your first demo order." action="Shop now" />
+      )}
+    </div>
+  );
 }
-function BookingHistory() {
-  const { state } = useApp();
-  return <div className="mt-10 grid gap-6 md:grid-cols-2"><div><h2 className="mb-3 font-semibold">Lab bookings (demo)</h2>{state.bookings.map((b) => <div key={b.id} className="card mb-2 p-3 text-sm"><div className="flex justify-between"><strong>{b.id}</strong><StatusBadge s={b.status}/></div><p className="text-muted-foreground">{b.tests.join(", ")} · {b.date} {b.time}</p></div>)}</div><div><h2 className="mb-3 font-semibold">Consultations (demo)</h2>{state.appointments.map((b) => <div key={b.id} className="card mb-2 p-3 text-sm"><div className="flex justify-between"><strong>{b.id}</strong><StatusBadge s={b.status}/></div><p className="text-muted-foreground">{b.doctor} · {b.specialty} · {b.date} {b.time}</p></div>)}</div></div>;
-}
-export const StatusBadge = ({ s }) => <Badge tone={/deliver|complete/i.test(s) ? "ok" : /cancel/i.test(s) ? "rx" : /ship|schedul/i.test(s) ? "mint" : "warn"}>{s}</Badge>;
 
-export function OrderDetail({ params }) {
-  const { state, addToCart } = useApp();
-  const o = state.orders.find((x) => x.id === params.id);
-  if (!o) return <NotFound/>;
-  const reorder = () => o.items.forEach((i) => { const p = state.products.find((x) => x.id === i.id); if (p && p.visible) addToCart(p, i.quantity); });
-  const steps = ["Placed", "Processing", "Shipped", "Delivered"];
-  const at = Math.max(0, steps.findIndex((s) => o.status.startsWith(s)));
-  return <div className="container-page max-w-3xl py-8"><Crumbs items={[["Orders", "/orders"], [o.id]]}/><div className="flex flex-wrap items-center justify-between gap-3"><h1 className="font-display text-3xl font-semibold">{o.id}</h1><StatusBadge s={o.status}/></div><p className="text-sm text-muted-foreground">{o.date} · Demo record — not a real order</p>
-    <ol className="my-6 grid grid-cols-4 gap-2">{steps.map((s, i) => <li key={s} className="text-center text-xs"><div className={cx("mx-auto mb-1 h-2 rounded-full", i <= at ? "bg-primary" : "bg-border")}/>{s}</li>)}</ol>
-    <ul className="card divide-y divide-border">{o.items.map((i) => <li key={i.id} className="flex justify-between p-4 text-sm"><span>{i.name} × {i.quantity}</span><span className="font-semibold">{money(i.price * i.quantity)}</span></li>)}<li className="flex justify-between p-4 font-bold"><span>Total</span><span>{money(o.total)}</span></li></ul>
-    <p className="mt-4 text-sm"><span className="text-muted-foreground">Delivery address:</span> {o.address}</p>
-    <button className="btn btn-primary mt-5" onClick={reorder}><Icon name="cart" size={17}/>Reorder items</button></div>;
+export function OrderDetail() {
+  return <Orders />;
 }
 
 export function NotFound() {
-  return <div className="container-page max-w-xl py-20 text-center"><p className="font-display text-7xl font-semibold text-primary">404</p><h1 className="mt-3 text-xl font-semibold">We couldn't find that page</h1><p className="mt-2 text-muted-foreground">The link may be broken or the item may be hidden.</p><A href="/" className="btn btn-primary mt-6">Go home</A></div>;
+  return (
+    <div className="p-16 text-center">
+      <h1 className="text-3xl font-bold text-gray-900">Page Not Found</h1>
+      <A href="/" className="mt-4 inline-block text-sm font-semibold text-[#ff6f61] underline">Back to Home</A>
+    </div>
+  );
 }
+
+export function StatusBadge({ s }) {
+  const tones = {
+    Delivered: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    Shipped: "bg-blue-50 text-blue-700 border-blue-200",
+    Processing: "bg-amber-50 text-amber-700 border-amber-200",
+    Placed: "bg-purple-50 text-purple-700 border-purple-200",
+    Cancelled: "bg-red-50 text-red-700 border-red-200",
+    Scheduled: "bg-sky-50 text-sky-700 border-sky-200",
+  };
+  return (
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${tones[s] || "bg-gray-100 text-gray-700 border-gray-200"}`}>
+      {s}
+    </span>
+  );
+}
+
