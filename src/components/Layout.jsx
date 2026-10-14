@@ -583,7 +583,7 @@ export function Footer() {
 
           {/* Download App */}
           <div>
-            <h4 className="mb-3 text-sm font-bold text-gray-900">Download the Tata 1mg app</h4>
+            <h4 className="mb-3 text-sm font-bold text-gray-900">Download the MEDITRUST app</h4>
             <div className="space-y-2">
               <a
                 href="https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus"
@@ -627,7 +627,7 @@ export function Footer() {
             <div>
               <h5 className="font-bold text-gray-900 text-sm">Reliable</h5>
               <p className="mt-1 text-xs text-gray-500 leading-relaxed">
-                All products displayed on Tata 1mg are procured from verified and licensed pharmacies. All labs listed on the platform are accredited.
+                All products displayed on MEDITRUST are procured from verified and licensed pharmacies. All labs listed on the platform are accredited.
               </p>
             </div>
           </div>
@@ -639,7 +639,7 @@ export function Footer() {
             <div>
               <h5 className="font-bold text-gray-900 text-sm">Secure</h5>
               <p className="mt-1 text-xs text-gray-500 leading-relaxed">
-                Tata 1mg uses Secure Sockets Layer (SSL) 128-bit encryption and is Payment Card Industry Data Security Standard (PCI DSS) compliant.
+                MEDITRUST uses Secure Sockets Layer (SSL) 128-bit encryption and is Payment Card Industry Data Security Standard (PCI DSS) compliant.
               </p>
             </div>
           </div>
@@ -674,21 +674,21 @@ export function Footer() {
           </p>
         </div>
 
-        {/* 4. Expandable "Know more about Tata 1mg" Accordion */}
+        {/* 4. Expandable "Know more about MEDITRUST" Accordion */}
         <div className="border-t border-gray-100 pt-6">
           <button
             type="button"
             onClick={() => setExpandInfo((v) => !v)}
             className="flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-[#ff6f61] transition"
           >
-            <span>Know more about Tata 1mg</span>
+            <span>Know more about MEDITRUST</span>
             <Icon name="chev" size={14} className={expandInfo ? "rotate-180" : ""} />
           </button>
 
           {expandInfo && (
             <div className="mt-4 space-y-3 text-xs leading-relaxed text-gray-500">
               <p>
-                Tata 1mg is your complete healthcare partner. We simplify healthcare with reliable medicines delivered to your doorstep, accredited diagnostic lab tests from the comfort of your home, and online doctor consultations across all clinical specialties.
+                MEDITRUST (MEDITRUST LIFE SCIENCE PVT LTD) is your complete healthcare partner under the visionary leadership of registered directors Ajay Kumar Pathri and Omkar Sanjay Telangi. We simplify healthcare with reliable medicines delivered to your doorstep, accredited diagnostic lab tests from the comfort of your home, and online doctor consultations across all clinical specialties.
               </p>
               <p>
                 Our Care Plan offers extra benefits including flat 5% extra savings on medicines, zero delivery fees on orders, complimentary lab checkups, and exclusive member discounts.
@@ -697,10 +697,38 @@ export function Footer() {
           )}
         </div>
 
+        {/* Corporate & Registered Office Information */}
+        <div className="mt-8 border-t border-gray-100 pt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-600">
+          <div>
+            <h5 className="font-bold text-gray-900 mb-1.5 text-sm">MEDITRUST LIFE SCIENCE PVT LTD</h5>
+            <p className="leading-relaxed">
+              <strong>Registered Office:</strong> Morya Colony, Matoshree Nagar, Sector No. 32, Chinchwad, Pimpri-Chinchwad, Maharashtra 411033
+            </p>
+            <p className="mt-1">
+              <strong>Registered Directors:</strong> Ajay Kumar Pathri, Omkar Sanjay Telangi
+            </p>
+          </div>
+          <div>
+            <h5 className="font-bold text-gray-900 mb-1.5 text-sm">Customer Support &amp; Enquiries</h5>
+            <p>
+              <strong>Phone:</strong>{" "}
+              <a href="tel:+917276048377" className="font-semibold text-[#ff6f61] hover:underline">
+                +91 7276048377
+              </a>
+            </p>
+            <p className="mt-1">
+              <strong>Email:</strong>{" "}
+              <a href="mailto:contact@meditrusts.life" className="font-semibold text-[#ff6f61] hover:underline">
+                contact@meditrusts.life
+              </a>
+            </p>
+          </div>
+        </div>
+
         {/* 5. Legal disclaimer and Copyright */}
-        <div className="mt-8 border-t border-gray-100 pt-6 text-[11px] text-gray-500 leading-relaxed">
+        <div className="mt-6 border-t border-gray-100 pt-4 text-[11px] text-gray-500 leading-relaxed">
           <p>
-            © 2026 Tata 1mg. All rights reserved. All medicines are dispensed in compliance with the Drugs and Cosmetics Act, 1940 and Drugs and Cosmetics Rules, 1945. We do not process requests for Schedule X and habit forming drugs.
+            © 2026 MEDITRUST LIFE SCIENCE PVT LTD. All rights reserved. All medicines are dispensed in compliance with the Drugs and Cosmetics Act, 1940 and Drugs and Cosmetics Rules, 1945. We do not process requests for Schedule X and habit forming drugs.
           </p>
         </div>
 
@@ -752,8 +780,8 @@ export function StickyBottomBar() {
           <div className="text-xs sm:text-sm">
             <span className="font-bold text-gray-900">Order Medicines on Call </span>
             <span className="text-gray-600">Call us at </span>
-            <a href="tel:18002122323" className="font-bold text-emerald-700 hover:underline">
-              1800-212-2323
+            <a href="tel:+917276048377" className="font-bold text-emerald-700 hover:underline">
+              +91 7276048377
             </a>
             <span className="text-gray-600"> or get a call back</span>
           </div>

@@ -47,10 +47,14 @@ function DealCard({ item }) {
       <div>
         {/* Product image container */}
         <A href={`/search?q=${encodeURIComponent(item.name.slice(0, 15))}`} className="block relative aspect-square w-full mb-2">
-          <div className="grid h-full w-full place-items-center p-2 rounded-lg bg-white">
-            <div className="grid h-20 w-20 place-items-center rounded-xl bg-gray-50 text-[#ff6f61]">
-              <Icon name="bottle" size={34} />
-            </div>
+          <div className="grid h-full w-full place-items-center p-2 rounded-lg bg-white overflow-hidden">
+            {item.image ? (
+              <img src={item.image} alt={item.name} className="h-full w-full object-contain hover:scale-105 transition" />
+            ) : (
+              <div className="grid h-20 w-20 place-items-center rounded-xl bg-gray-50 text-[#ff6f61]">
+                <Icon name="bottle" size={34} />
+              </div>
+            )}
           </div>
         </A>
 
@@ -189,34 +193,46 @@ export function Home() {
           <div className="grid gap-4 lg:grid-cols-12 items-stretch">
             {/* Left Main Hero Banner */}
             <div
-              className={`relative lg:col-span-8 overflow-hidden rounded-xl bg-gradient-to-r ${slide.bg} p-6 sm:p-8 flex flex-col justify-between min-h-[220px] shadow-sm`}
+              className={`relative lg:col-span-8 overflow-hidden rounded-xl bg-gradient-to-r ${slide.bg} flex flex-col justify-between min-h-[220px] shadow-sm`}
             >
-              <div className="max-w-md">
-                <span className="inline-block rounded-md bg-black px-2 py-0.5 text-[10px] font-black text-white tracking-widest uppercase mb-2">
-                  {slide.brandTag}
-                </span>
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 leading-tight">
-                  {slide.headline}
-                </h1>
-                <ul className="mt-3 space-y-1 text-xs text-gray-700 font-medium">
-                  {slide.features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-1.5">
-                      <Icon name="check" size={13} className="text-[#ff6f61]" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between">
-                <A
-                  href={slide.actionHref}
-                  className="rounded-md bg-black px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-gray-800 transition"
-                >
-                  {slide.actionText}
+              {slide.image ? (
+                <A href={slide.actionHref} className="block w-full h-full">
+                  <img
+                    src={slide.image}
+                    alt={slide.headline}
+                    className="w-full h-full object-cover rounded-xl min-h-[220px]"
+                  />
                 </A>
-                <span className="text-[10px] text-gray-500 font-medium">T&amp;C Apply</span>
-              </div>
+              ) : (
+                <div className="p-6 sm:p-8 flex flex-col justify-between h-full">
+                  <div className="max-w-md">
+                    <span className="inline-block rounded-md bg-black px-2 py-0.5 text-[10px] font-black text-white tracking-widest uppercase mb-2">
+                      {slide.brandTag}
+                    </span>
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 leading-tight">
+                      {slide.headline}
+                    </h1>
+                    <ul className="mt-3 space-y-1 text-xs text-gray-700 font-medium">
+                      {slide.features.map((f, i) => (
+                        <li key={i} className="flex items-center gap-1.5">
+                          <Icon name="check" size={13} className="text-[#ff6f61]" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <A
+                      href={slide.actionHref}
+                      className="rounded-md bg-black px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-gray-800 transition"
+                    >
+                      {slide.actionText}
+                    </A>
+                    <span className="text-[10px] text-gray-500 font-medium">T&amp;C Apply</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Public Interest Banner (PvPI toll-free) */}
@@ -291,7 +307,7 @@ export function Home() {
       <section className="py-6 text-center border-b border-gray-100">
         <div className="mx-auto max-w-7xl px-4">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
-            Tata 1mg: India's Leading Online Pharmacy &amp; Healthcare Platform
+            MEDITRUST: India's Leading Online Pharmacy &amp; Healthcare Platform
           </h2>
         </div>
       </section>
@@ -300,9 +316,17 @@ export function Home() {
       <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6">
         <div className="relative overflow-hidden rounded-2xl bg-[#fef4e8] border border-amber-200 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-4">
-            <div className="hidden sm:grid h-16 w-16 shrink-0 place-items-center rounded-full bg-amber-200/70 text-[#662d1b] font-black text-xl">
-              1mg
-            </div>
+            {D.carePlanBanner.avatar ? (
+              <img
+                src={D.carePlanBanner.avatar}
+                alt="Care Plan"
+                className="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-contain shrink-0 bg-amber-100/60 p-1 shadow-xs"
+              />
+            ) : (
+              <div className="hidden sm:grid h-16 w-16 shrink-0 place-items-center rounded-full bg-amber-200/70 text-[#662d1b] font-black text-xl">
+                1mg
+              </div>
+            )}
             <div>
               <div className="flex items-center gap-2">
                 <span className="rounded bg-[#662d1b] px-2 py-0.5 text-xs font-bold text-white uppercase tracking-wider">
@@ -344,9 +368,17 @@ export function Home() {
                   className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
                   style={{ backgroundColor: hc.color }}
                 >
-                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
-                    <Icon name={hc.icon} size={28} className="text-[#ff6f61]" />
-                  </div>
+                  {hc.image ? (
+                    <img
+                      src={hc.image}
+                      alt={hc.name}
+                      className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+                    />
+                  ) : (
+                    <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                      <Icon name={hc.icon} size={28} className="text-[#ff6f61]" />
+                    </div>
+                  )}
                 </div>
                 <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition line-clamp-2">
                   {hc.name}
@@ -376,10 +408,18 @@ export function Home() {
                 href={`/search?q=${encodeURIComponent(b.name)}`}
                 className="w-[105px] sm:w-[120px] shrink-0 text-center group"
               >
-                <div className="aspect-square w-full rounded-full border border-gray-200 bg-white grid place-items-center p-3 mb-1.5 shadow-sm group-hover:shadow-md transition group-hover:border-[#ff6f61]">
-                  <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
-                    {b.name}
-                  </span>
+                <div className="aspect-square w-full rounded-full border border-gray-200 bg-white grid place-items-center p-3 mb-1.5 shadow-sm group-hover:shadow-md transition group-hover:border-[#ff6f61] overflow-hidden">
+                  {b.image ? (
+                    <img
+                      src={b.image}
+                      alt={b.name}
+                      className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
+                    />
+                  ) : (
+                    <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
+                      {b.name}
+                    </span>
+                  )}
                 </div>
                 <p className="text-[11px] text-gray-500 truncate">{b.category}</p>
               </A>
@@ -398,12 +438,20 @@ export function Home() {
                 className="w-[125px] sm:w-[135px] shrink-0 text-center group"
               >
                 <div
-                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition overflow-hidden"
                   style={{ backgroundColor: pc.color }}
                 >
-                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
-                    <Icon name="sparkle" size={28} className="text-[#ff6f61]" />
-                  </div>
+                  {pc.image ? (
+                    <img
+                      src={pc.image}
+                      alt={pc.name}
+                      className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+                    />
+                  ) : (
+                    <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                      <Icon name="sparkle" size={28} className="text-[#ff6f61]" />
+                    </div>
+                  )}
                 </div>
                 <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition">
                   {pc.name}
@@ -480,12 +528,20 @@ export function Home() {
                 className="w-[125px] sm:w-[135px] shrink-0 text-center group"
               >
                 <div
-                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition"
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-2 shadow-sm group-hover:scale-105 transition overflow-hidden"
                   style={{ backgroundColor: cat.color }}
                 >
-                  <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
-                    <Icon name="tag" size={26} className="text-[#ff6f61]" />
-                  </div>
+                  {cat.image ? (
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+                    />
+                  ) : (
+                    <div className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm text-gray-800">
+                      <Icon name="tag" size={26} className="text-[#ff6f61]" />
+                    </div>
+                  )}
                 </div>
                 <p className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] transition">
                   {cat.name}
@@ -624,12 +680,20 @@ export function Home() {
                 className="w-[105px] sm:w-[120px] shrink-0 text-center group"
               >
                 <div
-                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-1.5 shadow-sm group-hover:scale-105 transition"
+                  className="aspect-square w-full rounded-2xl grid place-items-center p-3 mb-1.5 shadow-sm group-hover:scale-105 transition overflow-hidden"
                   style={{ backgroundColor: b.color }}
                 >
-                  <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
-                    {b.name}
-                  </span>
+                  {b.image ? (
+                    <img
+                      src={b.image}
+                      alt={b.name}
+                      className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
+                    />
+                  ) : (
+                    <span className="font-extrabold text-xs sm:text-sm text-gray-900 truncate">
+                      {b.name}
+                    </span>
+                  )}
                 </div>
                 <p className="text-[11px] text-gray-500">Ayurveda</p>
               </A>
@@ -707,8 +771,16 @@ export function Home() {
                 className="w-[200px] sm:w-[220px] shrink-0 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition flex flex-col justify-between"
               >
                 <div>
-                  <div className="aspect-[4/3] w-full rounded-xl bg-emerald-50 mb-3 grid place-items-center text-emerald-700">
-                    <Icon name="leaf" size={40} />
+                  <div className="aspect-[4/3] w-full rounded-xl bg-emerald-50 mb-3 grid place-items-center text-emerald-700 overflow-hidden">
+                    {herb.image ? (
+                      <img
+                        src={herb.image}
+                        alt={herb.name}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    ) : (
+                      <Icon name="leaf" size={40} />
+                    )}
                   </div>
                   <h3 className="font-bold text-gray-900 text-sm">{herb.name}</h3>
                   <p className="mt-1 text-xs text-gray-500 leading-relaxed line-clamp-3">

@@ -1122,15 +1122,15 @@ export function InfoPage({ id }) {
         {id === "about" && (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 border-t border-gray-100 pt-6">
             <div className="rounded-xl bg-gray-50 p-4 border border-gray-100">
-              <h2 className="font-bold text-gray-900 text-xs uppercase tracking-wider">Leadership</h2>
+              <h2 className="font-bold text-gray-900 text-xs uppercase tracking-wider">Registered Directors &amp; Leadership</h2>
               <ul className="mt-2 text-xs text-gray-600 space-y-1">
-                <li>Prashant Tandon (Co-Founder & CEO)</li>
-                <li>Gaurav Agarwal (Co-Founder & CTO)</li>
+                <li>Ajay Kumar Pathri (Registered Director)</li>
+                <li>Omkar Sanjay Telangi (Registered Director)</li>
               </ul>
             </div>
             <div className="rounded-xl bg-gray-50 p-4 border border-gray-100">
               <h2 className="font-bold text-gray-900 text-xs uppercase tracking-wider">
-                Corporate Address
+                Corporate &amp; Registered Address
               </h2>
               <p className="mt-2 text-xs text-gray-600 leading-relaxed">{state.settings.address}</p>
             </div>

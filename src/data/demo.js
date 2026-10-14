@@ -1,12 +1,12 @@
-// Tata 1mg comprehensive demonstration data.
+// MEDITRUST LIFE SCIENCE PVT LTD - Demonstration data
 export const company = {
-  name: "Tata 1mg Healthcare Solutions",
-  logoText: "TATA 1mg",
-  phone: "1800-212-2323",
-  tollFreeNotice: "1800 180 3024",
-  email: "care@1mg.com",
-  address: "B-23, Okhla Phase 1, New Delhi, Delhi 110020, India",
-  directors: ["Prashant Tandon", "Gaurav Agarwal"],
+  name: "MEDITRUST LIFE SCIENCE PVT LTD",
+  logoText: "MEDITRUST",
+  phone: "+91 7276048377",
+  tollFreeNotice: "+91 7276048377",
+  email: "contact@meditrusts.life",
+  address: "Morya Colony, Matoshree Nagar, Sector No. 32, Chinchwad, Pimpri-Chinchwad, Maharashtra 411033",
+  directors: ["Ajay Kumar Pathri", "Omkar Sanjay Telangi"],
 };
 
 export const slugify = (t) =>
@@ -199,6 +199,7 @@ export const navDropdowns = [
 export const heroSlides = [
   {
     id: 1,
+    image: "/images/banners/hero-slide-1.png",
     bg: "from-amber-50 to-orange-100",
     headline: "Seamless diagnostic services, now at your fingertips",
     features: [
@@ -218,6 +219,7 @@ export const heroSlides = [
   },
   {
     id: 2,
+    image: "/images/banners/hero-slide-2.png",
     bg: "from-red-50 to-rose-100",
     headline: "TRUSTED MOTHER TINCTURES & LIQUID DILUTIONS",
     features: ["Support health in most natural way", "B.Jain Pharmaceuticals Quality Assured", "100% Genuine Pure Extract"],
@@ -233,6 +235,7 @@ export const heroSlides = [
   },
   {
     id: 3,
+    image: "/images/banners/hero-slide-3.png",
     bg: "from-pink-50 to-amber-100",
     headline: "Not sure what your gut is telling you?",
     features: ["Take a quick self-assessment to understand your gut health better", "Expert Doctor Recommended Advice", "Instant Result Analysis"],
@@ -255,17 +258,19 @@ export const carePlanBanner = {
   action: "Become a member today!",
   btnText: "Know More",
   btnHref: "/offers",
+  avatar: "/images/banners/care-plan-man.png",
+  bannerImg: "/images/banners/care-plan-banner.png",
 };
 
 export const healthConcerns = [
-  { id: "diabetes", name: "Diabetes", color: "#fef3c7", icon: "drop", href: "/healthcare/diabetes-care" },
-  { id: "heart", name: "Heart Care", color: "#ede9fe", icon: "heart", href: "/healthcare/heart-care" },
-  { id: "stomach", name: "Stomach Care", color: "#d1fae5", icon: "shield", href: "/healthcare/stomach-care" },
-  { id: "liver", name: "Liver Care", color: "#fee2e2", icon: "plus", href: "/healthcare/liver-care" },
-  { id: "bone", name: "Bone, Joint & Muscle Care", color: "#fce7f3", icon: "leaf", href: "/healthcare/bone-joint-muscle" },
-  { id: "kidney", name: "Kidney Care", color: "#cffafe", icon: "drop", href: "/healthcare/kidney-care" },
-  { id: "derma", name: "Derma Care", color: "#fbcfe8", icon: "sun", href: "/healthcare/skin-care" },
-  { id: "respiratory", name: "Respiratory Care", color: "#dcfce7", icon: "flower", href: "/healthcare/respiratory-care" },
+  { id: "diabetes", name: "Diabetes", color: "#fef3c7", icon: "drop", image: "/images/concerns/diabetes.png", image: "/images/concerns/diabetes.png", href: "/healthcare/diabetes-care" },
+  { id: "heart", name: "Heart Care", color: "#ede9fe", icon: "heart", image: "/images/concerns/heart.png", image: "/images/concerns/heart.png", href: "/healthcare/heart-care" },
+  { id: "stomach", name: "Stomach Care", color: "#d1fae5", icon: "shield", image: "/images/concerns/stomach.png", image: "/images/concerns/stomach.png", href: "/healthcare/stomach-care" },
+  { id: "liver", name: "Liver Care", color: "#fee2e2", icon: "plus", image: "/images/concerns/liver.png", image: "/images/concerns/liver.png", href: "/healthcare/liver-care" },
+  { id: "bone", name: "Bone, Joint & Muscle Care", color: "#fce7f3", icon: "leaf", image: "/images/concerns/bone.png", image: "/images/concerns/bone.png", href: "/healthcare/bone-joint-muscle" },
+  { id: "kidney", name: "Kidney Care", color: "#cffafe", icon: "drop", image: "/images/concerns/kidney.png", image: "/images/concerns/kidney.png", href: "/healthcare/kidney-care" },
+  { id: "derma", name: "Derma Care", color: "#fbcfe8", icon: "sun", image: "/images/concerns/derma.png", image: "/images/concerns/derma.png", href: "/healthcare/skin-care" },
+  { id: "respiratory", name: "Respiratory Care", color: "#dcfce7", icon: "flower", image: "/images/concerns/respiratory.png", image: "/images/concerns/respiratory.png", href: "/healthcare/respiratory-care" },
 ];
 
 export const fullBodyCheckups = [
@@ -327,25 +332,25 @@ export const fullBodyCheckups = [
 ];
 
 export const featuredBrands = [
-  { id: "b-1", name: "PentaSure", category: "Nutrition" },
-  { id: "b-2", name: "Dabur", category: "Ayurveda" },
-  { id: "b-3", name: "pilgrim", category: "Skin & Hair" },
-  { id: "b-4", name: "Prohance", category: "Protein & Health" },
-  { id: "b-5", name: "Miduty", category: "Supplements" },
-  { id: "b-6", name: "Vaseline", category: "Skin Care" },
-  { id: "b-7", name: "Minimalist", category: "Active Skin" },
-  { id: "b-8", name: "TATA 1mg", category: "Healthcare" },
+  { id: "b-1", name: "PentaSure", category: "Nutrition", image: "/images/brands/pentasure.png", image: "/images/brands/pentasure.png" },
+  { id: "b-2", name: "Dabur", category: "Ayurveda", image: "/images/brands/dabur.png", image: "/images/brands/dabur.png" },
+  { id: "b-3", name: "pilgrim", category: "Skin & Hair", image: "/images/brands/pilgrim.png", image: "/images/brands/pilgrim.png" },
+  { id: "b-4", name: "Prohance", category: "Protein & Health", image: "/images/brands/prohance.png", image: "/images/brands/prohance.png" },
+  { id: "b-5", name: "Miduty", category: "Supplements", image: "/images/brands/miduty.png", image: "/images/brands/miduty.png" },
+  { id: "b-6", name: "Vaseline", category: "Skin Care", image: "/images/brands/vaseline.png", image: "/images/brands/vaseline.png" },
+  { id: "b-7", name: "Minimalist", category: "Active Skin", image: "/images/brands/minimalist.png", image: "/images/brands/minimalist.png" },
+  { id: "b-8", name: "TATA 1mg", category: "Healthcare", image: "/images/brands/tata1mg.png", image: "/images/brands/tata1mg.png" },
 ];
 
 export const personalCareCategories = [
-  { id: "skin", name: "Skin care", color: "#d9e2b8", href: "/healthcare/skin-care" },
-  { id: "hair", name: "Hair Care", color: "#86d6af", href: "/healthcare/hair-care" },
-  { id: "sex", name: "Sexual Wellness", color: "#f7a56a", href: "/healthcare/sexual-wellness" },
-  { id: "oral", name: "Oral Care", color: "#e89ea0", href: "/healthcare/oral-care" },
-  { id: "elder", name: "Elderly Care", color: "#4ecdc4", href: "/healthcare/elderly-care" },
-  { id: "baby", name: "Baby Care", color: "#9ca5e0", href: "/healthcare/baby-care" },
-  { id: "women", name: "Women Care", color: "#f78ebc", href: "/healthcare/women-care" },
-  { id: "men", name: "Men Grooming", color: "#8ab4cd", href: "/healthcare/men-grooming" },
+  { id: "skin", name: "Skin care", color: "#d9e2b8", image: "/images/categories/skincare.png", image: "/images/categories/skincare.png", href: "/healthcare/skin-care" },
+  { id: "hair", name: "Hair Care", color: "#86d6af", image: "/images/categories/haircare.png", image: "/images/categories/haircare.png", href: "/healthcare/hair-care" },
+  { id: "sex", name: "Sexual Wellness", color: "#f7a56a", image: "/images/categories/sexualwellness.png", image: "/images/categories/sexualwellness.png", href: "/healthcare/sexual-wellness" },
+  { id: "oral", name: "Oral Care", color: "#e89ea0", image: "/images/categories/oralcare.png", image: "/images/categories/oralcare.png", href: "/healthcare/oral-care" },
+  { id: "elder", name: "Elderly Care", color: "#4ecdc4", image: "/images/categories/elderlycare.png", image: "/images/categories/elderlycare.png", href: "/healthcare/elderly-care" },
+  { id: "baby", name: "Baby Care", color: "#9ca5e0", image: "/images/categories/babycare.png", image: "/images/categories/babycare.png", href: "/healthcare/baby-care" },
+  { id: "women", name: "Women Care", color: "#f78ebc", image: "/images/categories/womencare.png", image: "/images/categories/womencare.png", href: "/healthcare/women-care" },
+  { id: "men", name: "Men Grooming", color: "#8ab4cd", image: "/images/categories/mengrooming.png", image: "/images/categories/mengrooming.png", href: "/healthcare/men-grooming" },
 ];
 
 export const pathologyTests = [
@@ -367,7 +372,7 @@ export const superSavingDeals = [
     price: 159,
     mrp: 159,
     discount: null,
-    category: "Digestive Health",
+    category: "Digestive Health", image: "/images/products/super_unienzyme.png",
   },
   {
     id: "deal-2",
@@ -379,7 +384,7 @@ export const superSavingDeals = [
     price: 118,
     mrp: 131,
     discount: "10% off",
-    category: "Skin Care",
+    category: "Skin Care", image: "/images/products/super_clocip.png",
   },
   {
     id: "deal-3",
@@ -391,7 +396,7 @@ export const superSavingDeals = [
     price: 77.3,
     mrp: 159.37,
     discount: "52% off",
-    category: "Cough & Cold",
+    category: "Cough & Cold", image: "/images/products/super_cofsils.png",
   },
   {
     id: "deal-4",
@@ -403,7 +408,7 @@ export const superSavingDeals = [
     price: 101,
     mrp: 150,
     discount: "33% off",
-    category: "Skin Care",
+    category: "Skin Care", image: "/images/products/super_eloway.png",
   },
   {
     id: "deal-5",
@@ -415,7 +420,7 @@ export const superSavingDeals = [
     price: 240,
     mrp: 258.3,
     discount: "7% off",
-    category: "Stomach Care",
+    category: "Stomach Care", image: "/images/products/super_easylax.png",
   },
   {
     id: "deal-6",
@@ -427,7 +432,7 @@ export const superSavingDeals = [
     price: 262,
     mrp: 314.6,
     discount: "17% off",
-    category: "Pain Relief",
+    category: "Pain Relief", image: "/images/products/super_omnigel.png",
   },
   {
     id: "deal-7",
@@ -439,26 +444,26 @@ export const superSavingDeals = [
     price: 538,
     mrp: 675,
     discount: "20% off",
-    category: "Pain Relief",
+    category: "Pain Relief", image: "/images/products/super_hotwaterbag.png",
   },
 ];
 
 export const popularCategories = [
-  { id: "best-offers", name: "Best offers", color: "#d9e8c4", href: "/offers" },
-  { id: "vitamins-supplements", name: "Vitamins & Supplements", color: "#fce7f3", href: "/healthcare/vitamins-supplements" },
-  { id: "nutritional-drinks", name: "Nutritional Drinks", color: "#fef3c7", href: "/healthcare/nutritional-drinks" },
-  { id: "skin-care", name: "Skin Care", color: "#dcfce7", href: "/healthcare/skin-care" },
-  { id: "hair-care", name: "Hair Care", color: "#dbeafe", href: "/healthcare/hair-care" },
-  { id: "sexual-wellness", name: "Sexual Wellness", color: "#fae8ff", href: "/healthcare/sexual-wellness" },
-  { id: "ayurveda-products", name: "Ayurveda Products", color: "#ffedd5", href: "/healthcare/ayurveda-products" },
-  { id: "pain-relief", name: "Pain Relief", color: "#e0e7ff", href: "/healthcare/pain-relief" },
-  { id: "homeopathy", name: "Homeopathy", color: "#ecfccb", href: "/healthcare/homeopathy" },
+  { id: "best-offers", name: "Best offers", color: "#d9e8c4", image: "/images/categories/bestoffers.png", image: "/images/categories/bestoffers.png", href: "/offers" },
+  { id: "vitamins-supplements", name: "Vitamins & Supplements", color: "#fce7f3", image: "/images/categories/vitamins.png", image: "/images/categories/vitamins.png", href: "/healthcare/vitamins-supplements" },
+  { id: "nutritional-drinks", name: "Nutritional Drinks", color: "#fef3c7", image: "/images/categories/nutritionaldrinks.png", image: "/images/categories/nutritionaldrinks.png", href: "/healthcare/nutritional-drinks" },
+  { id: "skin-care", name: "Skin Care", color: "#dcfce7", image: "/images/categories/skincare_cat.png", image: "/images/categories/skincare_cat.png", href: "/healthcare/skin-care" },
+  { id: "hair-care", name: "Hair Care", color: "#dbeafe", image: "/images/categories/haircare_cat.png", image: "/images/categories/haircare_cat.png", href: "/healthcare/hair-care" },
+  { id: "sexual-wellness", name: "Sexual Wellness", color: "#fae8ff", image: "/images/categories/sexualwellness_cat.png", image: "/images/categories/sexualwellness_cat.png", href: "/healthcare/sexual-wellness" },
+  { id: "ayurveda-products", name: "Ayurveda Products", color: "#ffedd5", image: "/images/categories/ayurveda_cat.png", image: "/images/categories/ayurveda_cat.png", href: "/healthcare/ayurveda-products" },
+  { id: "pain-relief", name: "Pain Relief", color: "#e0e7ff", image: "/images/categories/painrelief_cat.png", image: "/images/categories/painrelief_cat.png", href: "/healthcare/pain-relief" },
+  { id: "homeopathy", name: "Homeopathy", color: "#ecfccb", image: "/images/categories/homeopathy_cat.png", image: "/images/categories/homeopathy_cat.png", href: "/healthcare/homeopathy" },
 ];
 
 export const trendingNow = [
   {
     id: "trend-1",
-    name: "Zandu Kesari Jeevan Fit for Diabetics",
+    name: "Zandu Kesari Jeevan Fit for Diabetics", image: "/images/products/trend_1.png",
     pack: "jar of 900 gm Paste",
     rating: 4.5,
     reviews: 792,
@@ -470,7 +475,7 @@ export const trendingNow = [
   },
   {
     id: "trend-2",
-    name: "Himalaya Gokshura Ayurvedic Tablets For Men",
+    name: "Himalaya Gokshura Ayurvedic Tablets For Men", image: "/images/products/trend_2.png",
     pack: "bottle of 60 tablets",
     rating: 4.2,
     reviews: 1994,
@@ -482,7 +487,7 @@ export const trendingNow = [
   },
   {
     id: "trend-3",
-    name: "Sloan's Spray (55gm Each) Fast Pain Relief",
+    name: "Sloan's Spray (55gm Each) Fast Pain Relief", image: "/images/products/trend_3.png",
     pack: "box of 1 Bottle",
     rating: 4.3,
     reviews: 15,
@@ -494,7 +499,7 @@ export const trendingNow = [
   },
   {
     id: "trend-4",
-    name: "Himalaya Wellness Tentex Royal Capsule",
+    name: "Himalaya Wellness Tentex Royal Capsule", image: "/images/products/trend_4.png",
     pack: "bottle of 30 capsules",
     rating: 4.3,
     reviews: 25,
@@ -506,7 +511,7 @@ export const trendingNow = [
   },
   {
     id: "trend-5",
-    name: "Skore Skin-Friendly Water-Based Lubricant",
+    name: "Skore Skin-Friendly Water-Based Lubricant", image: "/images/products/trend_5.png",
     pack: "bottle of 50 ml Liquid",
     rating: 4.0,
     reviews: 153,
@@ -518,7 +523,7 @@ export const trendingNow = [
   },
   {
     id: "trend-6",
-    name: "Himalaya Diabecon DS Tablet | Manages Blood Sugar",
+    name: "Himalaya Diabecon DS Tablet | Manages Blood Sugar", image: "/images/products/trend_6.png",
     pack: "bottle of 60 tablets",
     rating: 4.3,
     reviews: 1123,
@@ -530,7 +535,7 @@ export const trendingNow = [
   },
   {
     id: "trend-7",
-    name: "Nivea Luminous 630 Even Glow Night Cream",
+    name: "Nivea Luminous 630 Even Glow Night Cream", image: "/images/products/trend_7.png",
     pack: "tube of 40 ml Cream",
     rating: 4.4,
     reviews: 86,
@@ -543,52 +548,52 @@ export const trendingNow = [
 ];
 
 export const skinCareProducts = [
-  { id: "skin-1", name: "Palmolive Luminous Oils Shower Gel Rejuvenating", pack: "bottle of 250 ml Body Wash", rating: 4.4, reviews: 10, delivery: "Get by 12am, Tomorrow", price: 220, mrp: 250, discount: "12% off" },
-  { id: "skin-2", name: "The Derma Co 1% Hyaluronic Sunscreen Aqua Gel", pack: "pump bottle of 50 gm Gel", rating: 4.2, reviews: 218, delivery: "Get by 12am, Tomorrow", price: 449, mrp: 499, discount: "10% off" },
-  { id: "skin-3", name: "Photostable Gold Matte Finish Sunscreen Gel SPF 55", pack: "tube of 50 gm Gel", rating: 4.5, reviews: 891, delivery: "Get by 12am, Tomorrow", price: 725, mrp: 799, discount: "9% off" },
-  { id: "skin-4", name: "Sesderma Azelac RU Liposomal All Skin Types Serum", pack: "bottle of 30 ml Serum", rating: 4.2, reviews: 207, delivery: "Get by 12am, Tomorrow", price: 2100, mrp: 2350, discount: "11% off" },
-  { id: "skin-5", name: "C-Vit Facial Liposomal Serum with AntiOx Booster", pack: "bottle of 30 ml Serum", rating: 4.3, reviews: 203, delivery: "Get by 12am, Tomorrow", price: 2350, mrp: 2600, discount: "10% off" },
-  { id: "skin-6", name: "UV Doux Silicone Sunscreen Gel SPF 50 PA+++", pack: "tube of 50 gm Gel", rating: 4.4, reviews: 744, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 699, discount: "11% off" },
+  { id: "skin-1", name: "Palmolive Luminous Oils Shower Gel Rejuvenating", image: "/images/products/skin_1.png", pack: "bottle of 250 ml Body Wash", rating: 4.4, reviews: 10, delivery: "Get by 12am, Tomorrow", price: 220, mrp: 250, discount: "12% off" },
+  { id: "skin-2", name: "The Derma Co 1% Hyaluronic Sunscreen Aqua Gel", image: "/images/products/skin_2.png", pack: "pump bottle of 50 gm Gel", rating: 4.2, reviews: 218, delivery: "Get by 12am, Tomorrow", price: 449, mrp: 499, discount: "10% off" },
+  { id: "skin-3", name: "Photostable Gold Matte Finish Sunscreen Gel SPF 55", image: "/images/products/skin_3.png", pack: "tube of 50 gm Gel", rating: 4.5, reviews: 891, delivery: "Get by 12am, Tomorrow", price: 725, mrp: 799, discount: "9% off" },
+  { id: "skin-4", name: "Sesderma Azelac RU Liposomal All Skin Types Serum", image: "/images/products/skin_4.png", pack: "bottle of 30 ml Serum", rating: 4.2, reviews: 207, delivery: "Get by 12am, Tomorrow", price: 2100, mrp: 2350, discount: "11% off" },
+  { id: "skin-5", name: "C-Vit Facial Liposomal Serum with AntiOx Booster", image: "/images/products/skin_5.png", pack: "bottle of 30 ml Serum", rating: 4.3, reviews: 203, delivery: "Get by 12am, Tomorrow", price: 2350, mrp: 2600, discount: "10% off" },
+  { id: "skin-6", name: "UV Doux Silicone Sunscreen Gel SPF 50 PA+++", image: "/images/products/skin_6.png", pack: "tube of 50 gm Gel", rating: 4.4, reviews: 744, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 699, discount: "11% off" },
 ];
 
 export const popularComboDeals = [
-  { id: "combo-1", name: "Combo Pack of Volini Spray (100gm) & Tata 1mg Knee Support", pack: "combo pack of 2 Packs", rating: 4.4, reviews: 6292, price: 556, mrp: 675, discount: "18% off" },
-  { id: "combo-2", name: "Combo Pack of Tata 1mg Hot Water Bag & Tata 1mg Pain Relief Gel", pack: "combo pack of 2 Packs", rating: 4.3, reviews: 1173, price: 538, mrp: 675, discount: "20% off" },
-  { id: "combo-3", name: "Immunity Care Combo of 1mg Panch Tulsi 30ml & Patanjali Giloy Ghanvati", pack: "combo pack of 2 Packs", rating: 4.5, reviews: 2877, price: 187, mrp: 257, discount: "27% off" },
-  { id: "combo-4", name: "Dr Batra's Combo Pack of Hair Fall Control Serum & Shampoo", pack: "combo pack of 3 bottles", delivery: "Get by Mon, 19 Oct", price: 1227, mrp: 1534, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "combo-5", name: "Nature Sure Jatyadi Oil (30ml Each)", pack: "box of 1 Bottle", delivery: "Get by Fri, 16 Oct", price: 211, mrp: 277, discount: "24% off" },
-  { id: "combo-6", name: "Dr Batra's Combo Pack of Age Defying Skin Firming Cream", pack: "combo pack of 2 Packs", delivery: "Get by Mon, 19 Oct", price: 959, mrp: 1199, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "combo-7", name: "Dr Batra's Combo Pack of Normal Hair Shampoo & Serum", pack: "combo pack of 2 bottles", delivery: "Get by Mon, 19 Oct", price: 958, mrp: 1198, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "combo-1", name: "Combo Pack of Volini Spray (100gm) & Tata 1mg Knee Support", image: "/images/products/combo_1.png", pack: "combo pack of 2 Packs", rating: 4.4, reviews: 6292, price: 556, mrp: 675, discount: "18% off" },
+  { id: "combo-2", name: "Combo Pack of Tata 1mg Hot Water Bag & Tata 1mg Pain Relief Gel", image: "/images/products/combo_2.png", pack: "combo pack of 2 Packs", rating: 4.3, reviews: 1173, price: 538, mrp: 675, discount: "20% off" },
+  { id: "combo-3", name: "Immunity Care Combo of 1mg Panch Tulsi 30ml & Patanjali Giloy Ghanvati", image: "/images/products/combo_3.png", pack: "combo pack of 2 Packs", rating: 4.5, reviews: 2877, price: 187, mrp: 257, discount: "27% off" },
+  { id: "combo-4", name: "Dr Batra's Combo Pack of Hair Fall Control Serum & Shampoo", image: "/images/products/combo_4.png", pack: "combo pack of 3 bottles", delivery: "Get by Mon, 19 Oct", price: 1227, mrp: 1534, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "combo-5", name: "Nature Sure Jatyadi Oil (30ml Each)", image: "/images/products/combo_5.png", pack: "box of 1 Bottle", delivery: "Get by Fri, 16 Oct", price: 211, mrp: 277, discount: "24% off" },
+  { id: "combo-6", name: "Dr Batra's Combo Pack of Age Defying Skin Firming Cream", image: "/images/products/combo_6.png", pack: "combo pack of 2 Packs", delivery: "Get by Mon, 19 Oct", price: 959, mrp: 1199, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "combo-7", name: "Dr Batra's Combo Pack of Normal Hair Shampoo & Serum", image: "/images/products/combo_7.png", pack: "combo pack of 2 bottles", delivery: "Get by Mon, 19 Oct", price: 958, mrp: 1198, discount: "20% off", saleEnds: "Sale ends in 1 day 3 hrs" },
 ];
 
 export const topDealsPainCough = [
-  { id: "pain-1", name: "Volini Spray for Sprain, Muscle and Joint Pain", pack: "bottle of 100 gm Spray", delivery: "Get by 12am, Tomorrow", price: 341, mrp: 375, discount: "9% off" },
-  { id: "pain-2", name: "Hoop Mess Less Pain Roll On (50ml Each) Bottle", pack: "box of 1 Bottle", rating: 4.0, reviews: 8, delivery: "Get by Sat, 17 Oct", price: 459.3, mrp: 459.3, discount: null },
-  { id: "pain-3", name: "Saridon Advance Tablet for 5 in 1 Pain Relief", pack: "strip of 10 tablets", rating: 4.4, reviews: 1365, delivery: "Get by 12am, Tomorrow", price: 56.1, mrp: 59, discount: "5% off" },
-  { id: "pain-4", name: "Cofsils Lozenges for Quick Relief from Sore Throat Orange", pack: "strip of 10 lozenges", rating: 4.5, reviews: 2366, delivery: "Get by 12am, Tomorrow", price: 34.5, mrp: 39, discount: "12% off" },
-  { id: "pain-5", name: "Moov Pain Relief Ointment for Back Pain & Muscle Strain", pack: "tube of 50 gm Cream", rating: 4.5, reviews: 3655, delivery: "Get by 12am, Tomorrow", price: 204, mrp: 255, discount: "20% off" },
-  { id: "pain-6", name: "Volini Joint Xpert Long-Lasting Pain Relief Gel", pack: "tube of 20 gm Gel", delivery: "Get by 6pm, Tomorrow", price: 97.5, mrp: 97.5, discount: null },
-  { id: "pain-7", name: "Moov 100% Ayurvedic Pain Relief Spray | Fast Action", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off" },
+  { id: "pain-1", name: "Volini Spray for Sprain, Muscle and Joint Pain", image: "/images/products/pain_1.png", pack: "bottle of 100 gm Spray", delivery: "Get by 12am, Tomorrow", price: 341, mrp: 375, discount: "9% off" },
+  { id: "pain-2", name: "Hoop Mess Less Pain Roll On (50ml Each) Bottle", image: "/images/products/pain_2.png", pack: "box of 1 Bottle", rating: 4.0, reviews: 8, delivery: "Get by Sat, 17 Oct", price: 459.3, mrp: 459.3, discount: null },
+  { id: "pain-3", name: "Saridon Advance Tablet for 5 in 1 Pain Relief", image: "/images/products/pain_3.png", pack: "strip of 10 tablets", rating: 4.4, reviews: 1365, delivery: "Get by 12am, Tomorrow", price: 56.1, mrp: 59, discount: "5% off" },
+  { id: "pain-4", name: "Cofsils Lozenges for Quick Relief from Sore Throat Orange", image: "/images/products/pain_4.png", pack: "strip of 10 lozenges", rating: 4.5, reviews: 2366, delivery: "Get by 12am, Tomorrow", price: 34.5, mrp: 39, discount: "12% off" },
+  { id: "pain-5", name: "Moov Pain Relief Ointment for Back Pain & Muscle Strain", image: "/images/products/pain_5.png", pack: "tube of 50 gm Cream", rating: 4.5, reviews: 3655, delivery: "Get by 12am, Tomorrow", price: 204, mrp: 255, discount: "20% off" },
+  { id: "pain-6", name: "Volini Joint Xpert Long-Lasting Pain Relief Gel", image: "/images/products/pain_6.png", pack: "tube of 20 gm Gel", delivery: "Get by 6pm, Tomorrow", price: 97.5, mrp: 97.5, discount: null },
+  { id: "pain-7", name: "Moov 100% Ayurvedic Pain Relief Spray | Fast Action", image: "/images/products/pain_7.png", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off" },
 ];
 
 export const collagenSupplement = [
-  { id: "col-1", name: "Hair, Skin & Nails Supreme Capsule with Biotin", pack: "bottle of 60 capsules", rating: 4.1, reviews: 1531, delivery: "Get by 12am, Tomorrow", price: 363, mrp: 529, discount: "31% off" },
-  { id: "col-2", name: "MyFitFuel Premium Series Hydrolyzed Bovine Collagen+", pack: "jar of 500 gm Powder", delivery: "Get by Sat, 17 Oct", price: 1539, mrp: 2199, discount: "30% off" },
-  { id: "col-3", name: "Skinfay Capsule Ceramide Skin Restorative", pack: "strip of 10 capsules", rating: 4.4, reviews: 57, delivery: "Get by Today", price: 213.5, mrp: 213.5, discount: null },
-  { id: "col-4", name: "Inja Veg Collagen Powder Black Currant Flavour", pack: "jar of 150 gm Powder", delivery: "Get by Tue, 20 Oct", price: 2224.58, mrp: 2224.58, discount: null },
-  { id: "col-5", name: "Lupivestin Plus Tablet for Joint Mobility", pack: "strip of 10 tablets", rating: 4.2, reviews: 94, delivery: "Get by 12am, Tomorrow", price: 914, mrp: 973.03, discount: "6% off" },
-  { id: "col-6", name: "Marine Collagen | With Collagen Peptide & Vit C", pack: "jar of 210 gm Powder", rating: 3.7, reviews: 60, delivery: "Get by 6pm, Tomorrow", price: 642, mrp: 929, discount: "31% off" },
-  { id: "col-7", name: "Megabone Granules with Collagen for Strong Bones", pack: "sachet of 10.7 gm Granules", rating: 4.3, reviews: 11, delivery: "Get by 12am, Tomorrow", price: 79.8, mrp: 79.8, discount: null },
+  { id: "col-1", name: "Hair, Skin & Nails Supreme Capsule with Biotin", image: "/images/products/collagen_1.png", pack: "bottle of 60 capsules", rating: 4.1, reviews: 1531, delivery: "Get by 12am, Tomorrow", price: 363, mrp: 529, discount: "31% off" },
+  { id: "col-2", name: "MyFitFuel Premium Series Hydrolyzed Bovine Collagen+", image: "/images/products/collagen_2.png", pack: "jar of 500 gm Powder", delivery: "Get by Sat, 17 Oct", price: 1539, mrp: 2199, discount: "30% off" },
+  { id: "col-3", name: "Skinfay Capsule Ceramide Skin Restorative", image: "/images/products/collagen_3.png", pack: "strip of 10 capsules", rating: 4.4, reviews: 57, delivery: "Get by Today", price: 213.5, mrp: 213.5, discount: null },
+  { id: "col-4", name: "Inja Veg Collagen Powder Black Currant Flavour", image: "/images/products/collagen_4.png", pack: "jar of 150 gm Powder", delivery: "Get by Tue, 20 Oct", price: 2224.58, mrp: 2224.58, discount: null },
+  { id: "col-5", name: "Lupivestin Plus Tablet for Joint Mobility", image: "/images/products/collagen_5.png", pack: "strip of 10 tablets", rating: 4.2, reviews: 94, delivery: "Get by 12am, Tomorrow", price: 914, mrp: 973.03, discount: "6% off" },
+  { id: "col-6", name: "Marine Collagen | With Collagen Peptide & Vit C", image: "/images/products/collagen_6.png", pack: "jar of 210 gm Powder", rating: 3.7, reviews: 60, delivery: "Get by 6pm, Tomorrow", price: 642, mrp: 929, discount: "31% off" },
+  { id: "col-7", name: "Megabone Granules with Collagen for Strong Bones", image: "/images/products/collagen_7.png", pack: "sachet of 10.7 gm Granules", rating: 4.3, reviews: 11, delivery: "Get by 12am, Tomorrow", price: 79.8, mrp: 79.8, discount: null },
 ];
 
 export const flashSaleDeals = [
-  { id: "flash-1", name: "Simple Kind to Skin Facial Wash Refreshing", pack: "tube of 150 ml Face Wash", rating: 4.2, reviews: 31, delivery: "Get by 12am, Tomorrow", price: 362, mrp: 450, discount: "20% off" },
-  { id: "flash-2", name: "Cetaphil Gentle Skin Cleanser | For Dry to Normal Sensitive Skin", pack: "bottle of 118 ml Cleanser", rating: 4.4, reviews: 1878, delivery: "Get by 12am, Tomorrow", price: 335, mrp: 335, discount: null },
-  { id: "flash-3", name: "Vaseline Daily Brightening Body Lotion Triple Sunscreen", pack: "pump bottle of 400 ml Lotion", rating: 4.5, reviews: 16, delivery: "Get by Sat, 17 Oct", price: 365, mrp: 449, discount: "19% off" },
-  { id: "flash-4", name: "Pilgrim Korean Rice Water Hydra Glow Gel Face Wash", pack: "tube of 150 ml Face Wash", delivery: "Get by 12am, Tomorrow", price: 204, mrp: 365, discount: "44% off" },
-  { id: "flash-5", name: "Daffy Baby Lotion Gentle & Hydrating", pack: "pump bottle of 200 ml Lotion", rating: 4.3, reviews: 37, delivery: "Get by 12am, Tomorrow", price: 587, mrp: 600, discount: "2% off" },
-  { id: "flash-6", name: "Dhootapapeshwar Brahmi Vati Suvarna Yukta", pack: "packet of 30 tablets", rating: 4.4, reviews: 131, delivery: "Get by 12am, Tomorrow", price: 3013, mrp: 3013, discount: null },
-  { id: "flash-7", name: "MuscleBlaze Biozyme Performance Whey Protein Rich Chocolate", pack: "jar of 2 kg Powder", rating: 3.2, reviews: 10, delivery: "Get by Tomorrow", price: 7199, mrp: 9699, discount: "26% off" },
+  { id: "flash-1", name: "Simple Kind to Skin Facial Wash Refreshing", image: "/images/products/flash_1.png", pack: "tube of 150 ml Face Wash", rating: 4.2, reviews: 31, delivery: "Get by 12am, Tomorrow", price: 362, mrp: 450, discount: "20% off" },
+  { id: "flash-2", name: "Cetaphil Gentle Skin Cleanser | For Dry to Normal Sensitive Skin", image: "/images/products/flash_2.png", pack: "bottle of 118 ml Cleanser", rating: 4.4, reviews: 1878, delivery: "Get by 12am, Tomorrow", price: 335, mrp: 335, discount: null },
+  { id: "flash-3", name: "Vaseline Daily Brightening Body Lotion Triple Sunscreen", image: "/images/products/flash_3.png", pack: "pump bottle of 400 ml Lotion", rating: 4.5, reviews: 16, delivery: "Get by Sat, 17 Oct", price: 365, mrp: 449, discount: "19% off" },
+  { id: "flash-4", name: "Pilgrim Korean Rice Water Hydra Glow Gel Face Wash", image: "/images/products/flash_4.png", pack: "tube of 150 ml Face Wash", delivery: "Get by 12am, Tomorrow", price: 204, mrp: 365, discount: "44% off" },
+  { id: "flash-5", name: "Daffy Baby Lotion Gentle & Hydrating", image: "/images/products/flash_5.png", pack: "pump bottle of 200 ml Lotion", rating: 4.3, reviews: 37, delivery: "Get by 12am, Tomorrow", price: 587, mrp: 600, discount: "2% off" },
+  { id: "flash-6", name: "Dhootapapeshwar Brahmi Vati Suvarna Yukta", image: "/images/products/flash_6.png", pack: "packet of 30 tablets", rating: 4.4, reviews: 131, delivery: "Get by 12am, Tomorrow", price: 3013, mrp: 3013, discount: null },
+  { id: "flash-7", name: "MuscleBlaze Biozyme Performance Whey Protein Rich Chocolate", image: "/images/products/flash_7.png", pack: "jar of 2 kg Powder", rating: 3.2, reviews: 10, delivery: "Get by Tomorrow", price: 7199, mrp: 9699, discount: "26% off" },
 ];
 
 export const radiologyTests = [
@@ -600,126 +605,126 @@ export const radiologyTests = [
 ];
 
 export const exploreSomethingNew = [
-  { id: "exp-1", name: "Neuherbs Deep Sea Omega 3 Cod liver Oil Capsules", pack: "bottle of 100 soft gelatin capsules", delivery: "Get by 12am, Tomorrow", price: 368, mrp: 449, discount: "18% off" },
-  { id: "exp-2", name: "Puraroma Allergy Protection Nasal Spray", pack: "bottle of 15 ml Nasal Spray", delivery: "Get by 12am, Tomorrow", price: 887, mrp: 1249, discount: "29% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "exp-3", name: "Briyo H2Lyte Electrolytes with Vitamins & Amino", pack: "box of 10 Sachets", rating: 5.0, reviews: 13, delivery: "Get by 6pm, Tomorrow", price: 487, mrp: 605, discount: "20% off" },
-  { id: "exp-4", name: "Nivea Lip Balm with Natural Oils Strawberry Shine", pack: "packet of 4.8 gm Balm", rating: 4.5, reviews: 445, delivery: "Get by 12am, Tomorrow", price: 204, mrp: 240, discount: "15% off" },
-  { id: "exp-5", name: "Combo Pack of Tata 1mg Hot Water Bag & Tata 1mg Pain Relief Gel", pack: "combo pack of 2 Packs", rating: 4.3, reviews: 1173, price: 538, mrp: 675, discount: "20% off" },
-  { id: "exp-6", name: "Zandu Fast Pain Relief Ultra Strong Gel", pack: "tube of 45 ml Gel", rating: 4.3, reviews: 103, delivery: "Get by Sat, 17 Oct", price: 119, mrp: 170, discount: "30% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "exp-7", name: "Popular Fit Eats Zahidi Dates Soft & Sweet", pack: "packet of 500 gm Dry Fruits", rating: 4.0, reviews: 87, delivery: "Get by Mon, 19 Oct", price: 188, mrp: 250, discount: "25% off" },
+  { id: "exp-1", name: "Neuherbs Deep Sea Omega 3 Cod liver Oil Capsules", image: "/images/products/explore_1.png", pack: "bottle of 100 soft gelatin capsules", delivery: "Get by 12am, Tomorrow", price: 368, mrp: 449, discount: "18% off" },
+  { id: "exp-2", name: "Puraroma Allergy Protection Nasal Spray", image: "/images/products/explore_2.png", pack: "bottle of 15 ml Nasal Spray", delivery: "Get by 12am, Tomorrow", price: 887, mrp: 1249, discount: "29% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "exp-3", name: "Briyo H2Lyte Electrolytes with Vitamins & Amino", image: "/images/products/explore_3.png", pack: "box of 10 Sachets", rating: 5.0, reviews: 13, delivery: "Get by 6pm, Tomorrow", price: 487, mrp: 605, discount: "20% off" },
+  { id: "exp-4", name: "Nivea Lip Balm with Natural Oils Strawberry Shine", image: "/images/products/explore_4.png", pack: "packet of 4.8 gm Balm", rating: 4.5, reviews: 445, delivery: "Get by 12am, Tomorrow", price: 204, mrp: 240, discount: "15% off" },
+  { id: "exp-5", name: "Combo Pack of Tata 1mg Hot Water Bag & Tata 1mg Pain Relief Gel", image: "/images/products/explore_5.png", pack: "combo pack of 2 Packs", rating: 4.3, reviews: 1173, price: 538, mrp: 675, discount: "20% off" },
+  { id: "exp-6", name: "Zandu Fast Pain Relief Ultra Strong Gel", image: "/images/products/explore_6.png", pack: "tube of 45 ml Gel", rating: 4.3, reviews: 103, delivery: "Get by Sat, 17 Oct", price: 119, mrp: 170, discount: "30% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "exp-7", name: "Popular Fit Eats Zahidi Dates Soft & Sweet", image: "/images/products/explore_7.png", pack: "packet of 500 gm Dry Fruits", rating: 4.0, reviews: 87, delivery: "Get by Mon, 19 Oct", price: 188, mrp: 250, discount: "25% off" },
 ];
 
 export const inTheSpotlight = [
-  { id: "spot-1", name: "Organic India Neem Veg Capsule | Acts as Blood Purifier", pack: "bottle of 60 vegicaps", rating: 4.6, reviews: 203, delivery: "Get by 12am, Tomorrow", price: 270, mrp: 290, discount: "7% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "spot-2", name: "Durex Air Ultra Thin Condom", pack: "packet of 10 condoms", rating: 4.3, reviews: 1900, delivery: "Get by 12am, Tomorrow", price: 292, mrp: 356, discount: "18% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "spot-3", name: "Miduty Zinc Picolinate Capsule", pack: "bottle of 60 capsules", rating: 4.3, reviews: 9, delivery: "Get by 12am, Tomorrow", price: 699, mrp: 699, discount: null },
-  { id: "spot-4", name: "Patanjali Divya Lipidom Tablet", pack: "bottle of 60 tablets", rating: 4.4, reviews: 327, delivery: "Get by 12am, Tomorrow", price: 310, mrp: 310, discount: null },
-  { id: "spot-5", name: "i-Know Pregnancy Test kit | Fast Result in 5 min", pack: "box of 1 Test Kit", rating: 4.3, reviews: 844, delivery: "Get by 12am, Tomorrow", price: 55, mrp: 56.25, discount: "2% off" },
-  { id: "spot-6", name: "Baidyanath (Nagpur) Chyawan-Fit Sugarfree", pack: "jar of 1 kg Paste", rating: 4.4, reviews: 543, delivery: "Get by 12am, Tomorrow", price: 371, mrp: 431, discount: "14% off" },
-  { id: "spot-7", name: "Moov 100% Ayurvedic Pain Relief Spray | For Back Pain", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "spot-8", name: "Himalaya Wellness Ashwagandha Stress Relief", pack: "bottle of 60 tablets", rating: 4.4, reviews: 3944, delivery: "Get by 12am, Tomorrow", price: 229, mrp: 260, discount: "12% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "spot-1", name: "Organic India Neem Veg Capsule | Acts as Blood Purifier", image: "/images/products/spotlight_1.png", pack: "bottle of 60 vegicaps", rating: 4.6, reviews: 203, delivery: "Get by 12am, Tomorrow", price: 270, mrp: 290, discount: "7% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "spot-2", name: "Durex Air Ultra Thin Condom", image: "/images/products/spotlight_2.png", pack: "packet of 10 condoms", rating: 4.3, reviews: 1900, delivery: "Get by 12am, Tomorrow", price: 292, mrp: 356, discount: "18% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "spot-3", name: "Miduty Zinc Picolinate Capsule", image: "/images/products/spotlight_3.png", pack: "bottle of 60 capsules", rating: 4.3, reviews: 9, delivery: "Get by 12am, Tomorrow", price: 699, mrp: 699, discount: null },
+  { id: "spot-4", name: "Patanjali Divya Lipidom Tablet", image: "/images/products/spotlight_4.png", pack: "bottle of 60 tablets", rating: 4.4, reviews: 327, delivery: "Get by 12am, Tomorrow", price: 310, mrp: 310, discount: null },
+  { id: "spot-5", name: "i-Know Pregnancy Test kit | Fast Result in 5 min", image: "/images/products/spotlight_5.png", pack: "box of 1 Test Kit", rating: 4.3, reviews: 844, delivery: "Get by 12am, Tomorrow", price: 55, mrp: 56.25, discount: "2% off" },
+  { id: "spot-6", name: "Baidyanath (Nagpur) Chyawan-Fit Sugarfree", image: "/images/products/spotlight_6.png", pack: "jar of 1 kg Paste", rating: 4.4, reviews: 543, delivery: "Get by 12am, Tomorrow", price: 371, mrp: 431, discount: "14% off" },
+  { id: "spot-7", name: "Moov 100% Ayurvedic Pain Relief Spray | For Back Pain", image: "/images/products/spotlight_7.png", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "spot-8", name: "Himalaya Wellness Ashwagandha Stress Relief", image: "/images/products/spotlight_7.png", pack: "bottle of 60 tablets", rating: 4.4, reviews: 3944, delivery: "Get by 12am, Tomorrow", price: 229, mrp: 260, discount: "12% off", saleEnds: "Sale ends in 1 day 3 hrs" },
 ];
 
 export const ayurvedaTopBrands = [
-  { id: "ayur-b1", name: "Dabur", color: "#ecfccb" },
-  { id: "ayur-b2", name: "Baidyanath", color: "#fee2e2" },
-  { id: "ayur-b3", name: "Dhootapapeshwar", color: "#fef9c3" },
-  { id: "ayur-b4", name: "TATA 1mg", color: "#fef3c7" },
-  { id: "ayur-b5", name: "Himalaya", color: "#ccfbf1" },
-  { id: "ayur-b6", name: "JIVA", color: "#ffedd5" },
-  { id: "ayur-b7", name: "Kerala Ayurveda", color: "#fef08a" },
-  { id: "ayur-b8", name: "SriSri", color: "#ede9fe" },
+  { id: "ayur-b1", name: "Dabur", color: "#ecfccb", image: "/images/brands/dabur.png" },
+  { id: "ayur-b2", name: "Baidyanath", color: "#fee2e2", image: "/images/brands/ayur_baidyanath.png" },
+  { id: "ayur-b3", name: "Dhootapapeshwar", color: "#fef9c3", image: "/images/brands/ayur_dhootapapeshwar.png" },
+  { id: "ayur-b4", name: "TATA 1mg", color: "#fef3c7", image: "/images/brands/tata1mg.png" },
+  { id: "ayur-b5", name: "Himalaya", color: "#ccfbf1", image: "/images/brands/ayur_patanjali.png" },
+  { id: "ayur-b6", name: "JIVA", color: "#ffedd5", image: "/images/brands/ayur_jiva.png" },
+  { id: "ayur-b7", name: "Kerala Ayurveda", color: "#fef08a", image: "/images/brands/ayur_kottakkal.png" },
+  { id: "ayur-b8", name: "SriSri", color: "#ede9fe", image: "/images/brands/ayur_srisri.png" },
 ];
 
 export const dealsOfTheDay = [
-  { id: "dod-1", name: "Patanjali Nutrela Green Plant Protein Powder Iris Flavour", pack: "jar of 500 gm Powder", rating: 3.6, reviews: 8, delivery: "Get by Sun, 18 Oct", price: 714, mrp: 978, discount: "27% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "dod-2", name: "Zandu Nityam Tablet | For Stomach Care & Constipation", pack: "bottle of 30 tablets", rating: 4.5, reviews: 2309, delivery: "Get by 12am, Tomorrow", price: 96.8, mrp: 122, discount: "21% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "dod-3", name: "Avvatar Whey Protein Powder Sugar Free Chocolate", pack: "jar of 1 kg Powder", delivery: "Get by 12am, Tomorrow", price: 6299, mrp: 6299, discount: null },
-  { id: "dod-4", name: "Puraroma Sore Throat Spray Fast Relief", pack: "bottle of 15 ml Spray", delivery: "Get by Today", price: 824, mrp: 1249, discount: "34% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "dod-5", name: "Puraroma Joint & Muscle Pain Relief Blend", pack: "bottle of 30 ml Oil", delivery: "Get by Tomorrow", price: 870, mrp: 1749, discount: "50% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "dod-6", name: "Supradyn Naturals Ginseng Tablet with Zinc & Vitamins", pack: "bottle of 30 tablets", rating: 4.1, reviews: 21, delivery: "Get by Tomorrow", price: 232, mrp: 293.6, discount: "21% off" },
-  { id: "dod-7", name: "Stayfree Dry-Max All Night Ultra-Dry Sanitary Pads", pack: "packet of 42 pads", rating: 4.5, reviews: 461, delivery: "Get by 12am, Tomorrow", price: 563, mrp: 625, discount: "10% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "dod-1", name: "Patanjali Nutrela Green Plant Protein Powder Iris Flavour", image: "/images/products/deal_1.png", pack: "jar of 500 gm Powder", rating: 3.6, reviews: 8, delivery: "Get by Sun, 18 Oct", price: 714, mrp: 978, discount: "27% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "dod-2", name: "Zandu Nityam Tablet | For Stomach Care & Constipation", image: "/images/products/deal_2.png", pack: "bottle of 30 tablets", rating: 4.5, reviews: 2309, delivery: "Get by 12am, Tomorrow", price: 96.8, mrp: 122, discount: "21% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "dod-3", name: "Avvatar Whey Protein Powder Sugar Free Chocolate", image: "/images/products/deal_3.png", pack: "jar of 1 kg Powder", delivery: "Get by 12am, Tomorrow", price: 6299, mrp: 6299, discount: null },
+  { id: "dod-4", name: "Puraroma Sore Throat Spray Fast Relief", image: "/images/products/deal_4.png", pack: "bottle of 15 ml Spray", delivery: "Get by Today", price: 824, mrp: 1249, discount: "34% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "dod-5", name: "Puraroma Joint & Muscle Pain Relief Blend", image: "/images/products/deal_5.png", pack: "bottle of 30 ml Oil", delivery: "Get by Tomorrow", price: 870, mrp: 1749, discount: "50% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "dod-6", name: "Supradyn Naturals Ginseng Tablet with Zinc & Vitamins", image: "/images/products/deal_6.png", pack: "bottle of 30 tablets", rating: 4.1, reviews: 21, delivery: "Get by Tomorrow", price: 232, mrp: 293.6, discount: "21% off" },
+  { id: "dod-7", name: "Stayfree Dry-Max All Night Ultra-Dry Sanitary Pads", image: "/images/products/deal_7.png", pack: "packet of 42 pads", rating: 4.5, reviews: 461, delivery: "Get by 12am, Tomorrow", price: 563, mrp: 625, discount: "10% off", saleEnds: "Sale ends in 1 day 3 hrs" },
 ];
 
 export const skincarePicks = [
-  { id: "pick-1", name: "Bioderma Atoderm Ultra-Nourishing Cream for Dry Skin", pack: "tube of 200 ml Cream", rating: 4.4, reviews: 129, delivery: "Get by 12am, Tomorrow", price: 650, mrp: 699, discount: "7% off" },
-  { id: "pick-2", name: "Ahaglow Advanced Skin Rejuvenating Face Wash Gel", pack: "tube of 100 gm Face Wash", rating: 4.3, reviews: 2387, price: 480, mrp: 525, discount: "9% off" },
-  { id: "pick-3", name: "Minimalist 08% Glycolic Acid Exfoliating Liquid", pack: "bottle of 150 ml Liquid", rating: 4.0, reviews: 13, delivery: "Get by Today", price: 499, mrp: 499, discount: null },
-  { id: "pick-4", name: "Rivela Lite Weightless Mousse Broad Spectrum SPF 50", pack: "tube of 60 gm Cream", rating: 4.2, reviews: 150, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 690, discount: "10% off" },
-  { id: "pick-5", name: "UV Doux Silicone Sunscreen Gel SPF 50 PA+++", pack: "tube of 50 gm Gel", rating: 4.4, reviews: 744, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 699, discount: "11% off" },
-  { id: "pick-6", name: "Tetmosol Medicated Soap with 5% Monosulfiram", pack: "packet of 100 gm Soap", rating: 4.3, reviews: 2003, price: 85, mrp: 95, discount: "11% off" },
-  { id: "pick-7", name: "Minimalist B12 + Oat Extract 6.5% Gentle Cleanser", pack: "pump bottle of 120 ml Cleanser", rating: 4.4, reviews: 33, delivery: "Get by Tomorrow", price: 349, mrp: 349, discount: null },
+  { id: "pick-1", name: "Bioderma Atoderm Ultra-Nourishing Cream for Dry Skin", image: "/images/products/pick_1.png", pack: "tube of 200 ml Cream", rating: 4.4, reviews: 129, delivery: "Get by 12am, Tomorrow", price: 650, mrp: 699, discount: "7% off" },
+  { id: "pick-2", name: "Ahaglow Advanced Skin Rejuvenating Face Wash Gel", image: "/images/products/pick_2.png", pack: "tube of 100 gm Face Wash", rating: 4.3, reviews: 2387, price: 480, mrp: 525, discount: "9% off" },
+  { id: "pick-3", name: "Minimalist 08% Glycolic Acid Exfoliating Liquid", image: "/images/products/pick_3.png", pack: "bottle of 150 ml Liquid", rating: 4.0, reviews: 13, delivery: "Get by Today", price: 499, mrp: 499, discount: null },
+  { id: "pick-4", name: "Rivela Lite Weightless Mousse Broad Spectrum SPF 50", image: "/images/products/pick_4.png", pack: "tube of 60 gm Cream", rating: 4.2, reviews: 150, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 690, discount: "10% off" },
+  { id: "pick-5", name: "UV Doux Silicone Sunscreen Gel SPF 50 PA+++", image: "/images/products/pick_5.png", pack: "tube of 50 gm Gel", rating: 4.4, reviews: 744, delivery: "Get by 12am, Tomorrow", price: 620, mrp: 699, discount: "11% off" },
+  { id: "pick-6", name: "Tetmosol Medicated Soap with 5% Monosulfiram", image: "/images/products/pick_6.png", pack: "packet of 100 gm Soap", rating: 4.3, reviews: 2003, price: 85, mrp: 95, discount: "11% off" },
+  { id: "pick-7", name: "Minimalist B12 + Oat Extract 6.5% Gentle Cleanser", image: "/images/products/pick_7.png", pack: "pump bottle of 120 ml Cleanser", rating: 4.4, reviews: 33, delivery: "Get by Tomorrow", price: 349, mrp: 349, discount: null },
 ];
 
 export const painReliefEssentials = [
-  { id: "pre-1", name: "Moov 100% Ayurvedic Pain Relief Spray | For Muscle Pain", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "pre-2", name: "Dynapar QPS Plus Pain Relief Spray for Back & Knee", pack: "bottle of 30 ml Solution", rating: 4.4, reviews: 589, delivery: "Get by Today", price: 304, mrp: 356.25, discount: "15% off" },
-  { id: "pre-3", name: "TurmaBoost Curcumin 95% (400mg) + Black Pepper", pack: "box of 10 capsules", rating: 4.2, reviews: 86, delivery: "Get by Today", price: 186, mrp: 186, discount: null },
-  { id: "pre-4", name: "Jiva Pain Calm Oil | Pain Reliever for Joint Pain & Stiffness", pack: "pump bottle of 200 ml Oil", rating: 4.4, reviews: 77, delivery: "Get by 6pm, Tomorrow", price: 415, mrp: 415, discount: null },
-  { id: "pre-5", name: "Baidyanath (Jhansi) Ayurvedant Ekangvir Ras", pack: "bottle of 60 tablets", rating: 3.5, reviews: 11, delivery: "Get by 6pm, Tomorrow", price: 171, mrp: 190, discount: "10% off" },
-  { id: "pre-6", name: "Himalaya Rumalaya Pain Relief Gel | Quick relief in joint pain", pack: "tube of 30 gm Gel", rating: 4.5, reviews: 185, delivery: "Get by Tomorrow", price: 123, mrp: 140, discount: "12% off", saleEnds: "ends in 1 day 3 hrs" },
-  { id: "pre-7", name: "R3SET Pain Relief Tablet Instant Ease", pack: "bottle of 30 tablets", delivery: "Get by Sun, 18 Oct", price: 332, mrp: 349, discount: "5% off" },
+  { id: "pre-1", name: "Moov 100% Ayurvedic Pain Relief Spray | For Muscle Pain", image: "/images/products/pre_1.png", pack: "pump bottle of 80 gm Spray", rating: 4.4, reviews: 1404, delivery: "Get by 12am, Tomorrow", price: 288, mrp: 339, discount: "15% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "pre-2", name: "Dynapar QPS Plus Pain Relief Spray for Back & Knee", image: "/images/products/pre_2.png", pack: "bottle of 30 ml Solution", rating: 4.4, reviews: 589, delivery: "Get by Today", price: 304, mrp: 356.25, discount: "15% off" },
+  { id: "pre-3", name: "TurmaBoost Curcumin 95% (400mg) + Black Pepper", image: "/images/products/pre_3.png", pack: "box of 10 capsules", rating: 4.2, reviews: 86, delivery: "Get by Today", price: 186, mrp: 186, discount: null },
+  { id: "pre-4", name: "Jiva Pain Calm Oil | Pain Reliever for Joint Pain & Stiffness", image: "/images/products/pre_4.png", pack: "pump bottle of 200 ml Oil", rating: 4.4, reviews: 77, delivery: "Get by 6pm, Tomorrow", price: 415, mrp: 415, discount: null },
+  { id: "pre-5", name: "Baidyanath (Jhansi) Ayurvedant Ekangvir Ras", image: "/images/products/pre_5.png", pack: "bottle of 60 tablets", rating: 3.5, reviews: 11, delivery: "Get by 6pm, Tomorrow", price: 171, mrp: 190, discount: "10% off" },
+  { id: "pre-6", name: "Himalaya Rumalaya Pain Relief Gel | Quick relief in joint pain", image: "/images/products/pre_6.png", pack: "tube of 30 gm Gel", rating: 4.5, reviews: 185, delivery: "Get by Tomorrow", price: 123, mrp: 140, discount: "12% off", saleEnds: "ends in 1 day 3 hrs" },
+  { id: "pre-7", name: "R3SET Pain Relief Tablet Instant Ease", image: "/images/products/pre_7.png", pack: "bottle of 30 tablets", delivery: "Get by Sun, 18 Oct", price: 332, mrp: 349, discount: "5% off" },
 ];
 
 export const healthyHairStartsHere = [
-  { id: "hair-s1", name: "Pilgrim 3% Redensyl, 4% Anagain & 5% Capilia Serum", pack: "bottle of 30 ml Serum", rating: 4.0, reviews: 60, delivery: "Get by 12am, Tomorrow", price: 720, mrp: 799, discount: "10% off" },
-  { id: "hair-s2", name: "Sebamed Anti-Dandruff | Hair Care Shampoo For Oily Hair", pack: "bottle of 200 ml Shampoo", rating: 4.3, reviews: 496, delivery: "Get by 12am, Tomorrow", price: 630, mrp: 675, discount: "7% off" },
-  { id: "hair-s3", name: "Minimalist Anti-Dandruff Shampoo 3.5%", pack: "pump bottle of 200 ml Shampoo", rating: 3.9, reviews: 7, price: 399, mrp: 399, discount: null },
-  { id: "hair-s4", name: "Soulflower Hair Growth Rosemary Water Spray", pack: "pump bottle of 100 ml Spray", delivery: "Get by Tomorrow", price: 200, mrp: 200, discount: null },
-  { id: "hair-s5", name: "Pilgrim Spanish Rosemary Biotin Anti-Hairfall Shampoo", pack: "pump bottle of 200 ml Shampoo", rating: 4.4, reviews: 54, price: 400, mrp: 450, discount: "11% off" },
-  { id: "hair-s6", name: "Sebamed Anti-Hairloss Shampoo with Caffeine & Ginkgo", pack: "bottle of 200 ml Shampoo", rating: 4.3, reviews: 228, delivery: "Get by Today", price: 720, mrp: 799, discount: "10% off" },
-  { id: "hair-s7", name: "Minimalist 18% Hair Growth Actives Hair Serum", pack: "bottle of 30 ml Serum", rating: 4.0, reviews: 82, delivery: "Get by Today", price: 799, mrp: 799, discount: null },
+  { id: "hair-s1", name: "Pilgrim 3% Redensyl, 4% Anagain & 5% Capilia Serum", image: "/images/products/hair_1.png", pack: "bottle of 30 ml Serum", rating: 4.0, reviews: 60, delivery: "Get by 12am, Tomorrow", price: 720, mrp: 799, discount: "10% off" },
+  { id: "hair-s2", name: "Sebamed Anti-Dandruff | Hair Care Shampoo For Oily Hair", image: "/images/products/hair_2.png", pack: "bottle of 200 ml Shampoo", rating: 4.3, reviews: 496, delivery: "Get by 12am, Tomorrow", price: 630, mrp: 675, discount: "7% off" },
+  { id: "hair-s3", name: "Minimalist Anti-Dandruff Shampoo 3.5%", image: "/images/products/hair_3.png", pack: "pump bottle of 200 ml Shampoo", rating: 3.9, reviews: 7, price: 399, mrp: 399, discount: null },
+  { id: "hair-s4", name: "Soulflower Hair Growth Rosemary Water Spray", image: "/images/products/hair_4.png", pack: "pump bottle of 100 ml Spray", delivery: "Get by Tomorrow", price: 200, mrp: 200, discount: null },
+  { id: "hair-s5", name: "Pilgrim Spanish Rosemary Biotin Anti-Hairfall Shampoo", image: "/images/products/hair_5.png", pack: "pump bottle of 200 ml Shampoo", rating: 4.4, reviews: 54, price: 400, mrp: 450, discount: "11% off" },
+  { id: "hair-s6", name: "Sebamed Anti-Hairloss Shampoo with Caffeine & Ginkgo", image: "/images/products/hair_6.png", pack: "bottle of 200 ml Shampoo", rating: 4.3, reviews: 228, delivery: "Get by Today", price: 720, mrp: 799, discount: "10% off" },
+  { id: "hair-s7", name: "Minimalist 18% Hair Growth Actives Hair Serum", image: "/images/products/hair_7.png", pack: "bottle of 30 ml Serum", rating: 4.0, reviews: 82, delivery: "Get by Today", price: 799, mrp: 799, discount: null },
 ];
 
 export const tucoKidsTopSellers = [
-  { id: "tuco-1", name: "Tuco Kids Kumkumadi Face Cream Sulphate Free", pack: "tube of 50 gm Cream", delivery: "Get by Sun, 18 Oct", price: 162, mrp: 250, discount: "35% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-2", name: "Tuco Kids Soap (75gm Each) Buy 3 Get 1 Free", pack: "box of 3 soaps", delivery: "Get by 12am, Tomorrow", price: 247, mrp: 350, discount: "29% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-3", name: "Tuco Kids Oat Lotion Sulphate Free Paraben Free", pack: "bottle of 300 ml Lotion", delivery: "Get by 12am, Tomorrow", price: 264, mrp: 375, discount: "30% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-4", name: "Tuco Kids Oat Lotion Sulphate Free Paraben Free (50ml)", pack: "tube of 50 ml Lotion", delivery: "Get by 12am, Tomorrow", price: 114, mrp: 150, discount: "24% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-5", name: "Tuco Kids Bye,Dull Skin Soap (75gm Each) SLS Free", pack: "box of 3 soaps", delivery: "Get by 12am, Tomorrow", price: 245, mrp: 360, discount: "32% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-6", name: "Tuco Kids Bye,Dull Skin Face Wash Sulphate Free", pack: "tube of 100 ml Face Wash", delivery: "Get by 12am, Tomorrow", price: 162, mrp: 250, discount: "35% off", saleEnds: "Sale ends in 1 day 3 hrs" },
-  { id: "tuco-7", name: "Tuco Kids Reetha Shampoo Tear Free Natural Formula", pack: "tube of 50 ml Shampoo", delivery: "Get by 12am, Tomorrow", price: 114, mrp: 150, discount: "24% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-1", name: "Tuco Kids Kumkumadi Face Cream Sulphate Free", image: "/images/products/tuco_1.png", pack: "tube of 50 gm Cream", delivery: "Get by Sun, 18 Oct", price: 162, mrp: 250, discount: "35% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-2", name: "Tuco Kids Soap (75gm Each) Buy 3 Get 1 Free", image: "/images/products/tuco_2.png", pack: "box of 3 soaps", delivery: "Get by 12am, Tomorrow", price: 247, mrp: 350, discount: "29% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-3", name: "Tuco Kids Oat Lotion Sulphate Free Paraben Free", image: "/images/products/tuco_3.png", pack: "bottle of 300 ml Lotion", delivery: "Get by 12am, Tomorrow", price: 264, mrp: 375, discount: "30% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-4", name: "Tuco Kids Oat Lotion Sulphate Free Paraben Free (50ml)", image: "/images/products/tuco_4.png", pack: "tube of 50 ml Lotion", delivery: "Get by 12am, Tomorrow", price: 114, mrp: 150, discount: "24% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-5", name: "Tuco Kids Bye,Dull Skin Soap (75gm Each) SLS Free", image: "/images/products/tuco_5.png", pack: "box of 3 soaps", delivery: "Get by 12am, Tomorrow", price: 245, mrp: 360, discount: "32% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-6", name: "Tuco Kids Bye,Dull Skin Face Wash Sulphate Free", image: "/images/products/tuco_6.png", pack: "tube of 100 ml Face Wash", delivery: "Get by 12am, Tomorrow", price: 162, mrp: 250, discount: "35% off", saleEnds: "Sale ends in 1 day 3 hrs" },
+  { id: "tuco-7", name: "Tuco Kids Reetha Shampoo Tear Free Natural Formula", image: "/images/products/tuco_7.png", pack: "tube of 50 ml Shampoo", delivery: "Get by 12am, Tomorrow", price: 114, mrp: 150, discount: "24% off", saleEnds: "Sale ends in 1 day 3 hrs" },
 ];
 
 export const homeopathyWomensHealth = [
-  { id: "hom-1", name: "ADEL Platinum Met. Dilution 200", pack: "bottle of 10 ml Dilution", rating: 3.8, reviews: 6, delivery: "Get by Fri, 16 Oct", price: 175, mrp: 175, discount: null },
-  { id: "hom-2", name: "Wheezal Chaparoo Amargosa Dilution 200", pack: "bottle of 30 ml Dilution", delivery: "Get by Sun, 18 Oct", price: 115, mrp: 115, discount: null },
-  { id: "hom-3", name: "Wheezal WL26 Menopause Drop", pack: "bottle of 30 ml Drop", rating: 4.2, reviews: 12, delivery: "Get by Fri, 16 Oct", price: 155, mrp: 155, discount: null },
-  { id: "hom-4", name: "SBL Pinus Lambertiana Dilution 12 CH", pack: "bottle of 30 ml Dilution", delivery: "Get by Sat, 17 Oct", price: 110, mrp: 110, discount: null },
-  { id: "hom-5", name: "REPL Dr. Advice No.3 Anemia Drop", pack: "bottle of 30 ml Drop", rating: 4.2, reviews: 44, delivery: "Get by Fri, 16 Oct", price: 160, mrp: 160, discount: null },
-  { id: "hom-6", name: "Dr. Reckeweg Sepia Dilution 200 CH", pack: "bottle of 11 ml Dilution", rating: 4.6, reviews: 312, delivery: "Get by 12am, Tomorrow", price: 190, mrp: 190, discount: null },
-  { id: "hom-7", name: "Dr. Reckeweg Hydrocotyle Asiatica Dilution", pack: "bottle of 11 ml Dilution", rating: 4.6, reviews: 18, delivery: "Get by Fri, 16 Oct", price: 190, mrp: 190, discount: null },
+  { id: "hom-1", name: "ADEL Platinum Met. Dilution 200", image: "/images/products/hom_1.png", pack: "bottle of 10 ml Dilution", rating: 3.8, reviews: 6, delivery: "Get by Fri, 16 Oct", price: 175, mrp: 175, discount: null },
+  { id: "hom-2", name: "Wheezal Chaparoo Amargosa Dilution 200", image: "/images/products/hom_2.png", pack: "bottle of 30 ml Dilution", delivery: "Get by Sun, 18 Oct", price: 115, mrp: 115, discount: null },
+  { id: "hom-3", name: "Wheezal WL26 Menopause Drop", image: "/images/products/hom_3.png", pack: "bottle of 30 ml Drop", rating: 4.2, reviews: 12, delivery: "Get by Fri, 16 Oct", price: 155, mrp: 155, discount: null },
+  { id: "hom-4", name: "SBL Pinus Lambertiana Dilution 12 CH", image: "/images/products/hom_4.png", pack: "bottle of 30 ml Dilution", delivery: "Get by Sat, 17 Oct", price: 110, mrp: 110, discount: null },
+  { id: "hom-5", name: "REPL Dr. Advice No.3 Anemia Drop", image: "/images/products/hom_5.png", pack: "bottle of 30 ml Drop", rating: 4.2, reviews: 44, delivery: "Get by Fri, 16 Oct", price: 160, mrp: 160, discount: null },
+  { id: "hom-6", name: "Dr. Reckeweg Sepia Dilution 200 CH", image: "/images/products/hom_6.png", pack: "bottle of 11 ml Dilution", rating: 4.6, reviews: 312, delivery: "Get by 12am, Tomorrow", price: 190, mrp: 190, discount: null },
+  { id: "hom-7", name: "Dr. Reckeweg Hydrocotyle Asiatica Dilution", image: "/images/products/hom_7.png", pack: "bottle of 11 ml Dilution", rating: 4.6, reviews: 18, delivery: "Get by Fri, 16 Oct", price: 190, mrp: 190, discount: null },
 ];
 
 export const ayurvedaKnowledge = [
   {
     id: "ayur-k1",
-    name: "Celery",
+    name: "Celery", image: "/images/ayurveda/celery.png",
     desc: "Celery or Ajmoda is a plant whose leaves and stalk are commonly used as a part of a healthy diet, known for supporting digestion and cardiovascular wellness.",
   },
   {
     id: "ayur-k2",
-    name: "Plum",
+    name: "Plum", image: "/images/ayurveda/plum.png",
     desc: "Plum is a sweet and juicy summer fruit which is also known as Aalu Bukhara. Adding plums to your diet supports digestion, antioxidant defense, and vital cellular health.",
   },
   {
     id: "ayur-k3",
-    name: "Lemon",
+    name: "Lemon", image: "/images/ayurveda/lemon.png",
     desc: "Lemon (Citrus limon) is a flowering plant rich in vitamin C, citric acid and essential flavonoids that enhance immunity, skin glow, and natural detoxification.",
   },
   {
     id: "ayur-k4",
-    name: "Mahasudarshan churna",
+    name: "Mahasudarshan churna", image: "/images/ayurveda/mahasudarshan.png",
     desc: "Mahasudarshan Churna is a polyherbal Ayurvedic formulation containing 49 ingredients traditionally used for supporting immunity and seasonal recovery.",
   },
   {
     id: "ayur-k5",
-    name: "Kachnar",
+    name: "Kachnar", image: "/images/ayurveda/kachnar.png",
     desc: "Kachnar is also known as Mountain Ebony or Rakta Kanchan, an ornamental plant revered in Ayurveda for supporting thyroid balance and healthy lymphatic function.",
   },
   {
     id: "ayur-k6",
-    name: "Green Tea",
+    name: "Green Tea", image: "/images/ayurveda/greentea.png",
     desc: "The plant Camellia sinensis yields three types of tea based on the level of fermentation. Rich in EGCG catechins that stimulate metabolism and vitality.",
   },
 ];
@@ -1058,21 +1063,21 @@ export const trust = [
 export const pages = [
   {
     id: "about",
-    title: "About Tata 1mg",
-    body: "Tata 1mg is India's leading digital healthcare platform. From medicine delivery to lab testing and online doctor consultations, we make healthcare accessible, understandable, and affordable for millions across India.\n\nOur mission is to bring transparency to healthcare and empower patients with accurate, trusted information.",
+    title: "About MEDITRUST LIFE SCIENCE PVT LTD",
+    body: "MEDITRUST LIFE SCIENCE PVT LTD is a premier healthcare and pharmaceutical wellness company incorporated in Maharashtra, India. We are dedicated to providing accessible, high-quality, and authentic medicines, health supplements, diagnostic services, and wellness consultations.\n\nUnder the leadership of our registered directors, Ajay Kumar Pathri and Omkar Sanjay Telangi, we operate with uncompromised integrity, strict quality assurance, and customer-first care.",
   },
-  { id: "privacy-policy", title: "Privacy Policy", body: "Tata 1mg takes data privacy seriously. All patient health records and prescriptions are strictly confidential, 128-bit encrypted, and shared only with licensed pharmacists and testing labs." },
-  { id: "terms", title: "Terms and Conditions", body: "By using Tata 1mg, you agree to comply with applicable healthcare regulations. All prescription medicines require a valid doctor's prescription." },
-  { id: "shipping-policy", title: "Shipping Policy", body: "Tata 1mg provides standard and express delivery across 1800+ cities in India. Delivery fees are waived for orders above ₹499 or Care Plan members." },
-  { id: "returns-policy", title: "Returns and Refunds", body: "Medicines and unopened health products can be returned within 7 days of delivery. Refunds are credited instantly to your original payment method." },
-  { id: "careers", title: "Careers at Tata 1mg", body: "Join us in transforming healthcare delivery across India. Explore openings in engineering, medical operations, and pharmacy services." },
+  { id: "privacy-policy", title: "Privacy Policy", body: "MEDITRUST LIFE SCIENCE PVT LTD takes data privacy seriously. All patient health records and prescriptions are strictly confidential, 128-bit encrypted, and shared only with licensed pharmacists and accredited testing labs." },
+  { id: "terms", title: "Terms and Conditions", body: "By using MEDITRUST LIFE SCIENCE PVT LTD, you agree to comply with applicable healthcare regulations. All prescription medicines require a valid doctor's prescription." },
+  { id: "shipping-policy", title: "Shipping Policy", body: "MEDITRUST provides standard and express delivery across Maharashtra and nationwide across 1800+ cities in India. Delivery fees are waived for orders above ₹499." },
+  { id: "returns-policy", title: "Returns and Refunds", body: "Medicines and unopened health products can be returned within 7 days of delivery. Refunds are credited promptly to your original payment method." },
+  { id: "careers", title: "Careers at MEDITRUST", body: "Join MEDITRUST LIFE SCIENCE PVT LTD in transforming healthcare delivery. Explore openings in pharmaceutical operations, technology, and customer care." },
   { id: "healthcare-disclaimer", title: "Healthcare Disclaimer", body: "The information on this platform is for educational purposes and should not be used as a substitute for professional medical advice, diagnosis, or treatment." },
 ];
 
 export const defaultSettings = {
-  announcement: "QUICK BUY! Get up to 25% off on medicines* | Order on call: 1800-212-2323",
+  announcement: "QUICK BUY! Get up to 25% off on medicines* | Order on call: +91 7276048377",
   announcementVisible: true,
-  heroTitle: "Tata 1mg: India's Leading Online Pharmacy & Healthcare Platform",
+  heroTitle: "MEDITRUST: India's Trusted Healthcare & Pharmacy Platform",
   heroSubtitle: "Your trusted health partner for medicines, diagnostics, consultations, and wellness products.",
   heroImage: "",
   heroPrimaryText: "Order Medicines",
@@ -1084,7 +1089,7 @@ export const defaultSettings = {
   phone: company.phone,
   email: company.email,
   address: company.address,
-  footerText: "Tata 1mg is India's largest and most trusted online healthcare and medicine delivery platform.",
+  footerText: "MEDITRUST LIFE SCIENCE PVT LTD is dedicated to providing authentic medicines, certified lab testing, and verified healthcare services.",
   disclaimer: "All medicines are dispensed in compliance with the Drugs and Cosmetics Act, 1940 and Drugs and Cosmetics Rules, 1945. We do not process requests for Schedule X and habit forming drugs.",
   primaryColor: "#ff6f61",
   location: "Gurgaon",

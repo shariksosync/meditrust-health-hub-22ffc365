@@ -83,9 +83,9 @@ export function Icon({ name, size = 20, className = "" }) {
 }
 
 export function Logo({ light = false }) {
-  return <A href="/" className="flex items-center gap-1.5 shrink-0 select-none group" aria-label="Tata 1mg Home">
-    <span className={cx("font-black tracking-tight text-xl sm:text-2xl", light ? "text-white" : "text-gray-900")}>TATA</span>
-    <span className="flex items-center justify-center rounded px-1.5 py-0.5 bg-black text-white font-extrabold text-lg sm:text-xl leading-none tracking-tight">1mg</span>
+  return <A href="/" className="flex items-center gap-1.5 shrink-0 select-none group" aria-label="MEDITRUST Home">
+    <span className={cx("font-black tracking-tight text-xl sm:text-2xl", light ? "text-white" : "text-gray-900 group-hover:text-[#ff6f61] transition")}>MEDITRUST</span>
+    <span className="flex items-center justify-center rounded px-1.5 py-0.5 bg-black text-white font-extrabold text-xs sm:text-sm leading-none tracking-tight">1mg</span>
   </A>;
 }
 

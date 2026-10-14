@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  company,
   popularCities,
   allCities,
   topTabs,
@@ -10,6 +11,9 @@ import {
   fullBodyCheckups,
   superSavingDeals,
   trendingNow,
+  featuredBrands,
+  popularCategories,
+  ayurvedaKnowledge,
   offersData,
   paymentPartners,
   trustPillars,
@@ -78,5 +82,25 @@ describe("Tata 1mg Clone Mock Data & Architecture", () => {
     expect(paymentPartners).toContain("Amazon Pay");
     expect(paymentPartners).toContain("Paytm");
     expect(paymentPartners).toContain("Mobikwik");
+  });
+
+  it("contains authentic MEDITRUST LIFE SCIENCE PVT LTD registered company details", () => {
+    expect(company.name).toBe("MEDITRUST LIFE SCIENCE PVT LTD");
+    expect(company.directors).toContain("Ajay Kumar Pathri");
+    expect(company.directors).toContain("Omkar Sanjay Telangi");
+    expect(company.phone).toBe("+91 7276048377");
+    expect(company.address).toContain("Chinchwad");
+    expect(company.address).toContain("411033");
+  });
+
+  it("contains extracted authentic image paths across homepage sections", () => {
+    expect(heroSlides[0].image).toBe("/images/banners/hero-slide-1.png");
+    expect(carePlanBanner.avatar).toBe("/images/banners/care-plan-man.png");
+    expect(healthConcerns[0].image).toBe("/images/concerns/diabetes.png");
+    expect(featuredBrands[0].image).toBe("/images/brands/pentasure.png");
+    expect(popularCategories[0].image).toBe("/images/categories/bestoffers.png");
+    expect(superSavingDeals[0].image).toContain("/images/products/");
+    expect(trendingNow[0].image).toContain("/images/products/");
+    expect(ayurvedaKnowledge[0].image).toBe("/images/ayurveda/celery.png");
   });
 });

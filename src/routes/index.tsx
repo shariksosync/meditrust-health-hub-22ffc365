@@ -4,10 +4,10 @@ import App from "../App";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tata 1mg: India's Leading Online Pharmacy & Healthcare Platform" },
-      { name: "description", content: "Buy medicines and health products online at Tata 1mg. Find reliable diagnostics, lab tests, and doctor consultations." },
-      { property: "og:title", content: "Tata 1mg: India's Leading Online Pharmacy & Healthcare Platform" },
-      { property: "og:description", content: "Buy medicines and health products online at Tata 1mg." },
+      { title: "MEDITRUST: India's Leading Online Pharmacy & Healthcare Platform | MEDITRUST LIFE SCIENCE PVT LTD" },
+      { name: "description", content: "Buy authentic medicines and health products online at MEDITRUST LIFE SCIENCE PVT LTD. Reliable diagnostics, certified lab tests, and doctor consultations." },
+      { property: "og:title", content: "MEDITRUST: India's Leading Online Pharmacy & Healthcare Platform" },
+      { property: "og:description", content: "Buy authentic medicines and health products online at MEDITRUST LIFE SCIENCE PVT LTD." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
