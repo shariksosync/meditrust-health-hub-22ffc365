@@ -17,7 +17,21 @@ import {
   useForm,
   useGo,
 } from "../components/ui";
-import { specialties, slugify, offersData } from "../data/demo";
+import {
+  specialties,
+  slugify,
+  offersData,
+  labTrustCards,
+  labHealthNeeds,
+  labPromoBanners,
+  labRadiologyCards,
+  labCollectionSteps,
+  labPopularTestSuggestions,
+  popularCities,
+  company,
+  fullBodyCheckups,
+  pathologyTests,
+} from "../data/demo";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -127,9 +141,26 @@ export function LabCard({ t }) {
 }
 
 export function LabTests() {
-  const { state } = useApp();
+  const { state, toggleLab, toast } = useApp();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
+  const [city, setCity] = useState(state.settings.location || "Gurgaon");
+  const [cityOpen, setCityOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [bannerIdx, setBannerIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
+  // Auto-scroll banner
+  useState(() => {
+    const timer = setInterval(() => {
+      if (!isPaused) {
+        setBannerIdx((p) => (p + 1) % labPromoBanners.length);
+      }
+    }, 4500);
+    return () => clearInterval(timer);
+  });
+
   const list = state.labTests.filter(
     (t) =>
       t.visible &&
@@ -137,65 +168,522 @@ export function LabTests() {
       t.name.toLowerCase().includes(q.toLowerCase())
   );
 
+  const filteredPopular = labPopularTestSuggestions.filter((p) =>
+    !q.trim() ? true : p.name.toLowerCase().includes(q.toLowerCase())
+  );
+
   return (
-    <div className="bg-[#f8f9fa] min-h-screen pb-16">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-red-500 to-[#ff6f61] py-8 text-white">
+    <div className="bg-white min-h-screen pb-20">
+      {/* 1. HERO SECTION matching Screenshot 2026-10-14 234636.png */}
+      <section className="border-b border-gray-100 bg-[#ffffff] pt-8 pb-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <p className="text-xs font-bold uppercase tracking-wider text-white/80">Tata 1mg Labs</p>
-          <h1 className="mt-1 text-2xl sm:text-3xl font-extrabold">Diagnostic Tests & Checkups</h1>
-          <p className="mt-1 text-sm text-white/90">
-            100% Certified Labs · Safe Home Sample Collection · Free Doctor Consultation
-          </p>
-        </div>
-      </div>
+          <div className="grid gap-8 lg:grid-cols-12 items-start">
+            {/* Left Column (Headline + Search + Quick Pills + Category Grid) */}
+            <div className="lg:col-span-7 xl:col-span-7 space-y-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-gray-900 leading-[1.15] tracking-tight">
+                Book lab tests online from trusted and certified labs
+              </h1>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
-        <Crumbs items={[["Lab tests"]]} />
+              {/* Lab Search Bar with Location + Popular Suggestions (Screenshots 1, 8, 9) */}
+              <div className="relative z-30">
+                <div className="flex items-center rounded-2xl border border-gray-200 bg-white p-1.5 shadow-md focus-within:border-[#ff6f61] transition">
+                  {/* City Selector */}
+                  <div className="relative shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCityOpen((v) => !v);
+                        setSearchOpen(false);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold text-gray-800 hover:text-[#ff6f61] transition"
+                    >
+                      <Icon name="pin" size={16} className="text-[#ff6f61]" />
+                      <span className="truncate max-w-[90px] sm:max-w-[110px]">{city}</span>
+                      <Icon name="crosshair" size={13} className="text-gray-400" />
+                    </button>
 
-        {/* Filter bar */}
-        <div className="my-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-white p-3 rounded-xl border border-gray-200">
-          <div className="relative flex-1 sm:max-w-xs">
-            <input
-              className="w-full rounded-lg border border-gray-200 py-2 pl-9 pr-3 text-xs outline-none focus:border-[#ff6f61]"
-              placeholder="Search tests, e.g. CBC, Thyroid"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              aria-label="Search tests"
-            />
-            <Icon name="search" size={16} className="absolute left-3 top-2.5 text-gray-400" />
-          </div>
+                    {/* City Dropdown matching Screenshot 8 */}
+                    {cityOpen && (
+                      <div className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-gray-200 bg-white p-2 shadow-2xl z-50 animate-in fade-in duration-150">
+                        <p className="px-3 py-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                          Top Cities
+                        </p>
+                        <div className="space-y-0.5 max-h-48 overflow-y-auto">
+                          {popularCities.map((c) => (
+                            <button
+                              key={c}
+                              type="button"
+                              onClick={() => {
+                                setCity(c);
+                                setCityOpen(false);
+                                toast(`Location set to ${c}`);
+                              }}
+                              className={cx(
+                                "flex w-full items-center justify-between px-3 py-2 text-xs text-left rounded-lg transition",
+                                city === c
+                                  ? "bg-red-50 font-bold text-[#ff6f61]"
+                                  : "text-gray-700 hover:bg-gray-100"
+                              )}
+                            >
+                              <span>{c}</span>
+                              {city === c && <Icon name="check" size={14} />}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-          <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0">
-            {["", ...new Set(state.labTests.map((t) => t.category))].map((c) => (
-              <button
-                key={c || "all"}
-                onClick={() => setCat(c)}
-                className={cx(
-                  "rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap transition",
-                  cat === c
-                    ? "bg-[#ff6f61] text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  <div className="h-6 w-px bg-gray-200" />
+
+                  {/* Input */}
+                  <div className="flex-1 flex items-center px-3">
+                    <input
+                      value={q}
+                      onChange={(e) => {
+                        setQ(e.target.value);
+                        setSearchOpen(true);
+                      }}
+                      onFocus={() => {
+                        setSearchOpen(true);
+                        setCityOpen(false);
+                      }}
+                      placeholder="Search tests or full body checkups"
+                      className="w-full text-xs sm:text-sm text-gray-800 outline-none placeholder:text-gray-400"
+                    />
+                  </div>
+
+                  {/* Search Icon Button */}
+                  <button
+                    type="button"
+                    onClick={() => setSearchOpen(false)}
+                    className="grid h-10 w-10 place-items-center rounded-xl bg-[#ff6f61] text-white shadow-sm hover:bg-[#e85b4d] transition shrink-0"
+                    aria-label="Search lab tests"
+                  >
+                    <Icon name="search" size={18} />
+                  </button>
+                </div>
+
+                {/* Popular Tests Suggestion Dropdown matching Screenshot 9 */}
+                {searchOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-gray-200 bg-white p-3 shadow-2xl z-50 animate-in fade-in duration-150">
+                    <p className="px-2 pb-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                      Popular tests
+                    </p>
+                    <div className="divide-y divide-gray-100">
+                      {filteredPopular.map((pt) => {
+                        const inCart = state.labCart.includes(pt.testId);
+                        return (
+                          <div
+                            key={pt.id}
+                            className="flex items-center justify-between py-2.5 px-2 hover:bg-gray-50 rounded-lg transition"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="grid h-9 w-9 place-items-center rounded-lg bg-orange-50 text-[#ff6f61] shrink-0 font-bold text-xs">
+                                🧪
+                              </div>
+                              <div>
+                                <p className="text-xs sm:text-sm font-bold text-gray-900 leading-snug">
+                                  {pt.name}
+                                </p>
+                                <p className="text-[11px] text-gray-500">{pt.testsCount}</p>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                toggleLab(pt.testId);
+                                setSearchOpen(false);
+                              }}
+                              className={cx(
+                                "px-3 py-1 text-xs font-bold uppercase transition rounded-md",
+                                inCart
+                                  ? "bg-emerald-600 text-white"
+                                  : "text-[#ff6f61] hover:bg-red-50"
+                              )}
+                            >
+                              {inCart ? "BOOKED" : "BOOK"}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 )}
+              </div>
+
+              {/* 3 Quick Action Pills matching Screenshot 1 */}
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+                <a
+                  href={`tel:${company.phone.replace(/\s/g, "")}`}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-sky-100 bg-[#f0f8ff] p-3 text-center text-xs font-bold text-gray-800 hover:border-sky-300 transition shadow-xs"
+                >
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-blue-500 text-white text-[10px]">
+                    <Icon name="phone" size={12} />
+                  </span>
+                  <span className="truncate">Book via <span className="font-extrabold text-blue-900">Phone Call</span></span>
+                </a>
+
+                <A
+                  href="/quick-order"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-pink-100 bg-[#fff5f6] p-3 text-center text-xs font-bold text-gray-800 hover:border-pink-300 transition shadow-xs"
+                >
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-pink-500 text-white text-[10px]">
+                    <Icon name="prescription" size={12} />
+                  </span>
+                  <span className="truncate">Quick <span className="font-extrabold text-pink-900">Order</span></span>
+                </A>
+
+                <a
+                  href={`https://wa.me/${company.phone.replace(/[^0-9]/g, "")}?text=Hi,%20I%20would%20like%20to%20book%20a%20lab%20test%20with%20MEDITRUST`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-emerald-100 bg-[#f2fdf5] p-3 text-center text-xs font-bold text-gray-800 hover:border-emerald-300 transition shadow-xs"
+                >
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500 text-white text-[10px]">
+                    💬
+                  </span>
+                  <span className="truncate">Book via <span className="font-extrabold text-emerald-900">Whatsapp</span></span>
+                </a>
+              </div>
+
+              {/* Find tests & packages for your needs matching Screenshot 1 */}
+              <div className="rounded-2xl border border-gray-100 bg-[#fbfcfc] p-4 sm:p-5 shadow-xs">
+                <p className="text-xs sm:text-sm font-bold text-gray-800 mb-3">
+                  Find tests &amp; packages for your needs
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  {[
+                    { title: "Full Body Packages", icon: "👤", cat: "Fever" },
+                    { title: "X Rays, Scans & More", icon: "🫁", cat: "Radiology" },
+                    { title: "Fever Tests", icon: "🌡️", cat: "Fever" },
+                    { title: "Diabetes Tests", icon: "🩸", cat: "Diabetes" },
+                    { title: "Vitamins Tests", icon: "💊", cat: "Vitamins" },
+                  ].map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setCat(item.cat)}
+                      className={cx(
+                        "flex items-center justify-between rounded-xl border p-2.5 text-left transition shadow-2xs group",
+                        cat === item.cat
+                          ? "border-[#ff6f61] bg-red-50/50"
+                          : "border-gray-200 bg-white hover:border-[#ff6f61]"
+                      )}
+                    >
+                      <span className="text-xs font-semibold text-gray-800 group-hover:text-[#ff6f61] leading-tight">
+                        {item.title}
+                      </span>
+                      <span className="text-lg shrink-0 ml-1">{item.icon}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (4 Trust Cards Grid matching Screenshot 1) */}
+            <div className="lg:col-span-5 xl:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4">
+              {labTrustCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition aspect-[4/3] flex flex-col justify-end"
+                >
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  />
+                  {/* Subtle dark gradient overlay on bottom for text readability */}
+                  <div className="relative z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 pt-6 text-white">
+                    <p className="text-xs sm:text-sm font-extrabold leading-tight">{card.title}</p>
+                    <p className="text-[10px] text-gray-200 mt-0.5 line-clamp-1">{card.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. "Tests and packages for your health needs" matching Screenshot 2 */}
+      <section className="py-10 border-b border-gray-100 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+              Tests and packages for your health needs
+            </h2>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-xs text-gray-400 font-medium">Scroll to explore</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+            {labHealthNeeds.map((need) => (
+              <A
+                key={need.id}
+                href={need.href}
+                className="w-[150px] sm:w-[170px] shrink-0 text-center group"
               >
-                {c || "All Tests"}
-              </button>
+                <div className="aspect-square w-full rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md group-hover:scale-105 transition duration-200 border border-gray-100 bg-slate-50">
+                  <img
+                    src={need.image}
+                    alt={need.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="mt-2 text-xs sm:text-sm font-bold text-gray-800 group-hover:text-[#ff6f61] transition">
+                  {need.name}
+                </p>
+              </A>
             ))}
           </div>
         </div>
+      </section>
 
-        {list.length ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {list.map((t) => (
-              <LabCard key={t.id} t={t} />
+      {/* 3. PROMO VIDEO / LAB FEATURE BANNERS matching Screenshots 2 & 3 */}
+      <section className="py-10 bg-[#fafafa] border-b border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid gap-5 md:grid-cols-3">
+            {labPromoBanners.map((banner, idx) => (
+              <div
+                key={banner.id}
+                className="relative overflow-hidden rounded-2xl shadow-sm hover:shadow-md transition aspect-[16/9] sm:aspect-[2/1] group flex flex-col justify-end"
+              >
+                <img
+                  src={banner.image}
+                  alt={banner.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+                <div className="relative z-10 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 pt-8 text-white flex items-end justify-between">
+                  <div>
+                    <span className="inline-block rounded bg-black/60 backdrop-blur-xs px-2 py-0.5 text-[9px] font-black uppercase tracking-wider mb-1">
+                      {banner.title}
+                    </span>
+                    <p className="text-xs sm:text-sm font-bold leading-tight">{banner.subtitle}</p>
+                    <p className="text-[10px] text-gray-300 line-clamp-1">{banner.desc}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => toast(`Opening presentation: ${banner.subtitle}`)}
+                    className="rounded-md bg-white px-3 py-1 text-[11px] font-extrabold text-gray-900 shadow hover:bg-gray-100 transition shrink-0 ml-2"
+                  >
+                    {banner.btnText}
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
-        ) : (
-          <Empty icon="lab" title="No tests found" text="Try a different search term or category." />
-        )}
+        </div>
+      </section>
 
-        <LabBar />
-      </div>
+      {/* 4. "Radiology tests, x-rays & scans" matching Screenshots 3 & 4 */}
+      <section className="py-10 border-b border-gray-100 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+                Radiology tests, x-rays &amp; scans
+              </h2>
+              <p className="mt-1 text-xs text-gray-500">
+                Advanced diagnostic scans and imaging from accredited radiology centers
+              </p>
+            </div>
+            <A href="/lab-tests" className="text-xs font-bold text-[#ff6f61] hover:underline">
+              View all →
+            </A>
+          </div>
+
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+            {labRadiologyCards.map((rad) => (
+              <A
+                key={rad.id}
+                href={rad.href}
+                className="w-[150px] sm:w-[170px] shrink-0 text-center group"
+              >
+                <div className="aspect-square w-full rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md group-hover:scale-105 transition duration-200 border border-gray-100 bg-orange-50/30">
+                  <img
+                    src={rad.image}
+                    alt={rad.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="mt-2 text-xs sm:text-sm font-bold text-gray-800 group-hover:text-[#ff6f61] transition">
+                  {rad.name}
+                </p>
+              </A>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. "How does home sample collection work?" matching Screenshots 4 & 5 */}
+      <section className="py-12 border-b border-gray-100 bg-[#fbfcfc]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight mb-8">
+            How does home sample collection work?
+          </h2>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {labCollectionSteps.map((s) => (
+              <div
+                key={s.step}
+                className="rounded-2xl border border-gray-200 bg-white p-3.5 shadow-xs hover:shadow-sm transition flex flex-col justify-between"
+              >
+                <div>
+                  <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden mb-3.5 bg-gray-100">
+                    <img
+                      src={s.image}
+                      alt={s.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-2 left-2 grid h-7 w-7 place-items-center rounded-lg bg-black/80 font-black text-sm text-white">
+                      {s.step}
+                    </div>
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-gray-900 leading-snug">
+                    {s.title}
+                  </h3>
+                  <p className="mt-1.5 text-[11px] text-gray-500 leading-relaxed">
+                    {s.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. APP DOWNLOAD PROMO BANNER matching Screenshot 6 */}
+      <section className="py-10 border-b border-gray-100 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-50/70 via-orange-50/40 to-amber-50/80 border border-amber-200/60 p-6 sm:p-10 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-sm">
+            <div className="max-w-lg space-y-4">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight">
+                Download the MEDITRUST app. Trusted healthcare, at your fingertips.
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600">
+                Book tests, track real-time reports, and get AI-powered health insights anytime, anywhere.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://apps.apple.com/in/app/tata-1mg/id1081682217"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-block rounded-xl bg-black px-4 py-2 text-white hover:bg-gray-800 transition"
+                  >
+                    <p className="text-[9px] uppercase tracking-wider text-gray-400">Download on the</p>
+                    <p className="text-xs font-bold leading-tight">App Store</p>
+                  </a>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-block rounded-xl bg-black px-4 py-2 text-white hover:bg-gray-800 transition"
+                  >
+                    <p className="text-[9px] uppercase tracking-wider text-gray-400">GET IT ON</p>
+                    <p className="text-xs font-bold leading-tight">Google Play</p>
+                  </a>
+                </div>
+
+                <div className="hidden sm:flex items-center gap-3 border-l border-amber-200 pl-4">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-white p-1 border border-amber-200 text-center font-mono font-bold text-[10px] text-gray-800">
+                    QR
+                  </div>
+                  <p className="text-[11px] font-medium text-gray-500 leading-tight">
+                    Scan QR code <br /> to install app
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <img
+                src="/images/lab_tests/lab_app_mockup.png"
+                alt="MEDITRUST App Mockup"
+                className="max-h-72 w-auto object-contain rounded-2xl drop-shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. ALL LAB TESTS CATALOG / FILTERABLE DIRECTORY */}
+      <section className="py-10 bg-[#fafafa]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+                All Diagnostic Tests &amp; Full Body Packages
+              </h2>
+              <p className="mt-1 text-xs text-gray-500">
+                Choose from doctor-curated pathology packages and individual diagnostic tests
+              </p>
+            </div>
+
+            {/* Filter pills */}
+            <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+              {["", "Full Body", "Pathology", "Radiology", "Fever", "Diabetes", "Thyroid"].map((c) => (
+                <button
+                  key={c || "all"}
+                  onClick={() => setCat(c === "Full Body" ? "Health" : c)}
+                  className={cx(
+                    "rounded-full px-3.5 py-1.5 text-xs font-bold whitespace-nowrap transition shadow-2xs",
+                    (c === "" && !cat) || (c === "Full Body" && cat === "Health") || cat === c
+                      ? "bg-[#ff6f61] text-white"
+                      : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  )}
+                >
+                  {c || "All Tests"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {list.length ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {list.map((t) => (
+                <LabCard key={t.id} t={t} />
+              ))}
+            </div>
+          ) : (
+            <Empty icon="lab" title="No tests found" text="Try a different search term or category." />
+          )}
+        </div>
+      </section>
+
+      {/* 8. EXPANDABLE KNOWLEDGE ACCORDION matching Screenshot 6 */}
+      <section className="py-8 bg-white border-t border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <button
+            type="button"
+            onClick={() => setAccordionOpen((v) => !v)}
+            className="flex w-full items-center justify-between py-3 text-left text-sm sm:text-base font-bold text-gray-900 hover:text-[#ff6f61] transition"
+          >
+            <span>Keep your health in check with MEDITRUST: Lab tests just a click away</span>
+            <Icon
+              name="chev"
+              size={18}
+              className={cx("text-gray-400 transition-transform", accordionOpen && "rotate-180")}
+            />
+          </button>
+
+          {accordionOpen && (
+            <div className="mt-4 space-y-3 text-xs leading-relaxed text-gray-600 border-t border-gray-100 pt-4">
+              <p>
+                Diagnostics are an essential component of modern preventive and curative healthcare. MEDITRUST brings accredited diagnostic testing right to your doorstep with safe, temperature-controlled sample logistics and automated analyzers.
+              </p>
+              <p>
+                All samples collected by our certified phlebotomists are handled with barcoded, tamper-proof vacutainers and processed under rigorous ISO and NABL protocols. Reports are verified by MD pathologists and delivered directly to your email and phone within 24 hours.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Floating Lab Booking Cart Bar */}
+      <LabBar />
     </div>
   );
 }

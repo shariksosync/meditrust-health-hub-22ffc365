@@ -18,6 +18,12 @@ import {
   paymentPartners,
   trustPillars,
   platformStats,
+  labTrustCards,
+  labHealthNeeds,
+  labPromoBanners,
+  labRadiologyCards,
+  labCollectionSteps,
+  labPopularTestSuggestions,
 } from "../data/demo";
 
 describe("Tata 1mg Clone Mock Data & Architecture", () => {
@@ -102,5 +108,35 @@ describe("Tata 1mg Clone Mock Data & Architecture", () => {
     expect(superSavingDeals[0].image).toContain("/images/products/");
     expect(trendingNow[0].image).toContain("/images/products/");
     expect(ayurvedaKnowledge[0].image).toBe("/images/ayurveda/celery.png");
+  });
+
+  it("contains authentic Lab Tests landing page data and extracted images matching screenshots", () => {
+    expect(labTrustCards.length).toBe(4);
+    expect(labTrustCards[0].image).toBe("/images/lab_tests/trust_nabl.png");
+    expect(labTrustCards[1].image).toBe("/images/lab_tests/wide_coverage.png");
+    expect(labTrustCards[2].image).toBe("/images/lab_tests/home_collection.png");
+    expect(labTrustCards[3].image).toBe("/images/lab_tests/fast_reports.png");
+
+    expect(labHealthNeeds.length).toBe(6);
+    expect(labHealthNeeds[0].name).toBe("Men");
+    expect(labHealthNeeds[0].image).toBe("/images/lab_tests/need_men.png");
+    expect(labHealthNeeds[1].name).toBe("Women");
+    expect(labHealthNeeds[1].image).toBe("/images/lab_tests/need_women.png");
+
+    expect(labPromoBanners.length).toBe(3);
+    expect(labPromoBanners[0].image).toBe("/images/lab_tests/banner_phlebotomist.png");
+    expect(labPromoBanners[1].image).toBe("/images/lab_tests/banner_trust_see.png");
+    expect(labPromoBanners[2].image).toBe("/images/lab_tests/banner_national_ref_lab.png");
+
+    expect(labRadiologyCards.length).toBe(6);
+    expect(labRadiologyCards[0].name).toBe("CT Scan");
+    expect(labRadiologyCards[0].image).toBe("/images/lab_tests/rad_ct_scan.png");
+
+    expect(labCollectionSteps.length).toBe(5);
+    expect(labCollectionSteps[0].step).toBe(1);
+    expect(labCollectionSteps[0].image).toBe("/images/lab_tests/step_1_booking.png");
+
+    expect(labPopularTestSuggestions.length).toBe(3);
+    expect(labPopularTestSuggestions[0].name).toContain("Urine R/M");
   });
 });

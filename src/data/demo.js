@@ -729,6 +729,139 @@ export const ayurvedaKnowledge = [
   },
 ];
 
+// ---------------------- LAB TESTS LANDING PAGE DATA ----------------------
+export const labTrustCards = [
+  {
+    id: "nabl",
+    title: "Trusted NABL certified labs",
+    desc: "Hygienic & safety assured testing",
+    image: "/images/lab_tests/trust_nabl.png",
+  },
+  {
+    id: "coverage",
+    title: "Wide coverage across india",
+    desc: "Most trusted service in 55+ cities",
+    image: "/images/lab_tests/wide_coverage.png",
+  },
+  {
+    id: "collection",
+    title: "Home sample collection",
+    desc: "Safe pickup at your doorstep",
+    image: "/images/lab_tests/home_collection.png",
+  },
+  {
+    id: "reports",
+    title: "Fast, accurate reports",
+    desc: "Doctor-verified, delivered on time",
+    image: "/images/lab_tests/fast_reports.png",
+  },
+];
+
+export const labHealthNeeds = [
+  { id: "men", name: "Men", image: "/images/lab_tests/need_men.png", href: "/lab-tests?q=Men" },
+  { id: "women", name: "Women", image: "/images/lab_tests/need_women.png", href: "/lab-tests?q=Women" },
+  { id: "liver-kidney", name: "Liver & Kidney", image: "/images/lab_tests/need_liver_kidney.png", href: "/lab-tests?q=Liver" },
+  { id: "thyroid", name: "Thyroid", image: "/images/lab_tests/need_thyroid.png", href: "/lab-tests?q=Thyroid" },
+  { id: "hormones", name: "Hormones", image: "/images/lab_tests/need_hormones.png", href: "/lab-tests?q=Hormone" },
+  { id: "allergy", name: "Allergy", image: "/images/lab_tests/need_allergy.png", href: "/lab-tests?q=Allergy" },
+];
+
+export const labPromoBanners = [
+  {
+    id: "phlebotomist",
+    title: "BHAROSE KA BADGE:",
+    subtitle: "Earned by our phlebotomists",
+    desc: "See what sets them apart",
+    btnText: "Watch now",
+    image: "/images/lab_tests/banner_phlebotomist.png",
+    bg: "from-[#4c1d32] to-[#732943]",
+  },
+  {
+    id: "trust-see",
+    title: "Trust what you see!",
+    subtitle: "Take a sneak peek into our National Reference Lab, Delhi",
+    desc: "Accredited state-of-the-art diagnostic facilities",
+    btnText: "Watch now",
+    image: "/images/lab_tests/banner_trust_see.png",
+    bg: "from-[#391e4a] to-[#592c73]",
+  },
+  {
+    id: "ref-lab",
+    title: "National Reference Lab",
+    subtitle: "Making lab test safer, faster & accurate for you",
+    desc: "Equipped with automated world-class high-throughput analyzers",
+    btnText: "Know more",
+    image: "/images/lab_tests/banner_national_ref_lab.png",
+    bg: "from-[#0c4a2c] to-[#156f43]",
+  },
+];
+
+export const labRadiologyCards = [
+  { id: "ct-scan", name: "CT Scan", image: "/images/lab_tests/rad_ct_scan.png", href: "/lab-tests?q=CT+Scan" },
+  { id: "ecg", name: "ECG", image: "/images/lab_tests/rad_ecg.png", href: "/lab-tests?q=ECG" },
+  { id: "x-ray", name: "X-Ray", image: "/images/lab_tests/rad_xray.png", href: "/lab-tests?q=X-Ray" },
+  { id: "ultrasound", name: "Ultrasound", image: "/images/lab_tests/rad_ultrasound.png", href: "/lab-tests?q=Ultrasound" },
+  { id: "mri", name: "MRI", image: "/images/lab_tests/rad_mri.png", href: "/lab-tests?q=MRI" },
+  { id: "echo-test", name: "Echo Test", image: "/images/lab_tests/rad_echo.png", href: "/lab-tests?q=Echo" },
+];
+
+export const labCollectionSteps = [
+  {
+    step: 1,
+    title: "Easy online booking",
+    desc: "Search for tests and packages, book your preferred time slot and enter your address for seamless at-home lab tests.",
+    image: "/images/lab_tests/step_1_booking.png",
+  },
+  {
+    step: 2,
+    title: "Live tracking of phlebotomist",
+    desc: "Track our trained phlebotomist's real time location for seamless sample collection.",
+    image: "/images/lab_tests/step_2_tracking.png",
+  },
+  {
+    step: 3,
+    title: "Safe Sample Collection",
+    desc: "Our phlebotomists follow strict safety protocols to collect samples safely at home and on time.",
+    image: "/images/lab_tests/step_3_collection.png",
+  },
+  {
+    step: 4,
+    title: "Sample received at lab",
+    desc: "Samples are transported securely to our accredited labs with world-class machines for testing by qualified experts.",
+    image: "/images/lab_tests/step_4_lab.png",
+  },
+  {
+    step: 5,
+    title: "Quick, Doctor-Verified Reports",
+    desc: "Get doctor-approved reports via email and WhatsApp, with options for doctor follow-ups and AI insights.",
+    image: "/images/lab_tests/step_5_report.png",
+  },
+];
+
+export const labPopularTestSuggestions = [
+  {
+    id: "urine-rm",
+    name: "Urine R/M (Urine Routine & Microscopy)",
+    testsCount: "Contains 19 tests",
+    price: 199,
+    testId: "path-1",
+  },
+  {
+    id: "hba1c",
+    name: "HbA1c (Glycosylated Hemoglobin)",
+    testsCount: "Contains 1 test",
+    price: 320,
+    testId: "path-2",
+  },
+  {
+    id: "thyroid-profile",
+    name: "Thyroid Profile Total (T3, T4 & TSH)",
+    testsCount: "Contains 3 tests",
+    price: 539,
+    testId: "path-3",
+  },
+];
+
 export const platformStats = [
   { value: "260m+", label: "Visitors", icon: "visitors" },
   { value: "31m+", label: "Orders Delivered", icon: "orders" },
