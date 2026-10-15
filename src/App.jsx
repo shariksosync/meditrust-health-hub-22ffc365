@@ -5,6 +5,7 @@ import * as S from "./pages/shop";
 import * as V from "./pages/services";
 import * as U from "./pages/account";
 import { AdminLogin, AdminShell, adminRoutes } from "./pages/admin";
+import { CancerCare } from "./pages/cancer-care";
 
 const info = ["about", "privacy-policy", "terms", "shipping-policy", "returns-policy", "careers", "healthcare-disclaimer"];
 const routes = [
@@ -22,6 +23,8 @@ const routes = [
   ["/consult-doctor", V.Consult], ["/doctors/:specialty", V.Specialty], ["/doctor/:id", V.Doctor], ["/consultation/booking", V.ConsultBooking], ["/consultation/confirmation", V.ConsultConfirm],
   ["/ayurveda", V.Ayurveda],
   ["/partnerships", V.Partnerships],
+  ["/cancer-care", CancerCare],
+  ["/cancer-care/home", CancerCare],
   ["/health-articles", V.Articles], ["/health-articles/:slug", V.Article],
   ["/login", U.Login], ["/register", U.Register], ["/forgot-password", U.Forgot], ["/profile", U.Profile], ["/addresses", U.Addresses], ["/wishlist", U.Wishlist],
   ["/contact", V.Contact], ["/faq", V.Faq], ["/offers", V.Offers],
@@ -31,6 +34,9 @@ const routes = [
 function Routes() {
   const { path } = useLoc();
   const { state, ready } = useApp();
+  if (path === "/cancer-care" || path.startsWith("/cancer-care/")) {
+    return <CancerCare />;
+  }
   if (path === "/admin/login") return <AdminLogin/>;
   if (path.startsWith("/admin")) {
     const Page = adminRoutes[path];

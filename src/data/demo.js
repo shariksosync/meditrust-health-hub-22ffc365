@@ -99,7 +99,7 @@ export const topTabs = [
   { id: "medicines", label: "MEDICINES", href: "/medicines", active: true },
   { id: "lab-tests", label: "LAB TESTS", href: "/lab-tests" },
   { id: "consult-doctors", label: "CONSULT DOCTORS", href: "/consult-doctor" },
-  { id: "cancer-care", label: "CANCER CARE", href: "/healthcare/cancer-care" },
+  { id: "cancer-care", label: "CANCER CARE", href: "/cancer-care", target: "_blank" },
   { id: "ayurveda", label: "AYURVEDA", href: "/ayurveda" },
   { id: "partnerships", label: "PARTNERSHIPS", href: "/partnerships" },
   { id: "corporates", label: "CORPORATES", href: "/about" },

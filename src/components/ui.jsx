@@ -23,11 +23,11 @@ export function matchRoute(routes, path) {
   }
   return null;
 }
-export function A({ href = "/", children, className, onClick, ...rest }) {
+export function A({ href = "/", children, className, onClick, target, ...rest }) {
   const go = useGo();
-  return <a href={href} className={className} {...rest} onClick={(e) => {
+  return <a href={href} target={target} className={className} {...rest} onClick={(e) => {
     onClick?.(e);
-    if (!e.defaultPrevented && href.startsWith("/") && !e.metaKey && !e.ctrlKey && e.button === 0) { e.preventDefault(); go(href); }
+    if (!e.defaultPrevented && href.startsWith("/") && target !== "_blank" && !e.metaKey && !e.ctrlKey && e.button === 0) { e.preventDefault(); go(href); }
   }}>{children}</a>;
 }
 

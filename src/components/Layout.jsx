@@ -224,6 +224,8 @@ export function Header() {
                   <A
                     key={tab.id}
                     href={tab.href}
+                    target={tab.target}
+                    rel={tab.target === "_blank" ? "noopener noreferrer" : undefined}
                     className={cx(
                       "relative flex items-center h-full px-2 xl:px-3 text-xs font-bold tracking-tight transition duration-150 hover:text-[#ff6f61]",
                       isActive ? "text-[#ff6f61]" : "text-gray-800"
@@ -469,6 +471,8 @@ export function Header() {
                   <li key={t.id}>
                     <A
                       href={t.href}
+                      target={t.target}
+                      rel={t.target === "_blank" ? "noopener noreferrer" : undefined}
                       onClick={() => setMob(false)}
                       className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100"
                     >
