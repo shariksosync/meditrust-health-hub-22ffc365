@@ -524,6 +524,61 @@ export function Footer() {
 
   return (
     <footer className="mt-16 bg-white border-t border-gray-200 text-gray-700 text-xs pb-20">
+      {/* 0. Top Stats Bar: India's largest healthcare platform */}
+      <div className="border-b border-gray-100 py-10 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <h3 className="text-center text-lg sm:text-xl font-bold text-gray-900 mb-8">
+            India&apos;s largest healthcare platform
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {/* Stat 1: Visitors */}
+            <div className="flex items-center justify-between p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">260m+</p>
+                <p className="text-xs text-gray-500 font-medium mt-1">Visitors</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center p-2 shrink-0">
+                <img
+                  src="/images/partnerships/footer_stat_visitors.png"
+                  alt="Visitors"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Stat 2: Orders Delivered */}
+            <div className="flex items-center justify-between p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">31m+</p>
+                <p className="text-xs text-gray-500 font-medium mt-1">Orders Delivered</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center p-2 shrink-0">
+                <img
+                  src="/images/partnerships/footer_stat_orders.png"
+                  alt="Orders Delivered"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Stat 3: Cities */}
+            <div className="flex items-center justify-between p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+              <div>
+                <p className="text-3xl font-extrabold text-gray-900">1800+</p>
+                <p className="text-xs text-gray-500 font-medium mt-1">Cities</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-pink-50 flex items-center justify-center p-2 shrink-0">
+                <img
+                  src="/images/partnerships/footer_stat_cities.png"
+                  alt="Cities"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 1. Main Navigation Grid */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
@@ -573,60 +628,94 @@ export function Footer() {
           <div>
             <h4 className="mb-3 text-sm font-bold text-gray-900">Connect</h4>
             <p className="mb-3 text-xs text-gray-500">Social Links</p>
-            <div className="flex flex-wrap gap-2 text-gray-800">
-              {["FB", "IG", "X", "YT", "IN", "M"].map((s) => (
-                <span
-                  key={s}
-                  className="grid h-7 w-7 place-items-center rounded-full bg-black text-white font-bold text-[10px] cursor-pointer hover:bg-[#ff6f61] transition"
-                >
-                  {s}
-                </span>
-              ))}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" title="Facebook" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_facebook.png"
+                  alt="Facebook"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" title="Instagram" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_instagram.png"
+                  alt="Instagram"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" title="Twitter / X" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_twitter.png"
+                  alt="X (Twitter)"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" title="YouTube" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_youtube.png"
+                  alt="YouTube"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" title="LinkedIn" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_linkedin.png"
+                  alt="LinkedIn"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
+              <a href="https://medium.com" target="_blank" rel="noreferrer" title="Medium" className="hover:opacity-80 transition inline-block">
+                <img
+                  src="/images/partnerships/icon_medium.png"
+                  alt="Medium"
+                  className="h-6 w-6 object-contain cursor-pointer"
+                />
+              </a>
             </div>
           </div>
 
           {/* Download App */}
           <div>
             <h4 className="mb-3 text-sm font-bold text-gray-900">Download the MEDITRUST app</h4>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <a
                 href="https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block"
+                className="inline-block hover:opacity-90 transition"
               >
-                <div className="flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white hover:bg-gray-800 transition">
-                  <span className="text-base font-bold">▶</span>
-                  <div className="text-left leading-tight">
-                    <p className="text-[9px] uppercase tracking-wider text-gray-400">GET IT ON</p>
-                    <p className="text-xs font-bold">Google Play</p>
-                  </div>
-                </div>
+                <img
+                  src="/images/partnerships/google_play_badge.png"
+                  alt="Get it on Google Play"
+                  className="h-10 w-auto object-contain cursor-pointer drop-shadow-xs"
+                />
               </a>
 
               <a
                 href="https://apps.apple.com/in/app/tata-1mg/id1081682217"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block"
+                className="inline-block hover:opacity-90 transition"
               >
-                <div className="flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white hover:bg-gray-800 transition">
-                  <span className="text-base font-bold"></span>
-                  <div className="text-left leading-tight">
-                    <p className="text-[9px] uppercase tracking-wider text-gray-400">Download on the</p>
-                    <p className="text-xs font-bold">App Store</p>
-                  </div>
-                </div>
+                <img
+                  src="/images/partnerships/app_store_badge_official.png"
+                  alt="Download on the App Store"
+                  className="h-10 w-auto object-contain cursor-pointer drop-shadow-xs"
+                />
               </a>
             </div>
           </div>
         </div>
 
-        {/* 2. Trust Pillars (Reliable, Secure, Affordable) matching screenshot */}
+        {/* 2. Trust Pillars (Reliable, Secure, Affordable) matching uploaded icons */}
         <div className="my-12 grid gap-6 border-y border-gray-100 py-10 sm:grid-cols-3">
           <div className="flex items-start gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-purple-100 text-purple-700">
-              <Icon name="heart" size={26} />
+            <div className="h-10 w-10 shrink-0 flex items-center justify-center">
+              <img
+                src="/images/partnerships/icon_reliable_shield.png"
+                alt="Reliable"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
               <h5 className="font-bold text-gray-900 text-sm">Reliable</h5>
@@ -637,8 +726,12 @@ export function Footer() {
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-100 text-blue-600">
-              <Icon name="shield" size={26} />
+            <div className="h-10 w-10 shrink-0 flex items-center justify-center">
+              <img
+                src="/images/partnerships/icon_secure_shield.png"
+                alt="Secure"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
               <h5 className="font-bold text-gray-900 text-sm">Secure</h5>
@@ -649,8 +742,12 @@ export function Footer() {
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-emerald-100 text-emerald-600">
-              <Icon name="check" size={26} />
+            <div className="h-10 w-10 shrink-0 flex items-center justify-center">
+              <img
+                src="/images/partnerships/icon_wallet.png"
+                alt="Affordable"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
               <h5 className="font-bold text-gray-900 text-sm">Affordable</h5>

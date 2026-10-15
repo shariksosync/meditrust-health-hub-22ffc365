@@ -2694,58 +2694,117 @@ export function Partnerships() {
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-16">
-      {/* 1. HERO SECTION matching Screenshot 1 */}
-      <section className="bg-gradient-to-r from-orange-50 via-amber-50 to-rose-50 border-b border-orange-100 py-12 lg:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10">
-          <div className="max-w-2xl">
-            <span className="inline-block rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800 uppercase tracking-wider">
-              MEDITRUST Enterprise Healthcare
-            </span>
-            <h1 className="mt-4 text-3xl sm:text-5xl font-black text-gray-900 tracking-tight leading-tight">
-              Let's Empower Healthcare Together
-            </h1>
-            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">
-              Partner with India's trusted omnichannel healthcare and pharmacy network. We empower hospitals, corporations, diagnostic labs, insurance providers, and pharmaceutical innovators with cutting-edge digital supply chains and telehealth platforms.
-            </p>
+      {/* 1. HERO SECTION matching authentic SVG design */}
+      <section className="relative overflow-hidden min-h-[500px] sm:min-h-[580px] flex items-center justify-center bg-[#fdf5f3]">
+        <picture className="absolute inset-0 w-full h-full">
+          <source media="(max-width: 767px)" srcSet="/images/partnerships/c88a90df-d62a-46b1-82d7-1f37d802403b.svg" />
+          <source media="(min-width: 768px)" srcSet="/images/partnerships/041acb4e-d249-4faf-aaed-0cbb53721f3f.svg" />
+          <img
+            src="/images/partnerships/041acb4e-d249-4faf-aaed-0cbb53721f3f.svg"
+            alt="Healthcare Hero Background"
+            className="w-full h-full object-cover"
+          />
+        </picture>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="#lead-form"
-                className="rounded-xl bg-[#ff6f61] px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#e85b4d] transition"
-              >
-                Partner With Us
-              </a>
-              <a
-                href={`tel:${company.phone}`}
-                className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-gray-700 hover:bg-gray-50 transition shadow-xs flex items-center gap-2"
-              >
-                <Icon name="phone" size={16} className="text-[#ff6f61]" />
-                <span>Call {company.phone}</span>
-              </a>
-            </div>
-          </div>
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center py-16">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-[1.15]">
+            Let’s <span className="text-[#FF5443]">Empower </span>Healthcare <span className="text-[#FF5443]">Together</span>
+          </h1>
+          <p className="mt-5 text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Partner with India’s trusted healthcare platform to deliver care, enhance efficiency and improve health outcomes
+          </p>
 
-          <div className="shrink-0 flex justify-center">
-            <img
-              src="/images/partnerships/partner_floral_hero.png"
-              alt="Healthcare Partnerships"
-              className="max-h-72 sm:max-h-80 object-contain drop-shadow-md"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              href="#lead-form"
+              className="rounded-xl bg-[#181a1f] px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-lg hover:bg-black transition hover:scale-105 active:scale-95"
+            >
+              Know more about us
+            </a>
+            <a
+              href="#supportSection"
+              className="rounded-xl border border-gray-300 bg-white/90 backdrop-blur-xs px-6 py-3.5 text-xs sm:text-sm font-bold text-gray-800 shadow-xs hover:bg-white transition"
+            >
+              Our Solutions
+            </a>
           </div>
         </div>
       </section>
 
-      {/* 2. SCALE & REACH STATS matching Screenshot 2 */}
-      <section className="border-b border-gray-200 bg-white py-8">
+      {/* 2. SCALE & REACH STATS matching Screenshot 2 & authentic layout */}
+      <section id="supportSection" className="border-b border-gray-200 bg-white py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {partnerStats.map((st, idx) => (
-              <div key={idx} className="p-2">
-                <p className="text-2xl sm:text-4xl font-extrabold text-[#ff6f61]">{st.value}</p>
-                <p className="mt-1 text-xs font-semibold text-gray-600">{st.label}</p>
+          <div className="grid gap-10 lg:grid-cols-12 items-center">
+            {/* Left Column: Heading + Supported By 3 Pillars */}
+            <div className="lg:col-span-7 space-y-8">
+              <div>
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                  India’s Largest <span className="text-[#FF5443]">Integrated Healthcare Platform</span>
+                </h2>
+                <h3 className="mt-6 text-sm sm:text-base font-bold text-gray-400 uppercase tracking-wider">
+                  Supported by
+                </h3>
               </div>
-            ))}
+
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 p-4 rounded-xl border border-gray-100 bg-[#fafafa] hover:bg-white hover:shadow-xs transition">
+                  <div className="h-12 w-12 shrink-0 rounded-lg bg-red-50 flex items-center justify-center p-2.5">
+                    <img
+                      src="/images/partnerships/b89b5b0b-56e4-4038-9654-cad9b24a725a.svg"
+                      alt="ePharmacy"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-gray-900">ePharmacy</h4>
+                    <p className="mt-1 text-xs text-gray-600 leading-relaxed">
+                      Fast and reliable home delivery of genuine medicines and health essentials across 19,000+ pincodes.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 rounded-xl border border-gray-100 bg-[#fafafa] hover:bg-white hover:shadow-xs transition">
+                  <div className="h-12 w-12 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center p-2.5">
+                    <img
+                      src="/images/partnerships/b07f3889-b2fa-4f1a-bbf8-653992912000.svg"
+                      alt="eDiagnostics"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-gray-900">eDiagnostics</h4>
+                    <p className="mt-1 text-xs text-gray-600 leading-relaxed">
+                      Online lab test booking service with our certified labs, complete with convenient at-home sample collection and online reports.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 rounded-xl border border-gray-100 bg-[#fafafa] hover:bg-white hover:shadow-xs transition">
+                  <div className="h-12 w-12 shrink-0 rounded-lg bg-teal-50 flex items-center justify-center p-2.5">
+                    <img
+                      src="/images/partnerships/96df8863-e2fb-4b10-9636-55456c4c6eef.svg"
+                      alt="eConsultations"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-gray-900">eConsultations</h4>
+                    <p className="mt-1 text-xs text-gray-600 leading-relaxed">
+                      Immediate and free access to qualified doctors for virtual consultations.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Platform stats graphic */}
+            <div className="lg:col-span-5 flex justify-center">
+              <img
+                src="/images/partnerships/3c9bc782-09e6-45ca-8eac-89de28773ea0.svg"
+                alt="India's largest integrated healthcare platform stats"
+                className="w-full max-w-md object-contain drop-shadow-sm"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -2806,52 +2865,53 @@ export function Partnerships() {
           </div>
         </section>
 
-        {/* 4. TAILORED SECTOR SOLUTIONS TABS matching Screenshots 3-7 */}
+        {/* 4. TAILORED SECTOR SOLUTIONS TABS with official vector icons */}
         <section className="mt-16 rounded-2xl bg-white border border-gray-200 p-6 sm:p-10 shadow-xs">
           <div className="text-center max-w-xl mx-auto mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Tailored Strategic Solutions</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Tailored <span className="text-[#FF5443]">Solutions</span> for Every Need</h2>
             <p className="mt-1 text-xs text-gray-500">Industry-specific healthcare architectures tailored to your operational models</p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 border-b border-gray-200 pb-4">
+          <div className="flex flex-wrap justify-center gap-2.5 border-b border-gray-200 pb-5">
             {[
-              ["hospital", "Hospital Services"],
-              ["patient-support", "Patient Support Programs"],
-              ["insurance", "Insurance & TPA Networks"],
-              ["corporate", "Corporate Wellness"],
-              ["clinical", "Clinical Research Logistics"],
-            ].map(([tabKey, tabLabel]) => (
+              ["hospital", "Hospital Services", "/images/partnerships/hospital_services.svg"],
+              ["patient-support", "Patient Support Program", "/images/partnerships/pspicon.svg"],
+              ["insurance", "Insurance", "/images/partnerships/insuranceicon.svg"],
+              ["corporate", "Corporate Wellness", "/images/partnerships/corp_wellness.svg"],
+              ["strategic", "Strategic Partners", "/images/partnerships/strategic_partners.svg"],
+            ].map(([tabKey, tabLabel, tabIcon]) => (
               <button
                 key={tabKey}
                 onClick={() => setActiveTab(tabKey)}
                 className={cx(
-                  "rounded-full px-4 py-2 text-xs font-bold transition",
+                  "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition",
                   activeTab === tabKey
-                    ? "bg-[#ff6f61] text-white shadow-xs"
+                    ? "bg-[#ff6f61] text-white shadow-sm"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 )}
               >
-                {tabLabel}
+                <img src={tabIcon} alt="" className="h-4 w-4 shrink-0 brightness-0 invert" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <span>{tabLabel}</span>
               </button>
             ))}
           </div>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-2 items-center">
             <div>
-              <span className="text-xs font-bold text-[#ff6f61] uppercase">Sector Focus</span>
+              <span className="text-xs font-bold text-[#ff6f61] uppercase tracking-wider">Sector Focus</span>
               <h3 className="mt-1 text-xl font-bold text-gray-900">
                 {activeTab === "hospital" && "Hospital Digital Pharmacy & Home Discharge Delivery"}
                 {activeTab === "patient-support" && "Patient Support Programs (PSP) for Chronic Therapies"}
                 {activeTab === "insurance" && "Cashless OPD, Diagnostic & Pharmacy Benefits Integration"}
                 {activeTab === "corporate" && "Comprehensive Annual Health Checkups & Employee Care"}
-                {activeTab === "clinical" && "Temperature-Controlled Clinical Trial Sample Logistics"}
+                {activeTab === "strategic" && "Integrated Telehealth & Omnichannel Health Supply Chain"}
               </h3>
               <p className="mt-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
                 {activeTab === "hospital" && "Enable discharged patients to receive prescribed medicines at home within 2 hours. Seamless API integration with your hospital Information System (HIS) ensures zero stockouts, automated substitution checks, and real-time delivery tracking."}
                 {activeTab === "patient-support" && "Dedicated patient counseling, financial assistance program management, and monthly medication compliance refills for cardiology, oncology, and endocrinology regimens."}
                 {activeTab === "insurance" && "Direct cashless claim settlement for OPD prescriptions, home lab tests, and health supplements across India. Reduces administrative overhead with automated fraud-check algorithms."}
                 {activeTab === "corporate" && "Custom wellness dashboards, ergonomic on-site biometric screening camps, annual health checkups, and corporate pharmacy discounts for teams of 50 to 50,000 employees."}
-                {activeTab === "clinical" && "Cold-chain validation (-20°C to +25°C), barcoded biological sample transport, and strict regulatory compliance aligned with GCP and ICMR guidelines."}
+                {activeTab === "strategic" && "Co-branded digital storefronts, diagnostic kiosk deployment, and joint health programs powered by MEDITRUST infrastructure."}
               </p>
 
               <div className="mt-6 flex flex-wrap gap-4 text-xs font-semibold text-gray-800">

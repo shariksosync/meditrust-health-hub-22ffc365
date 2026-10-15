@@ -6,6 +6,7 @@ import * as V from "./pages/services";
 import * as U from "./pages/account";
 import { AdminLogin, AdminShell, adminRoutes } from "./pages/admin";
 import { CancerCare } from "./pages/cancer-care";
+import { PartnershipsPage } from "./pages/partnerships";
 
 const info = ["about", "privacy-policy", "terms", "shipping-policy", "returns-policy", "careers", "healthcare-disclaimer"];
 const routes = [
@@ -22,7 +23,7 @@ const routes = [
   ["/lab-tests", V.LabTests], ["/lab-tests/booking", V.LabBooking], ["/lab-tests/booking-confirmation", V.LabConfirm], ["/lab-tests/:id", V.LabTest],
   ["/consult-doctor", V.Consult], ["/doctors/:specialty", V.Specialty], ["/doctor/:id", V.Doctor], ["/consultation/booking", V.ConsultBooking], ["/consultation/confirmation", V.ConsultConfirm],
   ["/ayurveda", V.Ayurveda],
-  ["/partnerships", V.Partnerships],
+  ["/partnerships", PartnershipsPage],
   ["/cancer-care", CancerCare],
   ["/cancer-care/home", CancerCare],
   ["/health-articles", V.Articles], ["/health-articles/:slug", V.Article],
@@ -36,6 +37,9 @@ function Routes() {
   const { state, ready } = useApp();
   if (path === "/cancer-care" || path.startsWith("/cancer-care/")) {
     return <CancerCare />;
+  }
+  if (path === "/partnerships" || path.startsWith("/partnerships/")) {
+    return <PartnershipsPage />;
   }
   if (path === "/admin/login") return <AdminLogin/>;
   if (path.startsWith("/admin")) {

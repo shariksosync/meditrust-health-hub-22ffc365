@@ -817,43 +817,7 @@ export function Home() {
           </ScrollRow>
         </section>
 
-        {/* 28. Section 25: India's largest healthcare platform */}
-        <section className="py-8 border-t border-gray-100">
-          <h2 className="text-center text-xl sm:text-2xl font-bold text-gray-900 mb-8">
-            India's largest healthcare platform
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
-              <div>
-                <p className="text-3xl font-extrabold text-gray-900">260m+</p>
-                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Visitors</p>
-              </div>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-100 text-emerald-700">
-                <Icon name="users" size={26} />
-              </div>
-            </div>
 
-            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
-              <div>
-                <p className="text-3xl font-extrabold text-gray-900">31m+</p>
-                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Orders Delivered</p>
-              </div>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-blue-100 text-blue-600">
-                <Icon name="package" size={26} />
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-gray-100 bg-[#fafafa] p-6 flex items-center justify-between shadow-sm">
-              <div>
-                <p className="text-3xl font-extrabold text-gray-900">1800+</p>
-                <p className="mt-1 text-xs sm:text-sm font-semibold text-gray-500">Cities</p>
-              </div>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-pink-100 text-pink-600">
-                <Icon name="pin" size={26} />
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );

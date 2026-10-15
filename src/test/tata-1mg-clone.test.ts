@@ -202,6 +202,7 @@ describe("Tata 1mg Clone Mock Data & Architecture", () => {
 
     const partnerTab = topTabs.find((t) => t.id === "partnerships");
     expect(partnerTab?.href).toBe("/partnerships");
+    expect(partnerTab?.target).toBe("_blank");
 
     const cancerTab = topTabs.find((t) => t.id === "cancer-care");
     expect(cancerTab).toBeDefined();

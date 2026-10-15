@@ -99,4 +99,17 @@
   .tone-4 { background: oklch(0.95 0.03 300); }
   .tone-5 { background: oklch(0.96 0.03 140); }
   .hero-glow { background: radial-gradient(60% 80% at 10% 0%, var(--color-mint), transparent 70%), linear-gradient(180deg, var(--color-card), var(--color-surface)); }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 25s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
 }
