@@ -223,11 +223,11 @@ export function CancerCare() {
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Left: TATA 1mg Brand Logo */}
+            {/* Left: MEDITRUST Brand Logo */}
             <div className="flex items-center gap-3">
               <a href="/" className="flex items-center gap-2">
                 <span className="text-2xl sm:text-3xl font-black tracking-tighter text-black flex items-center">
-                  TATA <span className="text-[#ff6f61] ml-1">1mg</span>
+                  MEDITRUST <span className="text-[#ff6f61] ml-1.5 text-lg sm:text-xl font-bold tracking-normal uppercase">Cancer Care</span>
                 </span>
               </a>
             </div>
@@ -307,7 +307,7 @@ export function CancerCare() {
               Access to quality cancer care does not occur by chance
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Tata 1mg is here to support you and provide access to quality cancer care.
+              {company.name} is here to support you and provide access to quality cancer care.
             </p>
           </div>
 
@@ -459,7 +459,7 @@ export function CancerCare() {
             <div className="lg:col-span-5 bg-white rounded-2xl p-8 sm:p-10 shadow-sm min-h-[340px] flex flex-col justify-between">
               <div>
                 <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                  Out-of-pocket expenditure for cancer is one of the highest for any ailment. With Tata 1mg, you can reduce this expense by getting up to 20% OFF on your medicines.
+                  Out-of-pocket expenditure for cancer is one of the highest for any ailment. With MEDITRUST, you can reduce this expense by getting up to 20% OFF on your medicines.
                 </p>
               </div>
 
@@ -523,7 +523,7 @@ export function CancerCare() {
       </section>
 
       {/* ---------------- 8. EMPOWERING YOU THROUGH INFORMATION (SCREENSHOT 7 & 8) ---------------- */}
-      <section className="w-full overflow-hidden">
+      <section className="w-full bg-[#c3a0cc] overflow-hidden">
         <div className="max-w-[1920px] mx-auto">
           <img
             src="/images/cancer_care/empowering_you.png"
@@ -583,12 +583,12 @@ export function CancerCare() {
         </div>
       </section>
 
-      {/* ---------------- 10. WHY CHOOSE TATA 1MG? / A POCKETFUL OF TRUST (SCREENSHOT 10, 11, 12) ---------------- */}
+      {/* ---------------- 10. WHY CHOOSE MEDITRUST? / A POCKETFUL OF TRUST (SCREENSHOT 10, 11, 12) ---------------- */}
       <section className="py-16 sm:py-24 bg-[#b5dfd9] border-t border-[#a1d4cd]">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1f2937] tracking-tight">
-              Why choose Tata 1mg?
+              Why choose MEDITRUST?
             </h2>
             <p className="mt-1 text-base text-gray-800 font-medium">
               A pocketful of trust
@@ -610,7 +610,7 @@ export function CancerCare() {
                     {item.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
-                    {item.desc}
+                    {item.desc.replace(/Tata 1mg/g, "MEDITRUST")}
                   </p>
                 </div>
               </div>
@@ -644,13 +644,13 @@ export function CancerCare() {
             All the information provided here is for informational and awareness purposes only. It should NOT be used as a substitute for the advice of a qualified physician. Please consult your doctor and discuss all your queries related to any disease or medicine.
           </p>
           <p>
-            Tata 1mg's sole intention is to support our consumers throughout their cancer journey, one step at a time. We have made all efforts to keep the information true to the best of our knowledge. However, this may not cover everything about particular health conditions, medicines, all ongoing patient support or access programs, eligibility criteria, alerts, etc. We are continuously working on updates, improvisations, and advancements.
+            {company.name}'s sole intention is to support our consumers throughout their cancer journey, one step at a time. We have made all efforts to keep the information true to the best of our knowledge. However, this may not cover everything about particular health conditions, medicines, all ongoing patient support or access programs, eligibility criteria, alerts, etc. We are continuously working on updates, improvisations, and advancements.
           </p>
 
           <div className="pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <span className="text-xl font-black text-white">
-                TATA <span className="text-[#ff6f61]">1mg</span>
+                MEDITRUST <span className="text-[#ff6f61]">Cancer Care</span>
               </span>
               <span className="text-gray-600">|</span>
               <span className="text-[11px] text-gray-400">
