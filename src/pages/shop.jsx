@@ -4,26 +4,27 @@ import { A, Badge, DemoNote, Empty, Field, Icon, Stars, cx, money, phoneOk, req,
 import { ProductCard, ProductFilters, ProductGrid, SearchBar, SortSelect, applyFilters } from "../components/Layout";
 import * as D from "../data/demo";
 
-// Reusable Section Header with red "See all >" button
+// Reusable Section Header with authentic 1mg underline gradient and red "See all >" button
 function SectionHead({ title, href, isAd = false }) {
   return (
-    <div className="mb-4 flex items-center justify-between border-b border-gray-100 pb-2">
+    <div className="mb-4 relative pb-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
         {isAd && (
           <span className="rounded border border-gray-300 px-1 py-0.5 text-[10px] font-bold text-gray-500 uppercase">
             Ad
           </span>
         )}
-        <h2 className="text-base sm:text-lg font-bold text-gray-900">{title}</h2>
+        <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">{title}</h2>
       </div>
       {href && (
         <A
           href={href}
-          className="rounded-md border border-[#ff6f61] px-2.5 py-1 text-xs font-semibold text-[#ff6f61] hover:bg-[#ff6f61] hover:text-white transition"
+          className="rounded-md bg-[#ff6f61] px-3 py-1 text-xs font-bold text-white shadow-xs hover:bg-[#e85b4d] transition"
         >
           See all &gt;
         </A>
       )}
+      <div className="absolute bottom-0 left-0 w-[240px] sm:w-[280px] h-[2px] bg-gradient-to-r from-[#ff6b35] via-[#ffa07a] to-transparent rounded-full" />
     </div>
   );
 }
@@ -303,14 +304,32 @@ export function Home() {
         </div>
       </section>
 
-      {/* 2. Platform Headline Title */}
-      <section className="py-6 text-center border-b border-gray-100">
-        <div className="mx-auto max-w-7xl px-4">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+      {/* 2. Platform Headline Title matching 1mg DOM HomePage-module__pharmaHeader */}
+      <section className="relative w-full overflow-hidden bg-gradient-to-l from-white to-transparent py-4 my-2 border-y border-transparent">
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#ff6b35] via-50% via-[#ffa07a] to-transparent opacity-80" />
+        <div className="mx-auto max-w-7xl px-4 text-center">
+          <h1 className="text-xl sm:text-2xl lg:text-[26px] font-semibold text-[#181a1f] tracking-tight">
             MEDITRUST: India's Leading Online Pharmacy &amp; Healthcare Platform
-          </h2>
+          </h1>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#ff6b35] via-50% via-[#ffa07a] to-transparent opacity-80" />
       </section>
+
+      {/* Cashback Strip matching 1mg DOM HomePage-module__cashbackStripWrapper */}
+      <div className="bg-[#a91969] text-white py-2 px-4 shadow-xs">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-semibold">
+          <span className="flex items-center gap-1.5 font-bold">
+            <span className="rounded bg-white/20 px-2 py-0.5 text-[10px] tracking-wider uppercase">CASHBACK</span>
+            <span>Get flat 15% cashback up to ₹150 on your medicine orders</span>
+          </span>
+          <A
+            href="/offers"
+            className="text-white underline hover:text-amber-200 transition font-bold ml-2 text-xs"
+          >
+            Explore Offers →
+          </A>
+        </div>
+      </div>
 
       {/* 3. Care Plan Promotion Banner */}
       <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6">
