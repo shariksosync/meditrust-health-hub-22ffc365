@@ -1131,31 +1131,35 @@ export function Consult() {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans text-[#181a1f]">
-      {/* 1. CARE PLAN SAVINGS STRIP - Full-width cream strip matching Image 1 */}
-      <div className="w-full bg-[#fbf5ee] border-b border-[#f3e7d8] py-2 px-4 sm:px-6">
-        <div className="mx-auto max-w-7xl flex items-center justify-center gap-3 text-xs sm:text-[13px] text-[#414752]">
-          <img
-            src="/images/consult_doctor/care_plan_doctor_exact.png"
-            alt="Doctor Care Plan"
-            className="h-9 w-auto object-contain rounded-full shrink-0"
-            onError={(e) => {
-              e.currentTarget.src = "/images/consult_doctor/care_plan_doctor_thumb.png";
-            }}
-          />
-          <span>
-            Free consultation and more benefits with <strong>Care Plan</strong> membership.
-          </span>
-          <A
-            href="/care-plan"
-            className="inline-flex items-center gap-1.5 font-bold"
-          >
-            <span className="rounded bg-[#8a2422] px-2 py-0.5 text-[10px] font-extrabold text-white uppercase tracking-wider">
-              Care Plan
-            </span>
-            <span className="text-[#a82d2a] hover:underline">
-              Join now!
-            </span>
-          </A>
+      {/* 1. CARE PLAN SAVINGS STRIP - Full-width cream strip matching Image 1 & 2 */}
+      <div className="w-full bg-[#fbf5ee] border-b border-[#f3e7d8] py-4 sm:py-5 px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl flex items-center justify-center gap-4 text-xs sm:text-sm text-[#414752]">
+          <div className="h-14 w-14 sm:h-16 sm:w-16 flex items-center justify-center shrink-0">
+            <img
+              src="/images/consult_doctor/care_plan_doctor_exact.png"
+              alt="Doctor Care Plan"
+              className="max-h-full max-w-full object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/images/consult_doctor/care_plan_doctor_thumb.png";
+              }}
+            />
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="text-xs sm:text-sm font-normal text-[#181a1f] leading-snug">
+              Free consultation and more benefits with Care Plan membership.
+            </p>
+            <div className="mt-1 flex items-center gap-2">
+              <span className="rounded bg-[#8a2422] px-2 py-0.5 text-[10px] font-extrabold text-white uppercase tracking-wider">
+                Care Plan
+              </span>
+              <A
+                href="/care-plan"
+                className="text-xs sm:text-sm font-semibold text-[#a82d2a] hover:underline"
+              >
+                Join now!
+              </A>
+            </div>
+          </div>
         </div>
       </div>
 
