@@ -1364,52 +1364,58 @@ export function Consult() {
         </div>
       </section>
 
-      {/* 9. "INDIA'S LARGEST HEALTHCARE PLATFORM" STATS SECTION matching Image 2 */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
-        <h2 className="text-xl sm:text-2xl font-bold text-center text-[#181a1f] mb-8">
+      {/* 9. "INDIA'S LARGEST HEALTHCARE PLATFORM" STATS SECTION matching uploaded image */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-14">
+        <h2 className="text-xl sm:text-[22px] font-extrabold text-center text-[#181a1f] mb-8">
           India’s largest healthcare platform
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {/* Card 1: Visitors */}
-          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+          <div className="flex items-center justify-between rounded-2xl border border-[#edf0f5] bg-white px-7 py-6 shadow-xs hover:shadow-sm transition">
             <div>
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">260m+</p>
-              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Visitors</p>
+              <p className="text-3xl sm:text-[34px] font-extrabold text-[#181a1f] tracking-tight">260m+</p>
+              <p className="mt-1 text-sm font-medium text-[#414752]">Visitors</p>
             </div>
-            <img
-              src="/images/consult_doctor/stat_visitors.png"
-              alt="Visitors graph icon"
-              className="h-10 w-auto object-contain"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
+            <div className="h-12 w-12 flex items-center justify-center shrink-0">
+              <img
+                src="/images/consult_doctor/stat_visitors.png"
+                alt="Visitors"
+                className="h-12 w-12 object-contain"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </div>
           </div>
 
           {/* Card 2: Orders Delivered */}
-          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+          <div className="flex items-center justify-between rounded-2xl border border-[#edf0f5] bg-white px-7 py-6 shadow-xs hover:shadow-sm transition">
             <div>
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">31m+</p>
-              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Orders Delivered</p>
+              <p className="text-3xl sm:text-[34px] font-extrabold text-[#181a1f] tracking-tight">31m+</p>
+              <p className="mt-1 text-sm font-medium text-[#414752]">Orders Delivered</p>
             </div>
-            <img
-              src="/images/consult_doctor/stat_orders.png"
-              alt="Orders delivered kit icon"
-              className="h-10 w-auto object-contain"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
+            <div className="h-12 w-12 flex items-center justify-center shrink-0">
+              <img
+                src="/images/consult_doctor/stat_orders.png"
+                alt="Orders Delivered"
+                className="h-12 w-12 object-contain"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </div>
           </div>
 
           {/* Card 3: Cities */}
-          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+          <div className="flex items-center justify-between rounded-2xl border border-[#edf0f5] bg-white px-7 py-6 shadow-xs hover:shadow-sm transition">
             <div>
-              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">1800+</p>
-              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Cities</p>
+              <p className="text-3xl sm:text-[34px] font-extrabold text-[#181a1f] tracking-tight">1800+</p>
+              <p className="mt-1 text-sm font-medium text-[#414752]">Cities</p>
             </div>
-            <img
-              src="/images/consult_doctor/stat_cities.png"
-              alt="Cities building icon"
-              className="h-10 w-auto object-contain"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
+            <div className="h-12 w-12 flex items-center justify-center shrink-0">
+              <img
+                src="/images/consult_doctor/stat_cities.png"
+                alt="Cities"
+                className="h-12 w-12 object-contain"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </div>
           </div>
         </div>
       </section>
