@@ -1131,59 +1131,72 @@ export function Consult() {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans text-[#181a1f]">
-      {/* 1. CARE PLAN SAVINGS STRIP matching Screenshot 1 */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-3 pb-2">
-        <A
-          href="/care-plan"
-          className="flex items-center justify-center gap-3 rounded-md bg-[#fffcf8] border border-[#f5e6d3] p-2.5 text-xs text-[#181a1f] hover:bg-[#fff7ed] transition"
-        >
+      {/* 1. CARE PLAN SAVINGS STRIP - Full-width cream strip matching Image 1 */}
+      <div className="w-full bg-[#fbf5ee] border-b border-[#f3e7d8] py-2 px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl flex items-center justify-center gap-3 text-xs sm:text-[13px] text-[#414752]">
           <img
-            src="/images/consult_doctor/care_plan_doctor_thumb.png"
+            src="/images/consult_doctor/care_plan_doctor_exact.png"
             alt="Doctor Care Plan"
-            className="h-8 w-auto object-contain rounded-full"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            className="h-9 w-auto object-contain rounded-full shrink-0"
+            onError={(e) => {
+              e.currentTarget.src = "/images/consult_doctor/care_plan_doctor_thumb.png";
+            }}
           />
           <span>
             Free consultation and more benefits with <strong>Care Plan</strong> membership.
           </span>
-          <span className="rounded bg-[#a91969] px-2 py-0.5 text-[10px] font-bold text-white">
-            Care Plan
-          </span>
-          <span className="font-bold text-[#ff6f61] hover:underline">
-            Join now!
-          </span>
-        </A>
+          <A
+            href="/care-plan"
+            className="inline-flex items-center gap-1.5 font-bold"
+          >
+            <span className="rounded bg-[#8a2422] px-2 py-0.5 text-[10px] font-extrabold text-white uppercase tracking-wider">
+              Care Plan
+            </span>
+            <span className="text-[#a82d2a] hover:underline">
+              Join now!
+            </span>
+          </A>
+        </div>
       </div>
 
-      {/* 2. HERO SECTION matching Screenshot 1 */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 lg:py-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+      {/* 2. HERO SECTION matching Image 1 */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-10 pb-6 lg:pt-14 lg:pb-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="max-w-2xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#181a1f] tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-[#181a1f] tracking-tight leading-tight">
               Online doctor consultation with qualified doctors
             </h1>
-            <p className="mt-2 text-xl font-normal text-[#414752]">
+            <p className="mt-3 text-xl sm:text-2xl font-normal text-[#414752]">
               Starting at ₹199
             </p>
 
-            {/* 3 Value props matching Screenshot 1 */}
+            {/* 3 Value props matching Image 1 */}
             <div className="mt-8 flex flex-wrap items-center gap-6 sm:gap-8">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
-                  <Icon name="clock" size={20} />
-                </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/images/consult_doctor/ic_talk_exact.png"
+                  alt="Talk within 30 min"
+                  className="h-8 w-auto object-contain"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
                 <span className="text-sm font-medium text-[#414752]">Talk within 30 min</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
-                  <Icon name="chat" size={20} />
-                </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/images/consult_doctor/ic_chat_exact.png"
+                  alt="Free follow up for 3 days"
+                  className="h-8 w-auto object-contain"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
                 <span className="text-sm font-medium text-[#414752]">Free follow up for 3 days</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
-                  <Icon name="file" size={20} />
-                </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/images/consult_doctor/ic_rx_exact.png"
+                  alt="Get a valid prescription"
+                  className="h-8 w-auto object-contain"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
                 <span className="text-sm font-medium text-[#414752]">Get a valid prescription</span>
               </div>
             </div>
@@ -1213,21 +1226,21 @@ export function Consult() {
         </div>
       </section>
 
-      {/* 3. KEY METRICS STATS BAR matching Screenshot 1 */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 my-8">
-        <div className="rounded-xl border border-gray-100 bg-[#ffffff] p-6 sm:p-8 shadow-xs">
-          <div className="grid grid-cols-3 divide-x divide-gray-100 text-center">
+      {/* 3. KEY METRICS STATS BAR matching Image 1 */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 my-8">
+        <div className="rounded-xl border border-gray-200 bg-[#ffffff] p-6 sm:p-8 shadow-xs">
+          <div className="grid grid-cols-3 divide-x divide-gray-200 text-center">
             <div className="px-2">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">30L+</div>
-              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Total Consultations</div>
+              <div className="text-3xl sm:text-5xl font-black text-[#ff6f61]">30L+</div>
+              <div className="mt-2 text-sm sm:text-base font-bold text-[#181a1f]">Total Consultations</div>
             </div>
             <div className="px-2">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">3k+</div>
-              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Daily Consultations</div>
+              <div className="text-3xl sm:text-5xl font-black text-[#ff6f61]">3k+</div>
+              <div className="mt-2 text-sm sm:text-base font-bold text-[#181a1f]">Daily Consultations</div>
             </div>
             <div className="px-2">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">22+</div>
-              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Specialities</div>
+              <div className="text-3xl sm:text-5xl font-black text-[#ff6f61]">22+</div>
+              <div className="mt-2 text-sm sm:text-base font-bold text-[#181a1f]">Specialities</div>
             </div>
           </div>
         </div>
@@ -1351,7 +1364,57 @@ export function Consult() {
         </div>
       </section>
 
-      {/* 9. STICKY BOTTOM CALLBACK FOOTER matching live 1mg CallbackStickyFooter-module__stickyFooter */}
+      {/* 9. "INDIA'S LARGEST HEALTHCARE PLATFORM" STATS SECTION matching Image 2 */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
+        <h2 className="text-xl sm:text-2xl font-bold text-center text-[#181a1f] mb-8">
+          India’s largest healthcare platform
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Visitors */}
+          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+            <div>
+              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">260m+</p>
+              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Visitors</p>
+            </div>
+            <img
+              src="/images/consult_doctor/stat_visitors.png"
+              alt="Visitors graph icon"
+              className="h-10 w-auto object-contain"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+
+          {/* Card 2: Orders Delivered */}
+          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+            <div>
+              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">31m+</p>
+              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Orders Delivered</p>
+            </div>
+            <img
+              src="/images/consult_doctor/stat_orders.png"
+              alt="Orders delivered kit icon"
+              className="h-10 w-auto object-contain"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+
+          {/* Card 3: Cities */}
+          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-6 shadow-xs hover:shadow-sm transition">
+            <div>
+              <p className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">1800+</p>
+              <p className="mt-1 text-xs sm:text-sm text-[#626a7a]">Cities</p>
+            </div>
+            <img
+              src="/images/consult_doctor/stat_cities.png"
+              alt="Cities building icon"
+              className="h-10 w-auto object-contain"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 10. STICKY BOTTOM CALLBACK FOOTER matching live 1mg CallbackStickyFooter-module__stickyFooter */}
       {showSticky && (
         <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#fafdff] border-t border-[#f0f2f5] py-2.5 px-4 sm:px-12 shadow-md">
           <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-3">
