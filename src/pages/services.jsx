@@ -2451,21 +2451,23 @@ export function Ayurveda() {
             {ayurvedaFeaturedHerbs.map((h) => (
               <div
                 key={h.id}
-                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-emerald-500 hover:shadow-md transition flex flex-col justify-between"
+                className="group overflow-hidden rounded-xl border border-gray-200 bg-white text-center shadow-xs hover:border-emerald-500 hover:shadow-md transition flex flex-col justify-between"
               >
-                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-emerald-50/50 p-1 flex items-center justify-center">
+                <div className="w-full aspect-square overflow-hidden bg-gray-50">
                   <img
                     src={h.img}
                     alt={h.name}
-                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
-                <div className="mt-2">
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-emerald-700 transition">
-                    {h.name}
-                  </h3>
-                  <p className="mt-0.5 text-[11px] font-medium text-emerald-600">{h.subtitle}</p>
+                <div className="p-2.5 sm:p-3 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-emerald-700 transition">
+                      {h.name}
+                    </h3>
+                    <p className="mt-0.5 text-[11px] font-medium text-emerald-600">{h.subtitle}</p>
+                  </div>
                   <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
                 </div>
               </div>
@@ -2485,21 +2487,23 @@ export function Ayurveda() {
             {ayurvedaSkinHerbs.map((h) => (
               <div
                 key={h.id}
-                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-rose-400 hover:shadow-md transition flex flex-col justify-between"
+                className="group overflow-hidden rounded-xl border border-gray-200 bg-white text-center shadow-xs hover:border-rose-400 hover:shadow-md transition flex flex-col justify-between"
               >
-                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-rose-50/50 p-1 flex items-center justify-center">
+                <div className="w-full aspect-square overflow-hidden bg-gray-50">
                   <img
                     src={h.img}
                     alt={h.name}
-                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
-                <div className="mt-2">
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-rose-600 transition">
-                    {h.name}
-                  </h3>
-                  <p className="mt-0.5 text-[11px] font-medium text-rose-500">{h.subtitle}</p>
+                <div className="p-2.5 sm:p-3 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-rose-600 transition">
+                      {h.name}
+                    </h3>
+                    <p className="mt-0.5 text-[11px] font-medium text-rose-500">{h.subtitle}</p>
+                  </div>
                   <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
                 </div>
               </div>
@@ -2519,21 +2523,23 @@ export function Ayurveda() {
             {ayurvedaDigestiveHerbs.map((h) => (
               <div
                 key={h.id}
-                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-amber-500 hover:shadow-md transition flex flex-col justify-between"
+                className="group overflow-hidden rounded-xl border border-gray-200 bg-white text-center shadow-xs hover:border-amber-500 hover:shadow-md transition flex flex-col justify-between"
               >
-                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-amber-50/50 p-1 flex items-center justify-center">
+                <div className="w-full aspect-square overflow-hidden bg-gray-50">
                   <img
                     src={h.img}
                     alt={h.name}
-                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
-                <div className="mt-2">
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-amber-700 transition">
-                    {h.name}
-                  </h3>
-                  <p className="mt-0.5 text-[11px] font-medium text-amber-600">{h.subtitle}</p>
+                <div className="p-2.5 sm:p-3 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-amber-700 transition">
+                      {h.name}
+                    </h3>
+                    <p className="mt-0.5 text-[11px] font-medium text-amber-600">{h.subtitle}</p>
+                  </div>
                   <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
                 </div>
               </div>
@@ -2553,21 +2559,23 @@ export function Ayurveda() {
             {ayurvedaHairHerbs.map((h) => (
               <div
                 key={h.id}
-                className="group rounded-xl border border-gray-200 bg-white p-3 text-center shadow-xs hover:border-teal-500 hover:shadow-md transition flex flex-col justify-between"
+                className="group overflow-hidden rounded-xl border border-gray-200 bg-white text-center shadow-xs hover:border-teal-500 hover:shadow-md transition flex flex-col justify-between"
               >
-                <div className="mx-auto h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-lg bg-teal-50/50 p-1 flex items-center justify-center">
+                <div className="w-full aspect-square overflow-hidden bg-gray-50">
                   <img
                     src={h.img}
                     alt={h.name}
-                    className="h-full w-full object-contain group-hover:scale-105 transition"
+                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
-                <div className="mt-2">
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-teal-700 transition">
-                    {h.name}
-                  </h3>
-                  <p className="mt-0.5 text-[11px] font-medium text-teal-600">{h.subtitle}</p>
+                <div className="p-2.5 sm:p-3 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-teal-700 transition">
+                      {h.name}
+                    </h3>
+                    <p className="mt-0.5 text-[11px] font-medium text-teal-600">{h.subtitle}</p>
+                  </div>
                   <p className="mt-1 text-[10px] text-gray-400 line-clamp-2">{h.desc}</p>
                 </div>
               </div>
@@ -2628,11 +2636,11 @@ export function Ayurveda() {
                   key={idx}
                   className="flex items-center gap-3.5 rounded-xl border border-gray-100 bg-[#fafafa] p-3 hover:border-emerald-400 hover:bg-white hover:shadow-xs transition"
                 >
-                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-emerald-50 p-1 border border-emerald-100">
+                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-50 border border-gray-200">
                     <img
                       src={item.thumb}
                       alt={item.name}
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-cover"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
                     />
                   </div>
