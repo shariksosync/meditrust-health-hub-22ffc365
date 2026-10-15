@@ -32,7 +32,27 @@ export function AppProvider({ children }) {
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(KEY) || "null");
-      if (saved) setState((s) => ({ ...s, ...saved, prescription: null, settings: { ...D.defaultSettings, ...saved.settings, sections: { ...D.defaultSettings.sections, ...(saved.settings?.sections || {}) } } }));
+      if (saved) {
+        // Reconcile products to ensure fresh image assets and catalog data are preserved
+        const freshProducts = (saved.products && saved.products.length)
+          ? saved.products.map((sp) => {
+              const matched = D.products.find((dp) => dp.id === sp.id || dp.name === sp.name);
+              return matched ? { ...sp, image: matched.image || sp.image } : sp;
+            })
+          : D.products;
+
+        setState((s) => ({
+          ...s,
+          ...saved,
+          products: freshProducts,
+          prescription: null,
+          settings: {
+            ...D.defaultSettings,
+            ...saved.settings,
+            sections: { ...D.defaultSettings.sections, ...(saved.settings?.sections || {}) },
+          },
+        }));
+      }
     } catch { /* corrupt cache: fall back to sample data */ }
     setReady(true);
   }, []);

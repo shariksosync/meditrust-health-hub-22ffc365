@@ -99,9 +99,9 @@ export const topTabs = [
   { id: "medicines", label: "MEDICINES", href: "/medicines", active: true },
   { id: "lab-tests", label: "LAB TESTS", href: "/lab-tests" },
   { id: "consult-doctors", label: "CONSULT DOCTORS", href: "/consult-doctor" },
-  { id: "cancer-care", label: "CANCER CARE", href: "/cancer-care", target: "_blank" },
+  { id: "cancer-care", label: "CANCER CARE", href: "/cancer-care" },
   { id: "ayurveda", label: "AYURVEDA", href: "/ayurveda" },
-  { id: "partnerships", label: "PARTNERSHIPS", href: "/partnerships", target: "_blank" },
+  { id: "partnerships", label: "PARTNERSHIPS", href: "/partnerships" },
   { id: "corporates", label: "CORPORATES", href: "/about" },
   { id: "care-plan", label: "CARE PLAN", href: "/care-plan", badge: "SAVE MORE" },
 ];
@@ -257,7 +257,7 @@ export const carePlanBanner = {
   title: "Get extra 5% savings on your orders. Free shipping, same-day delivery and more.",
   action: "Become a member today!",
   btnText: "Know More",
-  btnHref: "/offers",
+  btnHref: "/care-plan",
   avatar: "/images/banners/care-plan-man.png",
   bannerImg: "/images/banners/care-plan-banner.png",
 };
@@ -1022,6 +1022,29 @@ const seed = [
   ["Prescription Medicine Atorvastatin 10mg", "Prescription Medicines", "Zydus", "10 tablets", 140],
 ];
 
+export const medicineCatalogImages = [
+  "/images/products/med_unienzyme.png",
+  "/images/products/med_protein.png",
+  "/images/products/med_nityam.png",
+  "/images/products/med_cofsils.png",
+];
+
+const explicitMedicineImages = {
+  "Unienzyme Digestive Enzymes for Indigestion": "/images/products/med_unienzyme.png",
+  "Himalaya Diabecon DS Tablet": "/images/products/med_nityam.png",
+  "Daily Multivitamin Tablets": "/images/products/med_protein.png",
+  "Vitamin C Chewable Tablets": "/images/products/med_cofsils.png",
+  "Prescription Medicine Amoxicillin 500mg": "/images/products/med_unienzyme.png",
+  "Zandu Kesari Jeevan Fit for Diabetics": "/images/products/med_nityam.png",
+  "Vitamin D3 Softgel Capsules": "/images/products/med_protein.png",
+  "Prescription Medicine Metformin 500mg": "/images/products/med_cofsils.png",
+  "Prescription Medicine Atorvastatin 10mg": "/images/products/med_unienzyme.png",
+  "Cofsils Gargle Antiseptic Solution": "/images/products/med_cofsils.png",
+  "Easylax L Oral Solution Lemon Sugar Free": "/images/products/med_unienzyme.png",
+  "Patanjali Nutrela Green Plant Protein": "/images/products/med_protein.png",
+  "Zandu Nityam Tablet for Stomach Care": "/images/products/med_nityam.png",
+};
+
 export const products = seed.map(([name, category, brand, pack, price], i) => ({
   id: `1MG-${101 + i}`,
   name,
@@ -1030,13 +1053,16 @@ export const products = seed.map(([name, category, brand, pack, price], i) => ({
   pack,
   price,
   mrp: Math.round(price * (i % 3 === 0 ? 1.25 : i % 3 === 1 ? 1.15 : 1.1)),
-  image: "",
+  image: explicitMedicineImages[name] || medicineCatalogImages[i % medicineCatalogImages.length],
   packs: [pack, i % 2 ? "Pack of 2" : "Pack of 3"],
   prescription: category === "Prescription Medicines",
   featured: i % 3 === 0 || i < 8,
   visible: true,
   stock: 12 + ((i * 7) % 46),
   popularity: 100 - ((i * 11) % 90),
+  rating: Number((4.1 + ((i * 3) % 9) / 10).toFixed(1)),
+  reviews: 45 + ((i * 37) % 850),
+  delivery: i % 2 === 0 ? "Get by 12am, Tomorrow" : "Get by Tomorrow",
   description:
     "Product information is for demonstration purposes. Genuine product sourced from licensed pharmacies.",
 }));
@@ -1225,7 +1251,7 @@ export const defaultSettings = {
   footerText: "MEDITRUST LIFE SCIENCE PVT LTD is dedicated to providing authentic medicines, certified lab testing, and verified healthcare services.",
   disclaimer: "All medicines are dispensed in compliance with the Drugs and Cosmetics Act, 1940 and Drugs and Cosmetics Rules, 1945. We do not process requests for Schedule X and habit forming drugs.",
   primaryColor: "#ff6f61",
-  location: "Gurgaon",
+  location: "Pimpri-Chinchwad",
   social: {
     facebook: "https://facebook.com/1mgOfficial",
     instagram: "https://instagram.com/1mgofficial",

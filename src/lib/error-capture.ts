@@ -54,6 +54,14 @@ function isErrorLike(value: unknown): value is Error {
 // recorded for consumeLastCapturedError and expanded before serialization.
 const originalConsoleError = console.error.bind(console);
 console.error = (...args: unknown[]) => {
+  // Ignore normal client-initiated aborted requests (e.g. browser fast-refresh, navigating before previous assets finish loading)
+  const isAborted = args.some(
+    (arg) =>
+      (arg instanceof Error && (arg.message === "aborted" || (arg as any).code === "ECONNRESET" || (arg as any).code === "ERR_HTTP2_STREAM_CANCEL")) ||
+      (typeof arg === "string" && arg.includes("Error: aborted"))
+  );
+  if (isAborted) return;
+
   const expanded = args.map((arg) => {
     if (!isErrorLike(arg)) return arg;
     record(arg);

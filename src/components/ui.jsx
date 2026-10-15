@@ -83,10 +83,30 @@ export function Icon({ name, size = 20, className = "" }) {
 }
 
 export function Logo({ light = false }) {
-  return <A href="/" className="flex items-center gap-1.5 shrink-0 select-none group" aria-label="MEDITRUST Home">
-    <span className={cx("font-black tracking-tight text-xl sm:text-2xl", light ? "text-white" : "text-gray-900 group-hover:text-[#ff6f61] transition")}>MEDITRUST</span>
-    <span className="flex items-center justify-center rounded px-1.5 py-0.5 bg-black text-white font-extrabold text-xs sm:text-sm leading-none tracking-tight">1mg</span>
-  </A>;
+  return (
+    <A href="/" className="flex items-center gap-2 shrink-0 select-none group" aria-label="MEDITRUST Home">
+      <svg
+        className="w-7 h-8 shrink-0 text-[#ff6f61]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+      <div className="flex flex-col leading-tight">
+        <span className={cx("font-black tracking-tight text-xl sm:text-2xl leading-none", light ? "text-white" : "text-[#ff6f61]")}>
+          MEDITRUST
+        </span>
+        <span className="text-[8px] sm:text-[9px] font-bold text-gray-500 tracking-wider uppercase mt-0.5">
+          LIFESCIENCE PVT LTD
+        </span>
+      </div>
+    </A>
+  );
 }
 
 export function Stars({ rating = 4.3, reviews }) {

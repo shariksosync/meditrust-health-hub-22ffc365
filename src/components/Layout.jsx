@@ -126,7 +126,7 @@ export function CitySelector() {
         className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm text-gray-800 bg-[#f1f4f6] rounded-lg hover:bg-gray-200 transition font-medium"
       >
         <Icon name="pin" size={16} className="text-gray-600 shrink-0" />
-        <span className="max-w-[90px] sm:max-w-[120px] truncate">{state.settings.location || "Gurgaon"}</span>
+        <span className="max-w-[90px] sm:max-w-[140px] truncate">{state.settings.location || "Pimpri-Chinchwad"}</span>
         <Icon name="crosshair" size={14} className="text-gray-500 shrink-0" />
       </button>
 
@@ -227,7 +227,7 @@ export function Header() {
                     target={tab.target}
                     rel={tab.target === "_blank" ? "noopener noreferrer" : undefined}
                     className={cx(
-                      "relative flex items-center h-full px-2 xl:px-3 text-xs font-bold tracking-tight transition duration-150 hover:text-[#ff6f61]",
+                      "relative flex items-center h-full px-2 xl:px-3 text-[13px] sm:text-[14px] font-extrabold tracking-tight transition duration-150 hover:text-[#ff6f61]",
                       isActive ? "text-[#ff6f61]" : "text-gray-800"
                     )}
                   >
@@ -246,7 +246,7 @@ export function Header() {
             </nav>
 
             {/* Right Side: Login/Signup | Offers | Cart | Need Help? */}
-            <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-gray-700">
+            <div className="flex items-center gap-3 sm:gap-5 text-sm font-semibold text-gray-700">
               {/* User Account / Login */}
               {state.user ? (
                 <div className="relative">
@@ -254,8 +254,8 @@ export function Header() {
                     onClick={() => setUserDropdown((v) => !v)}
                     className="flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-gray-100 font-semibold text-gray-900"
                   >
-                    <Icon name="user" size={16} className="text-[#ff6f61]" />
-                    <span className="max-w-[80px] truncate">{state.user.name.split(" ")[0]}</span>
+                    <Icon name="user" size={17} className="text-[#ff6f61]" />
+                    <span className="max-w-[90px] truncate">{state.user.name.split(" ")[0]}</span>
                     <Icon name="chev" size={12} className={userDropdown ? "rotate-180" : ""} />
                   </button>
 
@@ -282,11 +282,11 @@ export function Header() {
                   )}
                 </div>
               ) : (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => setAuthModal({ open: true, mode: "login" })}
-                    className="hover:text-[#ff6f61] font-semibold text-xs sm:text-sm text-gray-800"
+                    className="hover:text-[#ff6f61] font-semibold text-sm text-gray-800"
                   >
                     Login
                   </button>
@@ -294,7 +294,7 @@ export function Header() {
                   <button
                     type="button"
                     onClick={() => setAuthModal({ open: true, mode: "signup" })}
-                    className="hover:text-[#ff6f61] font-semibold text-xs sm:text-sm text-gray-800"
+                    className="hover:text-[#ff6f61] font-semibold text-sm text-gray-800"
                   >
                     Signup
                   </button>
@@ -302,7 +302,7 @@ export function Header() {
               )}
 
               {/* Offers link */}
-              <A href="/offers" className="hidden sm:inline-flex items-center hover:text-[#ff6f61] text-xs sm:text-sm text-gray-800 font-medium">
+              <A href="/offers" className="hidden sm:inline-flex items-center hover:text-[#ff6f61] text-sm text-gray-800 font-semibold">
                 Offers
               </A>
 
@@ -317,7 +317,7 @@ export function Header() {
                   className="relative p-1.5 text-gray-800 hover:text-[#ff6f61] transition block"
                   aria-label={`Cart, ${cartCount} items`}
                 >
-                  <Icon name="cart" size={22} />
+                  <Icon name="cart" size={23} />
                   {cartCount > 0 && (
                     <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#ff6f61] px-1 text-[9px] font-black text-white">
                       {cartCount}
@@ -348,7 +348,7 @@ export function Header() {
                 onMouseEnter={() => setHelpHover(true)}
                 onMouseLeave={() => setHelpHover(false)}
               >
-                <A href="/faq" className="hover:text-[#ff6f61] text-xs sm:text-sm text-gray-800 font-medium">
+                <A href="/faq" className="hover:text-[#ff6f61] text-sm text-gray-800 font-semibold">
                   Need Help?
                 </A>
 
@@ -871,51 +871,59 @@ export function StickyBottomBar() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-2xl py-2 px-4 animate-in slide-in-from-bottom duration-300">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-2xl py-2 px-3 sm:px-4 animate-in slide-in-from-bottom duration-300">
+      <div className="mx-auto flex max-w-7xl flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
         {/* Left Side: Call Info */}
-        <div className="flex items-center gap-2.5">
-          <div className="grid h-8 w-8 place-items-center rounded-full bg-blue-50 text-blue-600">
-            <Icon name="phone" size={16} />
+        <div className="flex items-center justify-between w-full sm:w-auto gap-2">
+          <div className="flex items-center gap-2">
+            <div className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-full bg-blue-50 text-blue-600 shrink-0">
+              <Icon name="phone" size={15} />
+            </div>
+            <div className="text-[11px] sm:text-xs">
+              <span className="font-bold text-gray-900">Order on Call: </span>
+              <a href="tel:+917276048377" className="font-bold text-emerald-700 hover:underline">
+                +91 7276048377
+              </a>
+            </div>
           </div>
-          <div className="text-xs sm:text-sm">
-            <span className="font-bold text-gray-900">Order Medicines on Call </span>
-            <span className="text-gray-600">Call us at </span>
-            <a href="tel:+917276048377" className="font-bold text-emerald-700 hover:underline">
-              +91 7276048377
-            </a>
-            <span className="text-gray-600"> or get a call back</span>
-          </div>
+
+          <button
+            onClick={() => setClosed(true)}
+            aria-label="Close bottom bar"
+            className="p-1 text-gray-400 hover:text-gray-800 transition rounded-full hover:bg-gray-100 sm:hidden shrink-0"
+          >
+            <Icon name="close" size={15} />
+          </button>
         </div>
 
         {/* Right Side: Phone callback form + Close button */}
-        <div className="flex items-center gap-2">
-          <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <div className="flex h-9 items-center rounded-md border border-gray-300 bg-white px-2 focus-within:border-[#ff6f61]">
-              <span className="text-xs font-semibold text-gray-600 mr-1.5 flex items-center gap-1">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+          <form onSubmit={handleSubmit} className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+            <div className="flex h-8 sm:h-9 flex-1 sm:flex-initial items-center rounded-md border border-gray-300 bg-white px-2 focus-within:border-[#ff6f61]">
+              <span className="text-[11px] sm:text-xs font-semibold text-gray-600 mr-1 flex items-center gap-0.5">
                 🇮🇳 +91
               </span>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter Phone Number"
-                className="w-32 sm:w-44 text-xs text-gray-900 outline-none"
+                placeholder="Phone Number"
+                className="w-full sm:w-36 text-xs text-gray-900 outline-none"
               />
             </div>
             <button
               type="submit"
-              className="flex items-center gap-1.5 rounded-md bg-[#ff6f61] px-3 sm:px-4 py-2 text-xs font-bold text-white shadow hover:bg-[#e85b4d] active:scale-95 transition whitespace-nowrap"
+              className="flex items-center gap-1 rounded-md bg-[#ff6f61] px-2.5 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-white shadow hover:bg-[#e85b4d] active:scale-95 transition whitespace-nowrap shrink-0"
             >
-              <Icon name="phone" size={14} />
-              <span>Get a Call to Order Medicines</span>
+              <Icon name="phone" size={12} />
+              <span>Get Call</span>
             </button>
           </form>
 
           <button
             onClick={() => setClosed(true)}
             aria-label="Close bottom bar"
-            className="p-1.5 text-gray-400 hover:text-gray-800 transition rounded-full hover:bg-gray-100"
+            className="hidden sm:block p-1.5 text-gray-400 hover:text-gray-800 transition rounded-full hover:bg-gray-100 shrink-0"
           >
             <Icon name="close" size={16} />
           </button>
@@ -949,8 +957,15 @@ export function ProductCard({ p }) {
         {/* Product Image */}
         <A href={`/product/${p.id}`} className="block relative aspect-square w-full overflow-hidden rounded-lg bg-white mb-3">
           <div className="grid h-full w-full place-items-center p-2 group-hover:scale-105 transition duration-200">
-            {p.image ? (
-              <img src={p.image} alt={p.name} className="h-full w-full object-contain" />
+            {p.image || D.medicineCatalogImages ? (
+              <img
+                src={p.image || D.medicineCatalogImages[Math.abs(p.name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)) % D.medicineCatalogImages.length]}
+                alt={p.name}
+                className="h-full w-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/products/med_unienzyme.png";
+                }}
+              />
             ) : (
               <div className="grid h-24 w-24 place-items-center rounded-xl bg-gray-50 text-[#ff6f61]">
                 <Icon name="bottle" size={38} />

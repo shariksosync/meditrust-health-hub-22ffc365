@@ -7,10 +7,12 @@ import * as U from "./pages/account";
 import { AdminLogin, AdminShell, adminRoutes } from "./pages/admin";
 import { CancerCare } from "./pages/cancer-care";
 import { PartnershipsPage } from "./pages/partnerships";
+import { CarePlanPage } from "./pages/care-plan";
 
 const info = ["about", "privacy-policy", "terms", "shipping-policy", "returns-policy", "careers", "healthcare-disclaimer"];
 const routes = [
   ["/", S.Home],
+  ["/care-plan", CarePlanPage],
   ["/medicines", (p) => <S.Listing {...p} base="medicines"/>], ["/medicines/:category", (p) => <S.Listing {...p} base="medicines"/>],
   ["/healthcare", (p) => <S.Listing {...p} base="healthcare"/>], ["/healthcare/:category", (p) => <S.Listing {...p} base="healthcare"/>],
   ["/search", (p) => <S.Listing {...p} base="search"/>],

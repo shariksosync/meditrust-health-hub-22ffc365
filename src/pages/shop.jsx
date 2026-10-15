@@ -188,132 +188,64 @@ export function Home() {
 
   return (
     <div className="bg-white min-h-screen pb-16">
-      {/* 1. Hero Multi-Slide Carousel Banner matching Screenshot 2026-10-14 201806.png */}
-      <section className="border-b border-gray-200 bg-[#fafafa]">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-          <div className="grid gap-4 lg:grid-cols-12 items-stretch">
-            {/* Left Main Hero Banner */}
-            <div
-              className={`relative lg:col-span-8 overflow-hidden rounded-xl bg-gradient-to-r ${slide.bg} flex flex-col justify-between min-h-[220px] shadow-sm`}
-            >
-              {slide.image ? (
-                <A href={slide.actionHref} className="block w-full h-full">
-                  <img
-                    src={slide.image}
-                    alt={slide.headline}
-                    className="w-full h-full object-cover rounded-xl min-h-[220px]"
-                  />
-                </A>
-              ) : (
-                <div className="p-6 sm:p-8 flex flex-col justify-between h-full">
-                  <div className="max-w-md">
-                    <span className="inline-block rounded-md bg-black px-2 py-0.5 text-[10px] font-black text-white tracking-widest uppercase mb-2">
-                      {slide.brandTag}
-                    </span>
-                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 leading-tight">
-                      {slide.headline}
-                    </h1>
-                    <ul className="mt-3 space-y-1 text-xs text-gray-700 font-medium">
-                      {slide.features.map((f, i) => (
-                        <li key={i} className="flex items-center gap-1.5">
-                          <Icon name="check" size={13} className="text-[#ff6f61]" />
-                          <span>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+      {/* 1. Full-Width Panoramic Hero Slider matching reference project and aspect-[1900/260] */}
+      <section className="w-full bg-[#f8f9fa] border-b border-gray-100">
+        <A
+          href={slide.actionHref}
+          className="w-full block border-0 p-0 overflow-hidden"
+          aria-label={slide.headline}
+        >
+          <img
+            src={slide.image || "/images/banners/hero-slide-1.png"}
+            alt={slide.headline}
+            className="w-full h-auto min-h-[140px] sm:min-h-[180px] md:aspect-[1900/260] object-cover block"
+          />
+        </A>
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <A
-                      href={slide.actionHref}
-                      className="rounded-md bg-black px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-gray-800 transition"
-                    >
-                      {slide.actionText}
-                    </A>
-                    <span className="text-[10px] text-gray-500 font-medium">T&amp;C Apply</span>
-                  </div>
-                </div>
-              )}
-            </div>
+        {/* Carousel Controls: Prev, Next, Dots, Play/Pause */}
+        <div className="flex justify-center gap-2 items-center h-11 bg-white">
+          <button
+            onClick={() => setSlideIdx((p) => (p === 0 ? D.heroSlides.length - 1 : p - 1))}
+            className="w-6 h-6 rounded-full border border-gray-300 bg-white text-gray-700 flex items-center justify-center cursor-pointer text-xs font-bold hover:bg-gray-100 transition shadow-xs"
+            aria-label="Previous slide"
+          >
+            &lt;
+          </button>
+          <button
+            onClick={() => setSlideIdx((p) => (p + 1) % D.heroSlides.length)}
+            className="w-6 h-6 rounded-full border border-gray-300 bg-white text-gray-700 flex items-center justify-center cursor-pointer text-xs font-bold hover:bg-gray-100 transition shadow-xs"
+            aria-label="Next slide"
+          >
+            &gt;
+          </button>
 
-            {/* Right Public Interest Banner (PvPI toll-free) */}
-            <div className="lg:col-span-4 rounded-xl border border-gray-200 bg-gradient-to-r from-orange-50 to-amber-50 p-4 sm:p-5 flex flex-col justify-between shadow-sm">
-              <div>
-                <p className="text-xs font-bold text-red-600 uppercase tracking-wide">
-                  {slide.rightNotice.title}
-                </p>
-                <p className="mt-1 text-xs text-gray-700 leading-relaxed">
-                  {slide.rightNotice.desc}
-                </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="grid h-8 w-8 place-items-center rounded-full bg-black text-white">
-                    <Icon name="phone" size={14} />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500">PvPI Toll Free Number</p>
-                    <a href={`tel:${slide.rightNotice.phone.replace(/\s/g, "")}`} className="font-extrabold text-sm text-gray-900 hover:text-[#ff6f61]">
-                      {slide.rightNotice.phone}
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-3 text-[9px] text-gray-500 border-t border-amber-200/60 pt-2 leading-tight">
-                {slide.rightNotice.org}
-              </p>
-            </div>
+          <div className="flex items-center gap-1.5 mx-2">
+            {D.heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setSlideIdx(i)}
+                className={`h-2 rounded-full transition-all duration-200 ${
+                  slideIdx === i ? "w-6 bg-[#ff6f61]" : "w-2 bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
           </div>
 
-          {/* Carousel Controls: Prev, Next, Dots, Pause */}
-          <div className="mt-3 flex items-center justify-center gap-3">
-            <button
-              onClick={() => setSlideIdx((p) => (p === 0 ? D.heroSlides.length - 1 : p - 1))}
-              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs font-bold"
-              aria-label="Previous slide"
-            >
-              &lt;
-            </button>
-            <button
-              onClick={() => setSlideIdx((p) => (p + 1) % D.heroSlides.length)}
-              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs font-bold"
-              aria-label="Next slide"
-            >
-              &gt;
-            </button>
-
-            <div className="flex items-center gap-1.5">
-              {D.heroSlides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSlideIdx(i)}
-                  className={`h-2 rounded-full transition-all ${
-                    slideIdx === i ? "w-6 bg-gray-800" : "w-2 bg-gray-300"
-                  }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => setIsPaused((p) => !p)}
-              className="grid h-6 w-6 place-items-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 text-[10px]"
-              aria-label={isPaused ? "Play slider" : "Pause slider"}
-            >
-              {isPaused ? "▶" : "❚❚"}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsPaused((p) => !p)}
+            className="w-6 h-6 rounded-full border border-gray-300 bg-white text-gray-700 flex items-center justify-center cursor-pointer text-[10px] hover:bg-gray-100 transition shadow-xs"
+            aria-label={isPaused ? "Play slider" : "Pause slider"}
+          >
+            {isPaused ? "▶" : "❚❚"}
+          </button>
         </div>
       </section>
 
-      {/* 2. Platform Headline Title matching 1mg DOM HomePage-module__pharmaHeader */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-l from-white to-transparent py-4 my-2 border-y border-transparent">
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#ff6b35] via-50% via-[#ffa07a] to-transparent opacity-80" />
-        <div className="mx-auto max-w-7xl px-4 text-center">
-          <h1 className="text-xl sm:text-2xl lg:text-[26px] font-semibold text-[#181a1f] tracking-tight">
-            MEDITRUST: India's Leading Online Pharmacy &amp; Healthcare Platform
-          </h1>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#ff6b35] via-50% via-[#ffa07a] to-transparent opacity-80" />
-      </section>
+      {/* 2. Platform Headline Title matching reference project separator banner */}
+      <h1 className="border-t border-[#ff6f61] border-b border-[#ffe8e6] text-center py-5 sm:py-6 px-4 text-base sm:text-lg lg:text-xl font-bold text-gray-900 bg-white">
+        Meditrust: Online Pharmacy &amp; Healthcare Platform
+      </h1>
 
       {/* Cashback Strip matching 1mg DOM HomePage-module__cashbackStripWrapper */}
       <div className="bg-[#a91969] text-white py-2 px-4 shadow-xs">
@@ -333,43 +265,16 @@ export function Home() {
 
       {/* 3. Care Plan Promotion Banner */}
       <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6">
-        <div className="relative overflow-hidden rounded-2xl bg-[#fef4e8] border border-amber-200 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-          <div className="flex items-center gap-4">
-            {D.carePlanBanner.avatar ? (
-              <img
-                src={D.carePlanBanner.avatar}
-                alt="Care Plan"
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-contain shrink-0 bg-amber-100/60 p-1 shadow-xs"
-              />
-            ) : (
-              <div className="hidden sm:grid h-16 w-16 shrink-0 place-items-center rounded-full bg-amber-200/70 text-[#662d1b] font-black text-xl">
-                1mg
-              </div>
-            )}
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded bg-[#662d1b] px-2 py-0.5 text-xs font-bold text-white uppercase tracking-wider">
-                  {D.carePlanBanner.tag}
-                </span>
-                <span className="text-xs font-semibold text-[#662d1b]">
-                  {D.carePlanBanner.subtag}
-                </span>
-              </div>
-              <h3 className="mt-2 text-sm sm:text-base font-bold text-gray-900 leading-snug">
-                {D.carePlanBanner.title}
-              </h3>
-              <p className="mt-0.5 text-xs text-gray-600 font-medium">
-                {D.carePlanBanner.action}
-              </p>
-            </div>
-          </div>
-          <A
-            href={D.carePlanBanner.btnHref}
-            className="rounded-md bg-[#662d1b] px-6 py-2.5 text-xs font-bold text-white shadow-md hover:bg-[#522314] transition shrink-0"
-          >
-            {D.carePlanBanner.btnText}
-          </A>
-        </div>
+        <A
+          href={D.carePlanBanner.btnHref || "/offers"}
+          className="block w-full overflow-hidden rounded-2xl shadow-sm border border-amber-200/80 hover:opacity-95 transition"
+        >
+          <img
+            src={D.carePlanBanner.bannerImg || "/images/banners/care-plan-banner.png"}
+            alt="Care Plan - Get extra 5% savings on your orders"
+            className="w-full h-auto block object-cover"
+          />
+        </A>
       </section>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-10 mt-6">
@@ -1121,21 +1026,81 @@ export function Listing({ params, base }) {
     list = list.filter((p) => `${p.name} ${p.brand} ${p.category}`.toLowerCase().includes(t));
   }
 
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const shown = applyFilters(list, f);
   const title = base === "search" ? `Results for “${q}”` : cat ? cat.name : base === "medicines" ? "Medicines" : "Healthcare products";
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-gray-100 pb-4">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-8">
+      <div className="mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-3 sm:pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-          <p className="text-xs text-gray-500 mt-1">{shown.length} products available</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{title}</h1>
+          <p className="text-xs text-gray-500 mt-0.5">{shown.length} products available</p>
         </div>
-        <SortSelect f={f} setF={setF} />
+
+        <div className="flex items-center gap-2">
+          {/* Mobile Filter Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setMobileFilterOpen(true)}
+            className="flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-bold text-gray-700 shadow-xs lg:hidden active:bg-gray-50"
+          >
+            <Icon name="sparkle" size={14} className="text-[#ff6f61]" />
+            <span>Filters</span>
+            {(f.brands.length > 0 || f.cat || f.max < 3000) && (
+              <span className="grid h-4 w-4 place-items-center rounded-full bg-[#ff6f61] text-[9px] font-black text-white">
+                !
+              </span>
+            )}
+          </button>
+          <SortSelect f={f} setF={setF} />
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-        <ProductFilters list={list} f={f} setF={setF} />
+        {/* Desktop Sidebar Filters */}
+        <div className="hidden lg:block">
+          <ProductFilters list={list} f={f} setF={setF} />
+        </div>
+
+        {/* Mobile Filter Drawer Modal */}
+        {mobileFilterOpen && (
+          <div
+            className="fixed inset-0 z-50 flex justify-end bg-black/60 lg:hidden animate-in fade-in duration-200"
+            onClick={() => setMobileFilterOpen(false)}
+          >
+            <div
+              className="h-full w-full max-w-xs bg-white p-5 shadow-2xl overflow-y-auto animate-in slide-in-from-right duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                <span className="font-extrabold text-sm text-gray-900 uppercase tracking-wider">Filters</span>
+                <button
+                  type="button"
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="rounded-full p-1 text-gray-400 hover:text-gray-700"
+                >
+                  <Icon name="close" size={20} />
+                </button>
+              </div>
+              <ProductFilters
+                list={list}
+                f={f}
+                setF={(newF) => {
+                  setF(newF);
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => setMobileFilterOpen(false)}
+                className="mt-4 w-full rounded-xl bg-[#ff6f61] py-2.5 text-xs font-bold text-white shadow"
+              >
+                Apply &amp; View {shown.length} Results
+              </button>
+            </div>
+          </div>
+        )}
+
         <div>
           {shown.length ? (
             <ProductGrid items={shown} />
@@ -1162,9 +1127,13 @@ export function Product({ params }) {
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Product image */}
         <div className="rounded-2xl border border-gray-200 bg-white p-8 grid place-items-center">
-          <div className="grid h-64 w-64 place-items-center rounded-2xl bg-gray-50 text-[#ff6f61]">
-            <Icon name="bottle" size={96} />
-          </div>
+          {p.image ? (
+            <img src={p.image} alt={p.name} className="max-h-80 w-auto object-contain" />
+          ) : (
+            <div className="grid h-64 w-64 place-items-center rounded-2xl bg-gray-50 text-[#ff6f61]">
+              <Icon name="bottle" size={96} />
+            </div>
+          )}
         </div>
 
         {/* Product Info */}
