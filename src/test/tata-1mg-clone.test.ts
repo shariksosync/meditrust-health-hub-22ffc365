@@ -180,8 +180,10 @@ describe("Tata 1mg Clone Mock Data & Architecture", () => {
     expect(consultTrustPillars[2].title).toBe("Convenience");
     expect(consultTrustPillars[3].title).toBe("Cost Effective");
 
-    expect(consultFaqs.length).toBe(4);
+    expect(consultFaqs.length).toBe(6);
+    expect(consultFaqs[0].q).toContain("When will I get an answer");
     expect(consultTestimonials.length).toBe(2);
+    expect(consultTestimonials[0].name).toBe("Aarohi");
   });
 
   it("verifies Partnerships platform solutions, metrics, and lead form matching screenshots 1-9", () => {

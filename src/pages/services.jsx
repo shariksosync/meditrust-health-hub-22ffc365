@@ -1125,131 +1125,157 @@ function DoctorCard({ d }) {
 export function Consult() {
   const { state } = useApp();
   const [openFaq, setOpenFaq] = useState(null);
+  const [callbackPhone, setCallbackPhone] = useState("");
+  const [callbackSent, setCallbackSent] = useState(false);
+  const [showSticky, setShowSticky] = useState(true);
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen pb-16">
-      {/* 1. CARE PLAN SAVINGS BANNER matching Screenshot 1 */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-4">
+    <div className="bg-white min-h-screen pb-20 font-sans text-[#181a1f]">
+      {/* 1. CARE PLAN SAVINGS STRIP matching Screenshot 1 */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-3 pb-2">
         <A
           href="/care-plan"
-          className="block overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100 p-3 sm:p-4 shadow-xs hover:shadow-md transition"
+          className="flex items-center justify-center gap-3 rounded-md bg-[#fffcf8] border border-[#f5e6d3] p-2.5 text-xs text-[#181a1f] hover:bg-[#fff7ed] transition"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <span className="rounded bg-gray-900 px-2 py-0.5 text-[10px] font-extrabold text-amber-300 uppercase tracking-wider">
-                CARE PLAN
-              </span>
-              <p className="text-xs sm:text-sm font-semibold text-gray-800">
-                You can save an additional <strong className="text-gray-900">₹600/yr</strong> on consultations with MEDITRUST Care Plan membership
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-xs font-bold text-[#ff6f61]">
-              <span>Explore Plan</span>
-              <Icon name="arrow" size={14} />
-            </div>
-          </div>
+          <img
+            src="/images/consult_doctor/care_plan_banner.png"
+            alt="Doctor Care Plan"
+            className="h-7 w-auto object-contain rounded"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+          <span>
+            Free consultation and more benefits with <strong>Care Plan</strong> membership.
+          </span>
+          <span className="rounded bg-[#a91969] px-2 py-0.5 text-[10px] font-bold text-white">
+            Care Plan
+          </span>
+          <span className="font-bold text-[#ff6f61] hover:underline">
+            Join now!
+          </span>
         </A>
       </div>
 
       {/* 2. HERO SECTION matching Screenshot 1 */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
-        <div className="overflow-hidden rounded-2xl bg-gradient-to-r from-rose-50 via-orange-50 to-rose-100 p-6 sm:p-10 border border-rose-100 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xs">
-          <div className="max-w-xl">
-            <span className="inline-block rounded-full bg-[#ff6f61]/15 px-3 py-1 text-xs font-bold text-[#ff6f61]">
-              Online Consultations Starting at ₹199
-            </span>
-            <h1 className="mt-3 text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-              Consult India's Top Doctors Online, Safely from Home
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 lg:py-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="max-w-2xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#181a1f] tracking-tight leading-tight">
+              Online doctor consultation with qualified doctors
             </h1>
-            <p className="mt-3 text-xs sm:text-base text-gray-600 leading-relaxed">
-              Connect in under 5 minutes with verified medical practitioners across 25+ specialties via HD Video, Audio call, or WhatsApp chat. Instant verifiable digital prescriptions.
+            <p className="mt-2 text-xl font-normal text-[#414752]">
+              Starting at ₹199
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <A
-                href="/doctors/general-physician"
-                className="rounded-xl bg-[#ff6f61] px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#e85b4d] transition"
-              >
-                Consult Now
-              </A>
-              <A
-                href="#specialties"
-                className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-gray-700 hover:bg-gray-50 transition shadow-xs"
-              >
-                Browse Specialties
-              </A>
+            {/* 3 Value props matching Screenshot 1 */}
+            <div className="mt-8 flex flex-wrap items-center gap-6 sm:gap-8">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
+                  <Icon name="clock" size={20} />
+                </div>
+                <span className="text-sm font-medium text-[#414752]">Talk within 30 min</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
+                  <Icon name="chat" size={20} />
+                </div>
+                <span className="text-sm font-medium text-[#414752]">Free follow up for 3 days</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-[#ff6f61]">
+                  <Icon name="file" size={20} />
+                </div>
+                <span className="text-sm font-medium text-[#414752]">Get a valid prescription</span>
+              </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-rose-200/60 pt-4 text-xs font-medium text-gray-600">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span><strong>3,000+</strong> Verified Doctors</span>
-              </div>
-              <div>
-                <span><strong>30 Lakh+</strong> Happy Consultations</span>
-              </div>
-              <div>
-                <span><strong>25+</strong> Specialties</span>
-              </div>
+            {/* Primary Action Button */}
+            <div className="mt-8">
+              <A
+                href="/doctors/general-physician"
+                className="inline-block rounded-md bg-[#ff6f61] px-8 py-3 text-sm font-bold text-white hover:bg-[#e86558] transition shadow-xs"
+              >
+                Consult now
+              </A>
             </div>
           </div>
 
-          <div className="shrink-0 flex justify-center">
+          {/* Hero Illustration */}
+          <div className="shrink-0 max-w-md flex justify-center">
             <img
-              src="/images/consult_doctor/consult_hero_art.png"
-              alt="Consult Doctor Online"
-              className="max-h-64 sm:max-h-72 object-contain drop-shadow-md"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              src="/images/consult_doctor/consult_hero_art_exact.png"
+              alt="Online doctor consultation"
+              className="max-h-72 object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/images/consult_doctor/consult_hero_art.png";
+              }}
             />
           </div>
         </div>
       </section>
 
-      {/* 3. TRUST PILLARS matching Screenshot 2 */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 3. KEY METRICS STATS BAR matching Screenshot 1 */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 my-8">
+        <div className="rounded-xl border border-gray-100 bg-[#ffffff] p-6 sm:p-8 shadow-xs">
+          <div className="grid grid-cols-3 divide-x divide-gray-100 text-center">
+            <div className="px-2">
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">30L+</div>
+              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Total Consultations</div>
+            </div>
+            <div className="px-2">
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">3k+</div>
+              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Daily Consultations</div>
+            </div>
+            <div className="px-2">
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#ff6f61]">22+</div>
+              <div className="mt-1 text-sm sm:text-base font-semibold text-[#181a1f]">Specialities</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. OUR HAPPY CUSTOMERS matching Screenshot 2 */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-12 text-center">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">Our Happy Customers</h2>
+        <div className="mt-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-[#414752] leading-relaxed">
+            I installed the app and went for a free consultation with a dietician. The advice given by Dr. Mirza was simply great. He shared a detailed diet chart and exercises with me which was easy to incorporate into my hectic schedule.
+          </p>
+          <p className="mt-4 text-xs font-semibold text-[#626a7a]">Aarohi</p>
+        </div>
+      </section>
+
+      {/* 5. FOUR TRUST PILLARS matching Screenshot 2 */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {consultTrustPillars.map((tp, idx) => (
-            <div
-              key={idx}
-              className="flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-xs hover:shadow-sm transition"
-            >
-              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-orange-50/70 p-2 border border-orange-100 flex items-center justify-center">
+            <div key={idx} className="flex flex-col items-center">
+              <div className="h-20 w-20 flex items-center justify-center mb-4">
                 <img
                   src={tp.iconImg}
                   alt={tp.title}
-                  className="h-full w-full object-contain"
+                  className="max-h-full max-w-full object-contain"
                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
               </div>
-              <div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-900">{tp.title}</h3>
-                <p className="mt-1 text-xs text-gray-500 leading-relaxed">{tp.desc}</p>
-              </div>
+              <h3 className="text-base font-bold text-[#181a1f]">{tp.title}</h3>
+              <p className="mt-2 text-xs text-[#626a7a] leading-relaxed max-w-xs">{tp.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6" id="specialties">
-        <Crumbs items={[["Doctor consultation"]]} />
-        <div className="my-4">
-          <DemoNote>
-            Demonstration medical consultation platform for <strong>{company.name}</strong>. No actual physician appointment, video call or clinical treatment is performed.
-          </DemoNote>
-        </div>
-
-        {/* 4. POPULAR SPECIALTIES */}
+      {/* 6. SPECIALTIES & DOCTORS */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10" id="specialties">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Consult Top Doctors by Specialty</h2>
-            <p className="text-xs text-gray-500">Pick from over 25+ verified medical disciplines</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#181a1f]">Consult Top Doctors by Specialty</h2>
+            <p className="text-xs text-[#626a7a]">Pick from over 22+ verified medical disciplines</p>
           </div>
         </div>
         <SpecialtyGrid />
 
-        {/* 5. FEATURED SPECIALISTS LIST */}
-        <h2 className="mb-2 mt-10 text-lg sm:text-xl font-bold text-gray-900">Featured Specialists</h2>
-        <p className="mb-4 text-xs text-gray-500">Available right now for instant or scheduled consultations</p>
+        <h2 className="mb-2 mt-12 text-xl font-bold text-[#181a1f]">Featured Specialists</h2>
+        <p className="mb-4 text-xs text-[#626a7a]">Available right now for instant or scheduled consultations</p>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {state.doctors
             .filter((d) => d.visible)
@@ -1257,87 +1283,136 @@ export function Consult() {
               <DoctorCard key={d.id} d={d} />
             ))}
         </div>
+      </div>
 
-        {/* 6. PATIENT TESTIMONIALS */}
-        <section className="mt-12 rounded-2xl bg-white border border-gray-200 p-6 sm:p-8">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900">What Our Patients Say</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            {consultTestimonials.map((t, idx) => (
-              <div key={idx} className="rounded-xl bg-gray-50 p-5 border border-gray-100 flex flex-col justify-between">
-                <p className="text-xs sm:text-sm italic text-gray-700 leading-relaxed">
-                  "{t.text}"
+      {/* 7. FREQUENTLY ASKED QUESTIONS matching Screenshots 2 & 3 */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-[#181a1f] mb-10">
+          Frequently Asked Questions
+        </h2>
+        <div className="divide-y divide-[#dde2eb] border-y border-[#dde2eb]">
+          {consultFaqs.map((faq, idx) => (
+            <div key={idx} className="py-4">
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="flex w-full items-center justify-between text-left text-sm font-semibold text-[#181a1f] hover:text-[#ff6f61] transition"
+              >
+                <span>{faq.q}</span>
+                <svg
+                  className={cx(
+                    "w-4 h-4 text-[#868e9e] shrink-0 transition-transform duration-200",
+                    openFaq === idx && "rotate-180 text-[#ff6f61]"
+                  )}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openFaq === idx && (
+                <p className="mt-3 text-xs sm:text-sm text-[#414752] leading-relaxed pr-6">
+                  {faq.a}
                 </p>
-                <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-bold text-gray-900">{t.name}</p>
-                    <p className="text-[10px] text-gray-400">{t.role}</p>
-                  </div>
-                  <div className="flex text-amber-400 text-xs">
-                    ★★★★★
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
-        {/* 7. DOCTOR RECRUITMENT BANNER matching Screenshot 3 & 4 */}
-        <section className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
-          <div className="max-w-lg">
-            <span className="rounded bg-emerald-500/30 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-200">
-              For Healthcare Providers
-            </span>
-            <h3 className="mt-2 text-xl sm:text-2xl font-bold">Are you a Doctor? Join MEDITRUST</h3>
-            <p className="mt-2 text-xs sm:text-sm text-emerald-100 leading-relaxed">
-              Expand your digital medical practice. Connect with thousands of verified patients across Maharashtra and India with sovereign scheduling and automated EHR tools.
+      {/* 8. "ARE YOU A DOCTOR ?" RECRUITMENT SECTION matching Screenshots 3 & 4 */}
+      <section className="bg-[#fff9f4] py-16 border-t border-[#f7e4d6]">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 flex flex-col md:flex-row items-center justify-center gap-10">
+          <div className="shrink-0 flex justify-center">
+            <img
+              src="/images/consult_doctor/doctor_desk_art.png"
+              alt="Are you a doctor"
+              className="max-h-56 object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/images/consult_doctor/doctor_join_banner.png";
+              }}
+            />
+          </div>
+          <div className="max-w-md text-left">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#181a1f]">Are you a doctor ?</h2>
+            <p className="mt-3 text-sm text-[#414752] leading-relaxed">
+              Be a part of our panel of specialists and connect with your patients from anywhere.
             </p>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-6">
               <a
                 href={`tel:${company.phone}`}
-                className="rounded-lg bg-white px-5 py-2.5 text-xs font-bold text-emerald-900 shadow hover:bg-emerald-50 transition"
+                className="inline-block rounded-md bg-[#ff6f61] px-8 py-3 text-sm font-bold text-white hover:bg-[#e86558] transition shadow-xs"
               >
-                Join as Doctor · {company.phone}
+                Join Now
               </a>
             </div>
           </div>
-          <div className="shrink-0">
-            <img
-              src="/images/consult_doctor/doctor_join_banner.png"
-              alt="Doctor Join Banner"
-              className="max-h-40 rounded-xl object-contain shadow-sm border border-emerald-700"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 8. CONSULT FAQs ACCORDION matching Screenshot 3 */}
-        <section className="mt-8 rounded-2xl bg-white border border-gray-200 p-6 sm:p-8">
-          <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-          <div className="divide-y divide-gray-100">
-            {consultFaqs.map((faq, idx) => (
-              <div key={idx} className="py-3.5">
-                <button
-                  type="button"
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="flex w-full items-center justify-between text-left text-xs sm:text-sm font-semibold text-gray-800 hover:text-[#ff6f61] transition"
-                >
-                  <span>{faq.q}</span>
-                  <Icon
-                    name="chev"
-                    size={16}
-                    className={cx("text-gray-400 transition-transform", openFaq === idx && "rotate-180")}
-                  />
-                </button>
-                {openFaq === idx && (
-                  <p className="mt-2 text-xs text-gray-600 leading-relaxed pr-6">
-                    {faq.a}
-                  </p>
-                )}
+      {/* 9. STICKY BOTTOM CALLBACK FOOTER matching live 1mg CallbackStickyFooter-module__stickyFooter */}
+      {showSticky && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#fafdff] border-t border-[#f0f2f5] py-2.5 px-4 sm:px-12 shadow-md">
+          <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-[#f0f2f5] p-2 flex items-center justify-center text-[#ff6f61] shrink-0">
+                <Icon name="phone" size={20} />
               </div>
-            ))}
+              <div className="text-left">
+                <p className="text-xs sm:text-sm font-bold text-[#181a1f]">
+                  Need help booking an appointment? We will call you back!
+                </p>
+                <p className="text-[11px] text-[#414752]">
+                  Or directly call <span className="font-bold text-[#308956]">{company.phone}</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              {callbackSent ? (
+                <span className="text-xs font-bold text-[#308956] bg-emerald-50 px-3 py-2 rounded-md">
+                  ✓ Callback request received!
+                </span>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (callbackPhone.length >= 10) setCallbackSent(true);
+                  }}
+                  className="flex items-center gap-2 w-full sm:w-auto"
+                >
+                  <div className="flex items-center rounded-md border border-[#868e9e] bg-white px-2 py-1.5 h-10">
+                    <span className="text-xs text-[#626a7a] mr-2 font-medium">+91</span>
+                    <span className="h-4 w-px bg-[#bec5d1] mr-2" />
+                    <input
+                      type="tel"
+                      placeholder="Enter mobile number"
+                      value={callbackPhone}
+                      onChange={(e) => setCallbackPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                      className="text-xs outline-none w-36 text-[#181a1f]"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="rounded-md bg-[#ff6b35] hover:bg-[#e55a2b] text-white px-4 py-2 h-10 text-xs font-semibold transition shrink-0"
+                  >
+                    Request Callback
+                  </button>
+                </form>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowSticky(false)}
+                className="p-1 text-[#868e9e] hover:text-[#181a1f] ml-2"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
