@@ -2,759 +2,681 @@ import { useState } from "react";
 import { company } from "../data/demo";
 
 export function CancerCare() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [contactSubmitted, setContactSubmitted] = useState(false);
-  const [contactForm, setContactForm] = useState({ name: "", phone: "", cancerType: "Breast Cancer", message: "" });
+  const [financialDropdownOpen, setFinancialDropdownOpen] = useState(false);
 
-  const navLinks = [
-    { label: "Home", href: "#hero" },
-    { label: "Cancer Specialists", href: "#specialists" },
-    { label: "Financial Assistance", href: "#financial" },
-    { label: "Patient Support Program", href: "#psp" },
-    { label: "NGOs", href: "#ngos" },
-    { label: "Cancer Types", href: "#cancer-types" },
-    { label: "Causes & Prevention", href: "#causes" },
+  const topNavLinks = [
+    { label: "Get Second Opinion", badge: "New", href: "/consult-doctor" },
+    { label: "Find Cancer Specialists", href: "/consult-doctor" },
+    { label: "Buy Cancer Medicines", href: "/medicines" },
+    { label: "Book Tests for Cancer", href: "/lab-tests" },
+    { label: "Get Financial Support", hasDropdown: true, href: "#financial" },
+    { label: "Access NGOs", href: "#ngos" },
   ];
 
   const accessCards = [
     {
-      id: "specialists",
-      title: "CANCER SPECIALISTS",
-      desc: "Connect with accredited oncologists, onco-surgeons & cancer care experts across top hospitals in India.",
-      tag: "500+ Verified Doctors",
-      icon: "🩺",
-      cta: "Find Specialists",
-      bgGradient: "from-[#29323c] to-[#485563]",
-      border: "border-slate-700",
-      accent: "text-amber-400",
+      title: "Get Second Opinion:",
+      subtitle: "Tata Memorial Centre",
+      badge: "NEW",
+      img: "/images/cancer_care/access_navya.png",
+      href: "/consult-doctor",
     },
     {
-      id: "financial",
-      title: "FINANCIAL ASSISTANCE",
-      desc: "Navigate subsidies, government health schemes (Ayushman Bharat, PMNRF, RAN), and crowd-funding options.",
-      tag: "Save up to 70% on Treatment",
-      icon: "💳",
-      cta: "Explore Aid Schemes",
-      bgGradient: "from-[#1e3c72] to-[#2a5298]",
-      border: "border-blue-900",
-      accent: "text-cyan-300",
+      title: "Find cancer specialists",
+      img: "/images/cancer_care/access_specialists.png",
+      href: "/consult-doctor",
     },
     {
-      id: "psp",
-      title: "PATIENT SUPPORT PROGRAMS",
-      desc: "Comprehensive pharmaceutical and clinic-backed care programs providing subsidized medications & counseling.",
-      tag: "Doorstep Support",
-      icon: "🤝",
-      cta: "Access Care Programs",
-      bgGradient: "from-[#093637] to-[#44a08d]",
-      border: "border-emerald-800",
-      accent: "text-emerald-300",
+      title: "Buy Cancer Medicines",
+      img: "/images/cancer_care/access_medicines.png",
+      href: "/medicines",
     },
     {
-      id: "ngos",
-      title: "CANCER NGOs",
-      desc: "Empowering partner non-profit organizations offering accommodation, emotional support, and nutrition aid.",
-      tag: "100+ Partner Non-Profits",
-      icon: "🎗️",
-      cta: "Locate Partner NGOs",
-      bgGradient: "from-[#4a1236] to-[#721b47]",
-      border: "border-rose-900",
-      accent: "text-rose-300",
+      title: "Get Financial Support",
+      img: "/images/cancer_care/access_financial.png",
+      href: "#financial",
+    },
+    {
+      title: "Book Tests for Cancer",
+      img: "/images/cancer_care/access_labtests.png",
+      href: "/lab-tests",
+    },
+    {
+      title: "Explore Patient Support Programs",
+      img: "/images/cancer_care/access_psp.png",
+      href: "#support-programs",
+    },
+    {
+      title: "Access Cancer Care NGOs",
+      img: "/images/cancer_care/access_ngos.png",
+      href: "#ngos",
     },
   ];
 
   const cancerTypes = [
     {
-      name: "Breast Cancer",
-      incidence: "Most prevalent in Indian women",
-      symptoms: "Lump in breast or underarm, thickening, nipple discharge or skin dimpling",
-      diagnostic: "Mammography, Ultrasound, Biopsy, BRCA Gene Testing",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/breast-cancer-guide",
-      color: "border-pink-500/30 hover:border-pink-500",
-      badgeColor: "bg-pink-950/60 text-pink-300 border-pink-700/50",
+      name: "Breast",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="24" cy="14" r="6" />
+          <path d="M16 28c0-4.4 3.6-8 8-8s8 3.6 8 8v12H16V28z" />
+          <path d="M21 34c1.5 2 4.5 2 6 0" />
+        </svg>
+      ),
     },
     {
-      name: "Lung Cancer",
-      incidence: "Leading cause of cancer mortality",
-      symptoms: "Persistent cough, coughing blood, chest pain, wheezing & hoarseness",
-      diagnostic: "Low-Dose CT (LDCT), Sputum Cytology, Chest X-Ray",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/lung-cancer-guide",
-      color: "border-sky-500/30 hover:border-sky-500",
-      badgeColor: "bg-sky-950/60 text-sky-300 border-sky-700/50",
+      name: "Blood",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M24 6c-8 10-12 16-12 22a12 12 0 1 0 24 0c0-6-4-12-12-22z" />
+          <path d="M20 28a4 4 0 0 0 4 4" />
+        </svg>
+      ),
     },
     {
-      name: "Oral & Head Neck",
-      incidence: "Highly prevalent due to tobacco use",
-      symptoms: "Non-healing mouth ulcers, red/white patches, persistent throat pain, swallowing difficulty",
-      diagnostic: "Clinical Oral Exam, Endoscopy, Tissue Biopsy",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/oral-cancer-guide",
-      color: "border-amber-500/30 hover:border-amber-500",
-      badgeColor: "bg-amber-950/60 text-amber-300 border-amber-700/50",
+      name: "Colon",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="10" y="10" width="28" height="28" rx="8" />
+          <path d="M16 18c4 0 4 4 8 4s4-4 8-4" />
+          <path d="M16 30c4 0 4-4 8-4s4 4 8 4" />
+        </svg>
+      ),
     },
     {
-      name: "Cervical Cancer",
-      incidence: "2nd most common cancer in women",
-      symptoms: "Unusual pelvic bleeding, pain during intercourse, persistent discharge",
-      diagnostic: "PAP Smear Test, Liquid-based Cytology (LBC), HPV-DNA Screening",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/cervical-cancer-guide",
-      color: "border-purple-500/30 hover:border-purple-500",
-      badgeColor: "bg-purple-950/60 text-purple-300 border-purple-700/50",
+      name: "Prostate",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 10h12v12c0 6-6 10-6 10s-6-4-6-10V10z" />
+          <path d="M14 22c-3 0-5 2-5 5s2 5 5 5" />
+          <path d="M34 22c3 0 5 2 5 5s-2 5-5 5" />
+        </svg>
+      ),
     },
     {
-      name: "Colorectal Cancer",
-      incidence: "Increasing rapidly with modern lifestyles",
-      symptoms: "Change in bowel habits, rectal bleeding, persistent abdominal cramps, unexplained fatigue",
-      diagnostic: "Colonoscopy, Fecal Immunochemical Test (FIT), CEA Marker",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/colorectal-cancer-guide",
-      color: "border-teal-500/30 hover:border-teal-500",
-      badgeColor: "bg-teal-950/60 text-teal-300 border-teal-700/50",
+      name: "Lung",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M24 10v16" />
+          <path d="M24 20c-4-4-10-4-13 1s-2 13 4 15 9-4 9-10" />
+          <path d="M24 20c4-4 10-4 13 1s2 13-4 15-9-4-9-10" />
+        </svg>
+      ),
     },
     {
-      name: "Blood & Lymphoma",
-      incidence: "Affects children and adults alike",
-      symptoms: "Swollen painless lymph nodes, fever, night sweats, rapid weight loss, recurrent infections",
-      diagnostic: "Complete Blood Count (CBC) with Peripheral Smear, Bone Marrow Aspiration, Flow Cytometry",
-      guidanceUrl: "https://www.meditrusts.life/health-articles/blood-cancer-guide",
-      color: "border-red-500/30 hover:border-red-500",
-      badgeColor: "bg-red-950/60 text-red-300 border-red-700/50",
+      name: "Multiple",
+      type: "Myeloma",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="24" cy="24" r="10" />
+          <circle cx="24" cy="10" r="3" />
+          <circle cx="24" cy="38" r="3" />
+          <circle cx="10" cy="24" r="3" />
+          <circle cx="38" cy="24" r="3" />
+          <circle cx="14" cy="14" r="2" />
+          <circle cx="34" cy="34" r="2" />
+        </svg>
+      ),
+    },
+    {
+      name: "Kidney",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M15 14c4-6 11-4 13 2s-1 14-6 16-10-4-10-10c0-3 1-6 3-8z" />
+          <path d="M28 20c3 1 5 4 5 7" />
+        </svg>
+      ),
+    },
+    {
+      name: "Cervical",
+      type: "Cancer",
+      iconSvg: (
+        <svg className="w-12 h-12 text-[#1a6a67]" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 14c6-4 18-4 24 0" />
+          <path d="M16 18c0 8 4 12 8 18 4-6 8-10 8-18" />
+          <circle cx="24" cy="26" r="3" />
+        </svg>
+      ),
     },
   ];
 
-  const causes = [
+  const expertArticles = [
     {
-      title: "Tobacco & Carcinogens",
-      stat: "Responsible for ~40% of cancers in India",
-      desc: "Smoking cigarettes, bidis, chewing gutkha, and passive smoke expose DNA to over 70 proven mutagens.",
-      icon: "🚭",
+      img: "/images/cancer_care/article_myths.png",
+      title: "Cancer symptoms & tests, common myths debunked",
+      isVideo: true,
     },
     {
-      title: "Diet, Obesity & Sedentary Habits",
-      stat: "Linked to 20-25% of adult cancer cases",
-      desc: "Processed meats, high glycemic refined foods, and persistent systemic inflammation foster tumor microenvironments.",
-      icon: "🥗",
+      img: "/images/cancer_care/article_covid.png",
+      title: "COVID and cancer: Is the risk higher?",
+      isVideo: true,
     },
     {
-      title: "Genetic Predispositions",
-      stat: "5-10% inherited gene mutations",
-      desc: "Alterations in BRCA1, BRCA2, TP53, and Lynch syndrome genes elevate susceptibility across generations.",
-      icon: "🧬",
+      img: "/images/cancer_care/article_breast.png",
+      title: "What does breast cancer feel like?",
+      isVideo: true,
     },
     {
-      title: "Viral & Bacterial Infections",
-      stat: "Preventable through timely vaccines & hygiene",
-      desc: "HPV (Human Papillomavirus), Hepatitis B & C viruses, and H. Pylori trigger cellular dysplasia if unaddressed.",
-      icon: "🔬",
-    },
-  ];
-
-  const statistics = [
-    { number: "1.4M+", label: "New cancer cases detected annually in India", sub: "ICMR & National Cancer Registry data" },
-    { number: "70%", label: "Cases diagnosed at advanced stages 3 & 4", sub: "Highlighting the urgency for early screening" },
-    { number: "85%+", label: "5-year survival rate when detected at Stage 1", sub: "Early diagnosis saves lives" },
-    { number: "100%", label: "Authentic, cold-chain chemotherapy medicines", sub: "Fulfilled by MEDITRUST LIFE SCIENCE" },
-  ];
-
-  const articles = [
-    {
-      title: "Understanding Cancer Staging: From Stage 0 to Stage IV",
-      readTime: "5 min read",
-      author: "Oncology Review Team",
-      tag: "Basics & Staging",
-      summary: "What TNM staging means, why biopsy precision dictates targeted therapies, and how prognosis improves with modern immunotherapy.",
+      img: "/images/cancer_care/article_treated.png",
+      title: "How can cancer be treated?",
+      isVideo: true,
     },
     {
-      title: "Financial Planning & Government Schemes for Oncology",
-      readTime: "7 min read",
-      author: "Healthcare Economist",
-      tag: "Aid & Schemes",
-      summary: "Step-by-step roadmap to apply for the Health Minister's Discretionary Grant, PMNRF, and accessing low-cost generic oncology drugs.",
+      img: "/images/cancer_care/article_walking.png",
+      title: "Walking can help people with advanced cancer",
+      isVideo: false,
     },
     {
-      title: "Managing Chemotherapy Side Effects: Nutrition & Mental Well-being",
-      readTime: "6 min read",
-      author: "Clinical Nutritionist",
-      tag: "Patient Care",
-      summary: "Practical dietary strategies to counter nausea, prevent neutropenia, and access compassionate patient counselor helplines.",
+      img: "/images/cancer_care/article_screening.png",
+      title: "Breast cancer screening tests",
+      isVideo: false,
+    },
+    {
+      img: "/images/cancer_care/article_prostate.png",
+      title: "5 causes and risk factors Of prostate cancer",
+      isVideo: false,
+    },
+    {
+      img: "/images/cancer_care/article_ovarian.png",
+      title: "Ovarian cancer: Know everything",
+      isVideo: false,
     },
   ];
 
-  const handleContactSubmit = (e) => {
-    e.preventDefault();
-    if (!contactForm.name || !contactForm.phone) return;
-    setContactSubmitted(true);
-  };
+  const whyChooseItems = [
+    {
+      title: "Quality care at reduced cost",
+      desc: "We help reduce medicine, diagnostic, and consultation expenses through inexhaustible discounts and coupon codes. You can save up to 20% on medicines. Get access to exclusive membership of pharma-run campaigns.",
+      img: "/images/cancer_care/why_reduced_cost.png",
+    },
+    {
+      title: "Doorstep Services",
+      desc: "Supporting caregivers through doorstep delivery of medicines, collection of test samples, online reports, online consultations and more.",
+      img: "/images/cancer_care/why_doorstep.png",
+    },
+    {
+      title: "Expert-vetted, evidence-driven information",
+      desc: "Our team consists of medical experts, qualified doctors, pharmacists, and editors who have extensive experience and expertise in scientific research and medical writing. The medicine and health content that we publish is curated through a well-structured editorial and review process which includes an in-depth review by our Clinical Specialist Review Board.",
+      img: "/images/cancer_care/why_expert_vetted.png",
+    },
+    {
+      title: "In-app pill reminder",
+      desc: "Given how crucial on-time medicine administration is, Tata 1mg pill reminder keeps track of when and what medicines need to be taken, so you never miss a dose.",
+      img: "/images/cancer_care/why_pill_reminder.png",
+    },
+    {
+      title: "Health Records",
+      desc: "This in-app feature helps everyone — cancer patients as well as their caregivers — keep a log of their liver and kidney health, sugar levels, BP, and other parameters.",
+      img: "/images/cancer_care/why_health_records.png",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-gray-100 font-sans selection:bg-[#ff6f61] selection:text-white">
-      {/* ---------------- CANCER CARE DEDICATED HEADER ---------------- */}
-      <header className="sticky top-0 z-50 bg-[#161b22]/95 backdrop-blur-md border-b border-gray-800 shadow-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white text-[#212121] font-sans antialiased selection:bg-[#ff6f61] selection:text-white">
+      {/* ---------------- 1. TOP STANDALONE NAVBAR (MATCHING SCREENSHOT 1) ---------------- */}
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Left: Cancer Care Branding */}
+            {/* Left: TATA 1mg Brand Logo */}
             <div className="flex items-center gap-3">
-              <a href="/cancer-care" className="flex items-center gap-2 group">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#724378] to-[#ff6f61] flex items-center justify-center text-white text-xl font-black shadow-lg shadow-purple-900/30 group-hover:scale-105 transition-transform">
-                  🎗️
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
-                    MEDITRUST <span className="text-[#ff6f61]">CANCER CARE</span>
-                  </span>
-                  <span className="text-[10px] text-gray-400 font-medium tracking-wide">
-                    Comprehensive Oncology & Patient Support Network
-                  </span>
-                </div>
+              <a href="/" className="flex items-center gap-2">
+                <span className="text-2xl sm:text-3xl font-black tracking-tighter text-black flex items-center">
+                  TATA <span className="text-[#ff6f61] ml-1">1mg</span>
+                </span>
               </a>
             </div>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-1 xl:space-x-4">
-              {navLinks.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="px-3 py-1.5 text-xs font-semibold text-gray-300 hover:text-amber-400 transition-colors rounded-md hover:bg-white/5"
-                >
-                  {item.label}
-                </a>
+            {/* Middle: Navigation Links matching screenshot */}
+            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+              {topNavLinks.map((item, idx) => (
+                <div key={idx} className="relative">
+                  {item.hasDropdown ? (
+                    <button
+                      onClick={() => setFinancialDropdownOpen(!financialDropdownOpen)}
+                      className="flex items-center gap-1 text-[13px] font-medium text-gray-800 hover:text-[#ff6f61] transition-colors"
+                    >
+                      <span>{item.label}</span>
+                      <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="flex items-center gap-1.5 text-[13px] font-medium text-gray-800 hover:text-[#ff6f61] transition-colors"
+                    >
+                      <span>{item.label}</span>
+                      {item.badge && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#ff6f61] text-white leading-none">
+                          {item.badge}
+                        </span>
+                      )}
+                    </a>
+                  )}
+
+                  {item.hasDropdown && financialDropdownOpen && (
+                    <div className="absolute left-0 mt-2 w-56 rounded-lg bg-white border border-gray-100 shadow-xl py-2 z-50">
+                      <a href="#financial" onClick={() => setFinancialDropdownOpen(false)} className="block px-4 py-2 text-xs font-medium text-gray-700 hover:bg-[#fff3f2] hover:text-[#ff6f61]">
+                        Government Schemes (PMNRF, RAN)
+                      </a>
+                      <a href="#financial" onClick={() => setFinancialDropdownOpen(false)} className="block px-4 py-2 text-xs font-medium text-gray-700 hover:bg-[#fff3f2] hover:text-[#ff6f61]">
+                        Pharma Patient Assistance (PSP)
+                      </a>
+                      <a href="#financial" onClick={() => setFinancialDropdownOpen(false)} className="block px-4 py-2 text-xs font-medium text-gray-700 hover:bg-[#fff3f2] hover:text-[#ff6f61]">
+                        Crowdfunding & NGO Grants
+                      </a>
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
 
-            {/* Right: Emergency Helpline Button & Phone */}
-            <div className="hidden sm:flex items-center gap-3">
-              <a
-                href={`tel:${company.phone}`}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800/80 border border-gray-700 hover:border-gray-600 transition"
-              >
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                <div className="flex flex-col text-left">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Helpline 24x7</span>
-                  <span className="text-xs font-bold text-white">{company.phone}</span>
-                </div>
-              </a>
-              <a
-                href="#consult-form"
-                className="px-4 py-2 text-xs font-bold rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#e64a19] text-white shadow-lg shadow-red-900/40 hover:brightness-110 active:scale-95 transition"
-              >
-                Request Callback
-              </a>
-            </div>
-
-            {/* Mobile menu hamburger */}
-            <div className="flex lg:hidden items-center gap-2">
-              <a
-                href={`tel:${company.phone}`}
-                className="p-2 rounded-lg bg-gray-800 text-white text-xs font-bold"
-                aria-label="Call helpline"
-              >
-                📞
-              </a>
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg bg-gray-800 text-gray-300 hover:text-white"
-                aria-label="Toggle navigation menu"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {mobileMenuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  )}
-                </svg>
-              </button>
+            {/* Right: Tata Trust Badge Logo */}
+            <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center justify-center font-black text-black leading-tight text-right">
+                <span className="text-[11px] tracking-widest uppercase">TATA</span>
+                <span className="w-6 h-0.5 bg-black mt-0.5"></span>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Mobile dropdown menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#1c2128] border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
-            {navLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-sm font-semibold text-gray-200 hover:bg-gray-800"
-              >
-                {item.label}
-              </a>
-            ))}
-            <div className="pt-2 border-t border-gray-800">
-              <a
-                href="#consult-form"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center w-full py-2.5 rounded-lg bg-[#ff6f61] text-white font-bold text-sm"
-              >
-                Request Free Callback
-              </a>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* ---------------- HERO BANNER SECTION ---------------- */}
-      <section id="hero" className="relative overflow-hidden bg-gradient-to-b from-[#1a1226] via-[#121620] to-[#0d1117] py-16 sm:py-24">
-        {/* Subtle decorative background glow */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Heading & Key Value Proposition */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-900/50 border border-purple-700/50 text-purple-200 text-xs font-semibold">
-                <span>🎗️</span>
-                <span>Dedicated Oncology Care Network · India</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                Accessible <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-300 to-amber-300">Cancer Care</span> for Everyone
-              </h1>
-
-              <p className="text-base sm:text-lg text-gray-300 leading-relaxed max-w-2xl">
-                Tata 1mg & MEDITRUST LIFE SCIENCE are here to support cancer fighters and caregivers at every step.
-                Explore verified <span className="text-amber-300 font-semibold">Cancer Specialists</span>,
-                access <span className="text-cyan-300 font-semibold">Financial Assistance</span>, enroll in
-                <span className="text-emerald-300 font-semibold"> Patient Support Programs</span>, and seek non-profit NGOs for patient advocacy.
-              </p>
-
-              {/* Trust highlights checklist */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                {[
-                  { text: "Doorstep Medicine Delivery", icon: "✓" },
-                  { text: "Accredited Lab Tests", icon: "✓" },
-                  { text: "Patient Care Navigator", icon: "✓" },
-                  { text: "Expert-Vetted Guidance", icon: "✓" },
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-xs font-medium text-gray-300 bg-white/5 rounded-lg px-2.5 py-2 border border-white/5">
-                    <span className="text-emerald-400 font-bold">{item.icon}</span>
-                    <span>{item.text}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4 pt-4">
-                <a
-                  href="#specialists"
-                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#724378] to-[#ff6f61] hover:opacity-95 text-white font-bold text-sm shadow-xl shadow-purple-950/50 transition-all hover:scale-[1.02] active:scale-95"
-                >
-                  Explore Cancer Care Resources
-                </a>
-                <a
-                  href={`tel:${company.phone}`}
-                  className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-sm transition-all"
-                >
-                  Call Helpline: {company.phone}
-                </a>
-              </div>
-            </div>
-
-            {/* Right Column: Hero Visual Graphic / Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md rounded-3xl bg-gradient-to-tr from-purple-950/80 via-slate-900 to-slate-900/90 border border-purple-500/30 p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
-                <div className="flex items-center justify-between pb-4 border-b border-gray-800">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-amber-400/20 text-amber-300 border border-amber-400/30 flex items-center justify-center text-2xl">
-                      🛡️
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-white text-base">Cancer Care Navigator</h3>
-                      <p className="text-xs text-gray-400">MEDITRUST Life Science Support</p>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Live Support
-                  </span>
-                </div>
-
-                <div className="py-6 space-y-4">
-                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
-                    <p className="text-xs font-semibold text-amber-300">Need Chemotherapy Medicines?</p>
-                    <p className="text-xs text-gray-300">100% genuine cold-chain oncology drugs with patient assistance program benefits.</p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
-                    <p className="text-xs font-semibold text-cyan-300">Second Opinions from Top Oncologists</p>
-                    <p className="text-xs text-gray-300">Review pathology, biopsy, and PET-CT reports with medical, surgical, and radiation oncologists.</p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
-                    <p className="text-xs font-semibold text-emerald-300">Financial Schemes & Aid</p>
-                    <p className="text-xs text-gray-300">Assistance with Ranbaxy/Cipla/Roche PSP forms, PMNRF, and CSR funding.</p>
-                  </div>
-                </div>
-
-                <a
-                  href="#consult-form"
-                  className="block text-center w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-bold text-sm hover:brightness-105 active:scale-95 transition"
-                >
-                  Speak to an Oncology Care Expert
-                </a>
-              </div>
-            </div>
-          </div>
+      {/* ---------------- 2. PINK HERO BANNER (MATCHING SCREENSHOT 1) ---------------- */}
+      <section className="w-full bg-[#fce4ec] overflow-hidden">
+        <div className="max-w-[1920px] mx-auto">
+          <img
+            src="/images/cancer_care/hero_banner_pink.png"
+            alt="Conquer Cancer with Hope & Care - TATA 1mg Cancer Care"
+            className="w-full h-auto object-cover max-h-[580px] shadow-sm"
+          />
         </div>
       </section>
 
-      {/* ---------------- 4 MAJOR ACCESS CARDS GRID ---------------- */}
-      <section id="access-grid" className="py-16 bg-[#11161d] border-y border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Four Pillars of Comprehensive Cancer Support
+      {/* ---------------- 3. ACCESS TO QUALITY CANCER CARE DOES NOT OCCUR BY CHANCE (SCREENSHOT 1 & 2) ---------------- */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2937] tracking-tight">
+              Access to quality cancer care does not occur by chance
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-gray-400">
-              We connect cancer fighters and their families to verified medical experts, subsidies, pharmaceutical assistance, and supportive NGOs.
+            <p className="mt-2 text-sm text-gray-600">
+              Tata 1mg is here to support you and provide access to quality cancer care.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {accessCards.map((card) => (
-              <div
-                key={card.id}
-                id={card.id}
-                className={`relative rounded-2xl bg-gradient-to-b ${card.bgGradient} border ${card.border} p-6 flex flex-col justify-between shadow-xl transition-all duration-300 hover:-translate-y-1.5`}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-3xl">{card.icon}</span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/30 border border-white/10 text-white">
-                      {card.tag}
-                    </span>
-                  </div>
-                  <h3 className={`mt-5 text-lg font-black tracking-wide ${card.accent}`}>
-                    {card.title}
-                  </h3>
-                  <p className="mt-2.5 text-xs text-gray-200 leading-relaxed">
-                    {card.desc}
-                  </p>
-                </div>
-
-                <div className="pt-6 mt-4 border-t border-white/10">
-                  <a
-                    href="#consult-form"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:underline group"
-                  >
-                    <span>{card.cta}</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- CANCER TYPES OVERVIEW ---------------- */}
-      <section id="cancer-types" className="py-16 sm:py-24 bg-[#0d1117]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-purple-400">Understanding Diseases</span>
-              <h2 className="mt-1 text-2xl sm:text-4xl font-black text-white">
-                Major Cancer Types & Clinical Guidance
-              </h2>
-              <p className="mt-2 text-sm text-gray-400 max-w-2xl">
-                Recognizing symptoms early and undergoing precise histopathology tests significantly improves treatment efficacy and remissions.
-              </p>
-            </div>
-            <div className="mt-4 md:mt-0">
+          {/* 7 Square Access Cards matching screenshot 2 */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+            {accessCards.map((card, idx) => (
               <a
-                href="#consult-form"
-                className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300"
-              >
-                <span>Get diagnostic guidance</span>
-                <span>→</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cancerTypes.map((cancer, idx) => (
-              <div
                 key={idx}
-                className={`rounded-2xl bg-[#161b22] border ${cancer.color} p-6 flex flex-col justify-between transition-all duration-200 hover:shadow-2xl`}
+                href={card.href}
+                className="group relative flex flex-col items-center text-center p-3 sm:p-4 rounded-xl bg-[#fbf5eb] hover:bg-[#f6edd9] border border-transparent hover:border-amber-200 transition-all duration-200"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold text-white tracking-tight">{cancer.name}</h3>
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${cancer.badgeColor}`}>
-                      {cancer.incidence}
-                    </span>
-                  </div>
-
-                  <div className="space-y-3 pt-2 text-xs">
-                    <div>
-                      <span className="font-semibold text-gray-400 block mb-0.5">Common Symptoms:</span>
-                      <p className="text-gray-200 leading-normal">{cancer.symptoms}</p>
-                    </div>
-
-                    <div>
-                      <span className="font-semibold text-gray-400 block mb-0.5">Recommended Screening:</span>
-                      <p className="text-cyan-300 font-mono text-[11px]">{cancer.diagnostic}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 mt-6 border-t border-gray-800 flex items-center justify-between">
-                  <a
-                    href="#consult-form"
-                    className="text-xs font-bold text-[#ff6f61] hover:text-amber-400 transition"
-                  >
-                    Consult Onco-Specialist →
-                  </a>
-                  <span className="text-[10px] text-gray-500">Stage I-IV Support</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- CANCER CAUSES SECTION ---------------- */}
-      <section id="causes" className="py-16 bg-[#11161d] border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-400">Etiology & Risk Factors</span>
-            <h2 className="mt-1 text-2xl sm:text-4xl font-extrabold text-white">
-              Primary Causes of Cancer
-            </h2>
-            <p className="mt-3 text-sm text-gray-400">
-              Up to 40% of cancers are preventable through risk avoidance, lifestyle interventions, and regular screenings.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {causes.map((c, i) => (
-              <div key={i} className="rounded-2xl bg-[#161b22] border border-gray-800 p-6 space-y-3">
-                <div className="text-4xl">{c.icon}</div>
-                <h3 className="text-base font-bold text-white">{c.title}</h3>
-                <span className="inline-block text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 rounded px-2 py-0.5">
-                  {c.stat}
-                </span>
-                <p className="text-xs text-gray-300 leading-relaxed">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- STATISTICS & IMPACT SECTION ---------------- */}
-      <section className="py-16 bg-gradient-to-r from-[#1c182a] via-[#161b22] to-[#1c182a] border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            {statistics.map((s, idx) => (
-              <div key={idx} className="space-y-1">
-                <div className="text-3xl sm:text-5xl font-black text-amber-400 tracking-tight">
-                  {s.number}
-                </div>
-                <div className="text-xs sm:text-sm font-bold text-white pt-1">
-                  {s.label}
-                </div>
-                <div className="text-[11px] text-gray-400">
-                  {s.sub}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- ARTICLES & PATIENT EDUCATION ---------------- */}
-      <section className="py-16 bg-[#0d1117]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#ff6f61]">Clinical Knowledge</span>
-              <h2 className="mt-1 text-2xl sm:text-4xl font-extrabold text-white">
-                Vetted Oncology Insights & Caregiver Guides
-              </h2>
-            </div>
-            <span className="text-xs text-gray-400 mt-2 md:mt-0">Reviewed by Oncology Specialists</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {articles.map((art, idx) => (
-              <div key={idx} className="rounded-2xl bg-[#161b22] border border-gray-800 p-6 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between text-[11px] text-gray-400 mb-3">
-                    <span className="px-2 py-0.5 rounded bg-gray-800 text-purple-300 font-semibold">{art.tag}</span>
-                    <span>{art.readTime}</span>
-                  </div>
-                  <h3 className="text-base font-bold text-white leading-snug hover:text-amber-300 transition">
-                    {art.title}
-                  </h3>
-                  <p className="mt-2.5 text-xs text-gray-300 leading-relaxed">
-                    {art.summary}
-                  </p>
-                </div>
-                <div className="pt-4 mt-4 border-t border-gray-800 text-[11px] text-gray-400 flex items-center justify-between">
-                  <span>By {art.author}</span>
-                  <a href="#consult-form" className="text-amber-400 font-semibold hover:underline">Read Article →</a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- CONTACT & CALLBACK FORM ---------------- */}
-      <section id="consult-form" className="py-16 bg-[#11161d] border-t border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-b from-[#1c2128] to-[#161b22] border border-gray-700/80 p-8 sm:p-12 shadow-2xl">
-            <div className="text-center max-w-xl mx-auto space-y-2 mb-8">
-              <span className="inline-block text-2xl">🤝</span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Connect with an Oncology Care Coordinator
-              </h2>
-              <p className="text-xs sm:text-sm text-gray-400">
-                Share patient details confidentially. Our certified healthcare team will guide you on doctor consultations, genuine medicine access, and financial support.
-              </p>
-            </div>
-
-            {contactSubmitted ? (
-              <div className="p-8 rounded-2xl bg-emerald-950/60 border border-emerald-600/60 text-center space-y-3">
-                <div className="w-12 h-12 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl font-bold">
-                  ✓
-                </div>
-                <h3 className="text-lg font-bold text-white">Care Request Submitted Successfully</h3>
-                <p className="text-xs text-gray-300 max-w-md mx-auto">
-                  Thank you, <span className="font-semibold text-white">{contactForm.name}</span>. An oncology coordinator from MEDITRUST LIFE SCIENCE will reach out to you at <span className="font-semibold text-white">{contactForm.phone}</span> shortly.
-                </p>
-                <div className="pt-2">
-                  <a
-                    href={`tel:${company.phone}`}
-                    className="inline-block px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition"
-                  >
-                    Or Call Immediately: {company.phone}
-                  </a>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Patient or Caregiver Name *</label>
-                    <input
-                      type="text"
-                      required
-                      value={contactForm.name}
-                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                      placeholder="e.g. Ramesh Verma"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-gray-700 text-white text-xs focus:outline-none focus:border-amber-400 transition"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Mobile Contact Number *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={contactForm.phone}
-                      onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
-                      placeholder="e.g. +91 9876543210"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-gray-700 text-white text-xs focus:outline-none focus:border-amber-400 transition"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Cancer Type / Diagnosis</label>
-                    <select
-                      value={contactForm.cancerType}
-                      onChange={(e) => setContactForm({ ...contactForm, cancerType: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-gray-700 text-white text-xs focus:outline-none focus:border-amber-400 transition"
-                    >
-                      <option>Breast Cancer</option>
-                      <option>Lung Cancer</option>
-                      <option>Oral / Head & Neck Cancer</option>
-                      <option>Cervical Cancer</option>
-                      <option>Colorectal / GI Cancer</option>
-                      <option>Blood / Leukemia / Lymphoma</option>
-                      <option>Prostate Cancer</option>
-                      <option>Other / Unsure</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">Required Support</label>
-                    <select className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-gray-700 text-white text-xs focus:outline-none focus:border-amber-400 transition">
-                      <option>Oncologist Consultation / 2nd Opinion</option>
-                      <option>Chemotherapy Medicine Supply</option>
-                      <option>Financial Schemes / NGO Subsidy</option>
-                      <option>Diagnostic PET-CT / Biopsy Booking</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">Additional Medical Context (Optional)</label>
-                  <textarea
-                    rows={3}
-                    value={contactForm.message}
-                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
-                    placeholder="Provide details such as disease stage, prescribed therapy, or city of residence..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-gray-700 text-white text-xs focus:outline-none focus:border-amber-400 transition"
+                {card.badge && (
+                  <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-black tracking-wider bg-[#ff6f61] text-white">
+                    {card.badge}
+                  </span>
+                )}
+                <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-2 overflow-hidden">
+                  <img
+                    src={card.img}
+                    alt={card.title}
+                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform"
                   />
                 </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ff6f61] to-[#e64a19] text-white font-extrabold text-sm shadow-xl shadow-red-950/50 hover:brightness-110 active:scale-98 transition"
-                  >
-                    Request Confidential Oncology Callback
-                  </button>
-                  <p className="mt-2 text-center text-[11px] text-gray-500">
-                    Your medical information is kept strictly confidential as per healthcare data protection laws.
-                  </p>
-                </div>
-              </form>
-            )}
+                <h3 className="text-xs font-semibold text-gray-800 leading-snug group-hover:text-[#ff6f61] transition-colors">
+                  {card.title}
+                  {card.subtitle && (
+                    <span className="block font-bold text-gray-900 mt-0.5">{card.subtitle}</span>
+                  )}
+                </h3>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ---------------- DEDICATED CANCER CARE FOOTER ---------------- */}
-      <footer className="bg-[#090d13] border-t border-gray-800 py-12 text-gray-400 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-gray-800">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#724378] flex items-center justify-center text-white text-base font-bold">
-                🎗️
-              </div>
-              <span className="font-extrabold text-white text-base">
-                MEDITRUST CANCER CARE
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-4 text-xs">
-              <a href="#hero" className="hover:text-white transition">Back to Top</a>
-              <a href="#specialists" className="hover:text-white transition">Specialists</a>
-              <a href="#financial" className="hover:text-white transition">Financial Aid</a>
-              <a href="#psp" className="hover:text-white transition">Patient Support</a>
-              <a href="#cancer-types" className="hover:text-white transition">Cancer Types</a>
-              <a href="/" className="hover:text-white text-amber-400 transition font-semibold">Return to Main Pharmacy ↗</a>
-            </div>
+      {/* ---------------- 4. MAJOR TYPES OF CANCER (SCREENSHOT 2 & 3) ---------------- */}
+      <section id="cancer-types" className="py-12 sm:py-16 bg-[#eef7f6] border-t border-gray-100">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2937] tracking-tight">
+              Major Types of Cancer
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[11px] leading-relaxed text-gray-500">
-            <div>
-              <p className="font-semibold text-gray-400 mb-1">{company.name}</p>
-              <p>Directors: {company.directors.join(" & ")}</p>
-              <p>Registered Office: {company.address}</p>
-              <p>National Cancer Support Helpline: {company.phone}</p>
+          {/* 8 Cards in 2 rows of 4 matching screenshot 2 & 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {cancerTypes.map((c, idx) => (
+              <div
+                key={idx}
+                className="rounded-xl bg-[#b5dfd9] p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-lg bg-transparent flex items-center justify-center shrink-0">
+                    {c.iconSvg}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#1a6a67] leading-none">
+                      {c.name}
+                    </h3>
+                    <p className="text-sm font-semibold text-[#1a6a67] mt-0.5">
+                      {c.type}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-5 mt-4 border-t border-[#9ecdc6] flex items-center justify-between text-xs font-semibold text-[#1a6a67]">
+                  <a href={`/consult-doctor`} className="hover:underline">About</a>
+                  <a href="#support-programs" className="hover:underline">Support Programs</a>
+                  <a href="#ngos" className="hover:underline">NGOs</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- 5. WHAT CAUSES CANCER (SCREENSHOT 3 & 4) ---------------- */}
+      <section className="py-16 sm:py-20 bg-[#b5dfd9] border-t border-[#a1d4cd]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-left mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2937] tracking-tight">
+              What Causes Cancer
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+              Cancer comprises a complex group of diseases with many possible causes. While genetics play a major role in cancer, other causes of cancer can differ between children and adults.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            {/* Childhood Cancers */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-36 h-36 rounded-full overflow-hidden mb-5 shadow-sm">
+                <img
+                  src="/images/cancer_care/cause_childhood.png"
+                  alt="Childhood Cancers"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Childhood Cancers</h3>
+              <p className="text-xs sm:text-sm text-gray-700 leading-relaxed max-w-sm">
+                A mutation or cell change that just happened by chance is a common cause for cancer in children.
+              </p>
             </div>
-            <div>
-              <p className="font-semibold text-gray-400 mb-1">Medical Disclaimer</p>
-              <p>
-                The information provided on this platform is for educational and informational purposes only. It is not intended to replace professional medical advice, diagnosis, or treatment. Always seek the advice of your qualified oncologist or healthcare provider.
+
+            {/* Adult Cancers */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-36 h-36 rounded-full overflow-hidden mb-5 shadow-sm">
+                <img
+                  src="/images/cancer_care/cause_adult.png"
+                  alt="Adult Cancers"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Adult Cancers</h3>
+              <p className="text-xs sm:text-sm text-gray-700 leading-relaxed max-w-sm">
+                In addition to mutations, lifestyle factors like smoking, tobacco, an unhealthy diet, lack of physical activity, working with toxic chemicals, or exposure to certain viruses may put adults at risk for cancers.
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="pt-4 text-center text-[10px] text-gray-600 border-t border-gray-900">
-            © {new Date().getFullYear()} {company.name}. All rights reserved.
+      {/* ---------------- 6. DID YOU KNOW? (SCREENSHOT 4 & 5) ---------------- */}
+      <section className="py-16 sm:py-20 bg-[#f6e18f]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto">
+            {/* Left Card: Did you KNOW? with Lightbulb Illustration */}
+            <div className="lg:col-span-7 bg-white rounded-2xl p-8 sm:p-10 shadow-sm relative min-h-[340px] flex flex-col justify-between">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#292929] mb-4">
+                  Did you KNOW?
+                </h2>
+                <p className="text-sm text-gray-700 max-w-xs leading-relaxed">
+                  Only <span className="font-bold text-gray-900">one out of four</span> patients who have been prescribed cancer medicines actually starts the treatment.
+                </p>
+              </div>
+
+              {/* Hanging light bulb illustration */}
+              <div className="absolute right-4 bottom-2 w-44 sm:w-56 h-auto pointer-events-none">
+                <img
+                  src="/images/cancer_care/did_you_know_bulb.png"
+                  alt="Did you know bulb"
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Right Card: Out-of-pocket discount with Get Here CTA */}
+            <div className="lg:col-span-5 bg-white rounded-2xl p-8 sm:p-10 shadow-sm min-h-[340px] flex flex-col justify-between">
+              <div>
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                  Out-of-pocket expenditure for cancer is one of the highest for any ailment. With Tata 1mg, you can reduce this expense by getting up to 20% OFF on your medicines.
+                </p>
+              </div>
+
+              <div className="pt-6 flex justify-end">
+                <a
+                  href="/medicines"
+                  className="inline-block px-7 py-3 rounded-lg bg-[#f0dba0] hover:bg-[#ebd28a] text-[#714d00] font-bold text-sm tracking-wide transition-all shadow-sm active:scale-95"
+                >
+                  Get Here
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- 7. CANCER IN INDIA STATS BANNER (SCREENSHOT 5, 6, 7) ---------------- */}
+      <section className="w-full bg-black">
+        {/* Top visual banner with 3D red blood cells and CANCER IN India */}
+        <div className="w-full max-w-[1920px] mx-auto overflow-hidden">
+          <img
+            src="/images/cancer_care/cancer_in_india.png"
+            alt="CANCER IN India"
+            className="w-full h-auto object-cover max-h-[500px]"
+          />
+        </div>
+
+        {/* Yellow Statistics Ribbon underneath matching screenshot 6 & 7 */}
+        <div className="bg-[#f6e18f] py-10 sm:py-12 border-b border-amber-300">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="space-y-1">
+                <h3 className="text-3xl sm:text-4xl font-extrabold text-[#292929] tracking-tight">
+                  2,250,000+
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-800 font-medium">
+                  people are living with cancer
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="text-3xl sm:text-4xl font-extrabold text-[#292929] tracking-tight">
+                  1,150,000+
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-800 font-medium">
+                  people are diagnosed with cancer every year
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="text-3xl sm:text-4xl font-extrabold text-[#292929] tracking-tight">
+                  12%
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-800 font-medium">
+                  increase in cancer cases estimated between 2020–2025
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- 8. EMPOWERING YOU THROUGH INFORMATION (SCREENSHOT 7 & 8) ---------------- */}
+      <section className="w-full overflow-hidden">
+        <div className="max-w-[1920px] mx-auto">
+          <img
+            src="/images/cancer_care/empowering_you.png"
+            alt="Empowering You Through Information"
+            className="w-full h-auto object-cover max-h-[540px]"
+          />
+        </div>
+      </section>
+
+      {/* ---------------- 9. TRUST ONLY EVIDENCE DRIVEN MEDICAL INFORMATION (SCREENSHOT 8, 9, 10) ---------------- */}
+      <section className="py-14 sm:py-20 bg-white">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="mb-10">
+            <p className="text-sm sm:text-base text-gray-700">
+              We strongly believe that awareness is the key to manage cancer better.
+            </p>
+            <p className="text-sm sm:text-base text-gray-700 mb-4">
+              Are you overwhelmed by information on the internet?
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#4907a3] tracking-tight">
+              Trust only evidence driven medical information reviewed by experts
+            </h2>
+          </div>
+
+          {/* 8 Expert Cards (4 videos top row, 4 articles bottom row) matching screenshot 9 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {expertArticles.map((item, idx) => (
+              <a
+                key={idx}
+                href="/health-articles"
+                className="group flex flex-col justify-between rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200"
+              >
+                <div className="relative aspect-[16/10] bg-gray-100 overflow-hidden rounded-xl">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {item.isVideo && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition-colors">
+                      <div className="w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-xs">
+                        <svg className="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="pt-3 pb-1">
+                  <h3 className="text-sm font-semibold text-gray-800 leading-snug group-hover:text-[#4907a3] transition-colors">
+                    {item.title}
+                  </h3>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- 10. WHY CHOOSE TATA 1MG? / A POCKETFUL OF TRUST (SCREENSHOT 10, 11, 12) ---------------- */}
+      <section className="py-16 sm:py-24 bg-[#b5dfd9] border-t border-[#a1d4cd]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+          <div className="mb-12">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1f2937] tracking-tight">
+              Why choose Tata 1mg?
+            </h2>
+            <p className="mt-1 text-base text-gray-800 font-medium">
+              A pocketful of trust
+            </p>
+          </div>
+
+          <div className="space-y-12 max-w-4xl">
+            {whyChooseItems.map((item, idx) => (
+              <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden shrink-0 shadow-sm bg-black">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- 11. POLICY STRIP & FOOTER (SCREENSHOT 12 & 13) ---------------- */}
+      <footer className="bg-black text-gray-300">
+        {/* Horizontal Policies Navigation Bar */}
+        <div className="border-b border-gray-800 py-6">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs sm:text-sm font-semibold text-white">
+              <a href="/privacy-policy" className="hover:text-[#ff6f61] transition">Privacy Policy</a>
+              <span className="text-gray-600 hidden sm:inline">|</span>
+              <a href="/terms" className="hover:text-[#ff6f61] transition">Terms and Conditions</a>
+              <span className="text-gray-600 hidden sm:inline">|</span>
+              <a href="/editorial-policy" className="hover:text-[#ff6f61] transition">Editorial Policy</a>
+              <span className="text-gray-600 hidden sm:inline">|</span>
+              <a href="/ip-policy" className="hover:text-[#ff6f61] transition">IP Policy</a>
+              <span className="text-gray-600 hidden sm:inline">|</span>
+              <a href="/grievance-policy" className="hover:text-[#ff6f61] transition">Grievance Redressal Policy</a>
+            </div>
+          </div>
+        </div>
+
+        {/* Medical Disclaimers and Client Credentials */}
+        <div className="py-10 max-w-[1240px] mx-auto px-4 sm:px-6 space-y-6 text-xs text-gray-400 leading-relaxed">
+          <p>
+            All the information provided here is for informational and awareness purposes only. It should NOT be used as a substitute for the advice of a qualified physician. Please consult your doctor and discuss all your queries related to any disease or medicine.
+          </p>
+          <p>
+            Tata 1mg's sole intention is to support our consumers throughout their cancer journey, one step at a time. We have made all efforts to keep the information true to the best of our knowledge. However, this may not cover everything about particular health conditions, medicines, all ongoing patient support or access programs, eligibility criteria, alerts, etc. We are continuously working on updates, improvisations, and advancements.
+          </p>
+
+          <div className="pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-xl font-black text-white">
+                TATA <span className="text-[#ff6f61]">1mg</span>
+              </span>
+              <span className="text-gray-600">|</span>
+              <span className="text-[11px] text-gray-400">
+                {company.name} · {company.address}
+              </span>
+            </div>
+            <div className="text-[11px] text-gray-500">
+              © {new Date().getFullYear()} {company.name}. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* ---------------- 12. FLOATING RED/CORAL HELPLINE PILL (VISIBLE IN ALL SCREENSHOTS) ---------------- */}
+      <a
+        href={`tel:${company.phone}`}
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#f45647] hover:bg-[#ea4333] text-white font-bold text-sm shadow-2xl shadow-red-900/50 hover:scale-105 active:scale-95 transition-all"
+        aria-label="Call Cancer Helpline"
+      >
+        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z" />
+          </svg>
+        </div>
+        <span className="tracking-wide">1800-102-1618</span>
+      </a>
     </div>
   );
 }
