@@ -1138,9 +1138,9 @@ export function Consult() {
           className="flex items-center justify-center gap-3 rounded-md bg-[#fffcf8] border border-[#f5e6d3] p-2.5 text-xs text-[#181a1f] hover:bg-[#fff7ed] transition"
         >
           <img
-            src="/images/consult_doctor/care_plan_banner.png"
+            src="/images/consult_doctor/care_plan_doctor_thumb.png"
             alt="Doctor Care Plan"
-            className="h-7 w-auto object-contain rounded"
+            className="h-8 w-auto object-contain rounded-full"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
           <span>
