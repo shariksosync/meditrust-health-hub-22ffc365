@@ -207,7 +207,7 @@ export function CancerCare() {
     },
     {
       title: "In-app pill reminder",
-      desc: "Given how crucial on-time medicine administration is, Tata 1mg pill reminder keeps track of when and what medicines need to be taken, so you never miss a dose.",
+      desc: "Given how crucial on-time medicine administration is, MEDITRUST pill reminder keeps track of when and what medicines need to be taken, so you never miss a dose.",
       img: "/images/cancer_care/why_pill_reminder.png",
     },
     {
@@ -277,11 +277,11 @@ export function CancerCare() {
               ))}
             </nav>
 
-            {/* Right: Tata Trust Badge Logo */}
+            {/* Right: Business Trust Badge */}
             <div className="flex items-center gap-2">
               <div className="flex flex-col items-center justify-center font-black text-black leading-tight text-right">
-                <span className="text-[11px] tracking-widest uppercase">TATA</span>
-                <span className="w-6 h-0.5 bg-black mt-0.5"></span>
+                <span className="text-[10px] tracking-widest uppercase text-gray-700">MEDITRUST</span>
+                <span className="w-8 h-0.5 bg-[#ff6f61] mt-0.5"></span>
               </div>
             </div>
           </div>
@@ -293,7 +293,7 @@ export function CancerCare() {
         <div className="max-w-[1920px] mx-auto">
           <img
             src="/images/cancer_care/hero_banner_pink.png"
-            alt="Conquer Cancer with Hope & Care - TATA 1mg Cancer Care"
+            alt="Conquer Cancer with Hope & Care - MEDITRUST Cancer Care"
             className="w-full h-auto object-cover max-h-[580px] shadow-sm"
           />
         </div>
